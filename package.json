@@ -4,7 +4,9 @@
   "description": "A starter kit for building a custom Cisco Spark bot with Botkit Studio",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node bot.js",
+    "test": "mocha test --recursive",
+    "test-watch" : "npm run test --watch"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -16,7 +18,11 @@
     "request": "^2.79.0",
     "wordfilter": "^0.2.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "sinon": "^2.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/howdyai/botkit-starter-ciscospark.git"
