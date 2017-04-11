@@ -1,0 +1,6 @@
+version: '2'
+services:
+  service-now:
+    image: asynchronyringo/service-now-spark-bot
+    volumes:
+      - .env:/app/.env

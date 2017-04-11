@@ -1,9 +1,13 @@
 FROM library/node:argon-slim
 
-COPY . /app
+COPY package.json tmp/package.json
+RUN cd tmp \
+&& npm install \
+&& mkdir /app \
+&& cp -R node_modules /app/node_modules/ \
+&& rm -R *
 
-RUN cd /app \
-  && npm install --production
+COPY . /app
 
 WORKDIR /app
 
