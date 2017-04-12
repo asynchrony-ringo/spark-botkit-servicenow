@@ -1,13 +1,12 @@
-let assert = require('assert');
-let sinon = require('sinon');
-let expect = require('chai').expect;
-let hello_world = require('../../skills/hello_world.js')
+const sinon = require('sinon');
+const expect = require('chai').expect;
+const helloWorld = require('../../skills/hello_world.js');
 
 describe('hello world', () => {
-  let controller = { hears: sinon.spy() };
+  const controller = { hears: sinon.spy() };
 
   beforeEach(() => {
-    hello_world(controller);
+    helloWorld(controller);
   });
 
   it('should register hear listener on controller', () => {
@@ -23,9 +22,9 @@ describe('hello world', () => {
     beforeEach(() => {
       bot = { startConversation: sinon.spy() };
       message = 'some message';
-      let listenerCallback = controller.hears.args[0][2];
+      const listenerCallback = controller.hears.args[0][2];
 
-      listenerCallback(bot, message)
+      listenerCallback(bot, message);
     });
 
     it('should start a conversation', () => {
@@ -40,7 +39,7 @@ describe('hello world', () => {
       beforeEach(() => {
         convo = { say: sinon.spy() };
         error = null;
-        let conversationCallback = bot.startConversation.args[0][1];
+        const conversationCallback = bot.startConversation.args[0][1];
 
         conversationCallback(error, convo);
       });
