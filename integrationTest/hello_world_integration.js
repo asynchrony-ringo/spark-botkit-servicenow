@@ -1,22 +1,15 @@
 const expect = require('chai').expect;
 const Nightmare = require('nightmare');
 const env = require('node-env-file');
+const nightmareHelpers = require('./nightmare_helpers.js');
 
 env('.env');
 
 describe('hello world', () => {
   it('should return world! when prompted with hello', () => {
     const nightmare = Nightmare({ show: true });
-
     return nightmare
-      .goto('https://web.ciscospark.com/signin')
-      .insert('input[type=text]', process.env.integrationUser)
-      .click('button.button')
-      .wait('input[type=password]')
-      .insert('input[type=password]', process.env.integrationPassword)
-      .click('button')
-      .wait('.user-welcome-text')
-      .wait(() => document.querySelectorAll('.user-welcome-text').length === 0)
+      .use(nightmareHelpers.login)
       .insert('input.add-people', 'SNBot@sparkbot.io')
       .insert('input.add-people', '\u000d')
       .click('button.btnCreateRoom')

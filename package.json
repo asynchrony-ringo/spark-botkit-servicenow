@@ -7,7 +7,7 @@
     "start": "node bot.js",
     "test": "mocha test --recursive",
     "test:watch": "npm run test -- --watch",
-    "uat": "mocha integrationTest --recursive --timeout 30000",
+    "uat": "mocha integrationTest --recursive --timeout 300000",
     "uat:debug": "DEBUG=nightmare npm run uat"
   },
   "dependencies": {
