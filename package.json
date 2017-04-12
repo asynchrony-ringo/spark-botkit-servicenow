@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node bot.js",
     "test": "mocha test --recursive",
-    "test-watch" : "npm run test --watch"
+    "test:watch" : "npm run test -- --watch"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
