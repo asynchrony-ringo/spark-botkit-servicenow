@@ -9,11 +9,7 @@
 This is a sample Cisco Spark bot built with Botkit.
 
 # RUN THE BOT:
-  Follow the instructions here to set up your Cisco Spark bot:
-    -> https://developer.ciscospark.com/bots.html
-  Run your bot from the command line:
-    access_token=<MY BOT ACCESS TOKEN> public_address=<MY PUBLIC HTTPS URL> node bot.js
-
+  Follow the instructions in the README
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -54,9 +50,6 @@ var webserver = require(__dirname + '/components/express_webserver.js')(controll
 
 // Tell Cisco Spark to start sending events to this application
 require(__dirname + '/components/subscribe_events.js')(controller);
-
-// Enable Dashbot.io plugin
-require(__dirname + '/components/plugin_dashbot.js')(controller);
 
 var normalizedPath = require("path").join(__dirname, "skills");
 require("fs").readdirSync(normalizedPath).forEach(function(file) {
