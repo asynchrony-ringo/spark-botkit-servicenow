@@ -10,12 +10,6 @@ module.exports = function(controller, bot) {
     webserver.use(bodyParser.json());
     webserver.use(bodyParser.urlencoded({ extended: true }));
 
-    // import express middlewares that are present in /components/express_middleware
-    var normalizedPath = require("path").join(__dirname, "express_middleware");
-    require("fs").readdirSync(normalizedPath).forEach(function(file) {
-        require("./express_middleware/" + file)(webserver, controller);
-    });
-
     webserver.use(express.static('public'));
 
 
