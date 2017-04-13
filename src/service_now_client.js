@@ -1,6 +1,6 @@
 const request = require('request');
 
-class ServiceNow {
+class ServiceNowClient {
   constructor() {
     this.username = process.env.serviceNowUsername;
     this.password = process.env.serviceNowPassword;
@@ -34,4 +34,4 @@ class ServiceNow {
 }
 
 
-module.exports = ServiceNow;
+module.exports = ServiceNowClient;

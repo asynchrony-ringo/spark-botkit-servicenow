@@ -1,4 +1,4 @@
-const ServiceNow = require('../src/ServiceNowClient.js');
+const ServiceNowClient = require('../src/service_now_client.js');
 const expect = require('chai').expect;
 const request = require('request');
 const sinon = require('sinon');
@@ -19,7 +19,7 @@ describe('service now client', () => {
     ].forEach(({ error, env }) => {
       it(`should throw error "${error}"`, () => {
         Object.keys(env).forEach((k) => { process.env[k] = env[k]; });
-        expect(() => new ServiceNow()).to.throw(error);
+        expect(() => new ServiceNowClient()).to.throw(error);
         Object.keys(env).forEach(k => delete process.env[k]);
       });
     });
@@ -33,7 +33,7 @@ describe('service now client', () => {
 
       sinon.stub(request, 'get');
 
-      testObject = new ServiceNow();
+      testObject = new ServiceNowClient();
     });
 
     afterEach(() => {
