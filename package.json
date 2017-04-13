@@ -2,9 +2,9 @@
   "name": "spark-botkit",
   "version": "0.0.1",
   "description": "A starter kit for building a custom Cisco Spark bot with Botkit Studio",
-  "main": "bot.js",
+  "main": "src/bot.js",
   "scripts": {
-    "start": "node bot.js",
+    "start": "node src/bot.js",
     "test": "mocha test --recursive",
     "test:watch": "npm run test -- --watch",
     "uat": "mocha integrationTest --recursive --timeout 300000",

@@ -11,4 +11,4 @@ COPY . /app
 
 WORKDIR /app
 
-CMD ["node", "bot.js"]
+CMD ["node", "src/bot.js"]

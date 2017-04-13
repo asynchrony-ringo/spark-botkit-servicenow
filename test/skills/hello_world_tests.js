@@ -1,6 +1,6 @@
 const sinon = require('sinon');
 const expect = require('chai').expect;
-const helloWorld = require('../../skills/hello_world.js');
+const helloWorld = require('../../src/skills/hello_world.js');
 
 describe('hello world', () => {
   const controller = { hears: sinon.spy() };
