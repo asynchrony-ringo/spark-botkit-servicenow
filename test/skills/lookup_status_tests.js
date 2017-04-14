@@ -45,6 +45,7 @@ describe('look up status', () => {
     });
 
     it('should reply with incident when record is found', () => {
+      process.env.serviceNowBaseUrl = 'yo.service-now.com';
       const tableRecordPromise = Promise.resolve({ short_description: 'description for record 1234' });
       const message = { match: 'status 1234'.match(/status (.*)/) };
 
@@ -54,7 +55,7 @@ describe('look up status', () => {
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Information for incident: 1234\n```{\n  "short_description": "description for record 1234"\n}');
+          expect(bot.reply.args[0][1]).to.equal('Information for incident: [1234](yo.service-now.com/incident.do?sys_id=1234)\n```{\n  "short_description": "description for record 1234"\n}');
         });
     });
 
