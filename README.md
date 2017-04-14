@@ -19,6 +19,9 @@ To actually get the bot up and running, a public address is required. We used ng
     - NOTE: the docker instance must be running on port 3000 in order for communication to the bot to work
  - Copy the https forwarding address in the ngrok log (```https://<########>.ngrok.io```)
  - Paste that address as the ```public_address``` variable in the ```.env``` file of the project
- - run the start-dev script ```./start.dev.sh```
+ - run npm install
+ - make sure you have docker installed
+ - docker build -t asynchronyringo/service-now-spark-bot .
+ - run the start-dev script ./start.dev.sh
 
 You should now be able to communicate with the bot from within Cisco Spark
