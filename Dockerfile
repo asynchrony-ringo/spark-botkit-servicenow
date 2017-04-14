@@ -1,4 +1,4 @@
-FROM library/node:argon-slim
+FROM library/node:6.10
 
 COPY package.json tmp/package.json
 RUN cd tmp \
