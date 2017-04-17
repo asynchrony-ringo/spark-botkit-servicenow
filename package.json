@@ -7,6 +7,7 @@
     "start": "node src/bot.js",
     "test": "mocha test --recursive",
     "test:watch": "npm run test -- --watch",
+    "test-jenkins": "JUNIT_REPORT_PATH=test/jenkins-report.xml mocha test --recursive --colors --reporter mocha-jenkins-reporter",
     "uat": "mocha integrationTest --recursive --timeout 300000",
     "uat:debug": "DEBUG=nightmare npm run uat"
   },
@@ -26,6 +27,7 @@
     "eslint-config-airbnb-base": "^11.1.3",
     "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.2.0",
+    "mocha-jenkins-reporter": "^0.3.7",
     "nightmare": "^2.10.0",
     "sinon": "^2.1.0"
   },
