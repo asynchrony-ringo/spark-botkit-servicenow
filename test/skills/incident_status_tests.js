@@ -1,13 +1,13 @@
 const sinon = require('sinon');
 const expect = require('chai').expect;
-const lookupStatus = require('../../src/skills/lookup_status.js');
+const incidentStatus = require('../../src/skills/incident_status.js');
 const serviceNowClient = require('../../src/service_now_client.js');
 
-describe('look up status', () => {
+describe('incident status', () => {
   const controller = { hears: sinon.spy() };
 
   beforeEach(() => {
-    lookupStatus(controller);
+    incidentStatus(controller);
   });
 
   it('should register hear listener on controller', () => {

@@ -1,6 +1,6 @@
 const serviceNowClient = require('../service_now_client.js');
 
-const lookupStatus = (controller) => {
+const incidentStatus = (controller) => {
   controller.hears(['status (.*)'], 'direct_message,direct_mention', (bot, message) => {
     const serviceNowIncidentId = message.match[1];
     return serviceNowClient.getTableRecord('incident', serviceNowIncidentId)
@@ -16,4 +16,4 @@ const lookupStatus = (controller) => {
   });
 };
 
-module.exports = lookupStatus;
+module.exports = incidentStatus;
