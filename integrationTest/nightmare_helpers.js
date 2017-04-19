@@ -38,7 +38,7 @@ const nightmareHelpers = {
     .wait('.convoFilters-FILTER_UNREAD')
     .click('.convoFilters-FILTER_UNREAD')
     .wait(500)
-    .wait('.roomListItem:nth-of-type(1)')
+    .wait(botName => document.querySelector('.roomListItem:nth-of-type(1) .roomListItem-title-text').innerText.split(', ').indexOf(botName) !== -1, process.env.bot_name)
     .click('.roomListItem:nth-of-type(1)')
     .wait(1000)
     .wait((botName) => {
