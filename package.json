@@ -9,7 +9,7 @@
     "test:watch": "npm run test -- --watch",
     "test-jenkins": "JUNIT_REPORT_PATH=test/jenkins-report.xml mocha test --recursive --colors --reporter mocha-jenkins-reporter",
     "uat": "mocha integrationTest --recursive --timeout 300000",
-    "uat:debug": "DEBUG=nightmare npm run uat"
+    "uat:debug": "DEBUG=nightmare:actions* npm run uat"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
