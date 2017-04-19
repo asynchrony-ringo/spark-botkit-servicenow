@@ -19,15 +19,15 @@ describe('incident status', () => {
     }
   ].forEach(({ description, conversationStarter, messageSender }) => {
     it(`should respond with incident status when ${description}`, () => {
-      const nightmare = Nightmare({ show: true });
+      const nightmare = Nightmare({ show: true, waitTimeout: 60000 });
       return nightmare
         .use(nightmareHelpers.login)
         .use(conversationStarter)
-        .use(messageSender('status 001462683dff9940bb2d16a3cbae2b35'))
+        .use(messageSender('status f9e45cecdb1232005450f4eabf961913'))
         .use(nightmareHelpers.evaluateNextSNBotResponse)
         .end()
         .then((innerText) => {
-          expect(innerText).to.match(/Information for incident: [001462683dff9940bb2d16a3cbae2b35]/);
+          expect(innerText).to.match(/Information for incident: [f9e45cecdb1232005450f4eabf961913]/);
           return Promise.resolve();
         });
     });
