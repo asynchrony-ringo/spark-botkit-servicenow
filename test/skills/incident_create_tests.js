@@ -53,7 +53,8 @@ describe('incident create', () => {
 
     it('should reply with incident when record is created', () => {
       process.env.serviceNowBaseUrl = 'yo.service-now.com';
-      const tableRecordPromise = Promise.resolve({ short_description: 'description for record 1234' });
+      const insertResponse = { result: { sys_id: '1234', number: 'INC1234' } };
+      const tableRecordPromise = Promise.resolve(insertResponse);
 
       serviceNowClient.insertTableRecord.withArgs('incident', incident).returns(tableRecordPromise);
 
@@ -61,7 +62,7 @@ describe('incident create', () => {
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('```{\n  "short_description": "description for record 1234"\n}');
+          expect(bot.reply.args[0][1]).to.equal(`Success: [${insertResponse.result.number}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${insertResponse.result.sys_id})`);
         });
     });
 

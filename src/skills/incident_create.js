@@ -10,7 +10,7 @@ const incidentCreate = (controller) => {
 
     return serviceNowClient.insertTableRecord('incident', incident)
       .then((response) => {
-        const responseString = `\`\`\`${JSON.stringify(response, null, 2)}`;
+        const responseString = `Success: [${response.result.number}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${response.result.sys_id})`;
         bot.reply(message, responseString);
       })
       .catch((error) => {
