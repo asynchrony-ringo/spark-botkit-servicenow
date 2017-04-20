@@ -16,12 +16,14 @@ describe('service now client', () => {
     process.env.serviceNowBaseUrl = serviceNowBaseUrl;
 
     sinon.stub(request, 'get');
+    sinon.stub(request, 'post');
 
     testObject = serviceNowClient;
   });
 
   afterEach(() => {
     request.get.restore();
+    request.post.restore();
     delete process.env.serviceNowUsername;
     delete process.env.serviceNowPassword;
     delete process.env.serviceNowBaseUrl;
@@ -81,6 +83,74 @@ describe('service now client', () => {
             .then(() => 'Failed. Expected rejection')
             .catch(error => error)
             .then(error => expect(error).to.equal(`Error querying table: 'table'. Unexpected status code: ${status}`));
+      });
+    });
+  });
+
+  describe('insertTableRecord', () => {
+    const record = {
+      short_description: 'Super cool record.',
+      category: 'inquiry',
+    };
+
+    it('should make post request once', () => {
+      testObject.insertTableRecord('table', record);
+      expect(request.post.calledOnce);
+    });
+
+    it('should make post request to the correct url', () => {
+      testObject.insertTableRecord('sometable', record);
+      expect(request.post.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v1/table/sometable`);
+    });
+
+    it('should include auth in request', () => {
+      testObject.insertTableRecord('table', record);
+      expect(request.post.args[0][0]).to.have.property('auth').that.deep.equal({
+        user: serviceNowUsername,
+        pass: serviceNowPassword,
+      });
+    });
+
+    it('should include json in request', () => {
+      testObject.insertTableRecord('table', record);
+      expect(request.post.args[0][0]).to.have.property('json', true);
+    });
+
+    it('should have body in request', () => {
+      testObject.insertTableRecord('table', record);
+      expect(request.post.args[0][0]).to.have.property('body').that.deep.equal(record);
+    });
+
+    it('should resolve with the record result on success', () => {
+      const result = testObject.insertTableRecord('table', record);
+      const requestCallback = request.post.args[0][1];
+      requestCallback(null, { statusCode: 201 }, { goodOle: 'json' });
+
+      return result
+        .then(response => expect(response).to.deep.equal({ goodOle: 'json' }));
+    });
+
+    it('should reject if error', () => {
+      const result = testObject.insertTableRecord('table', record);
+      const requestCallback = request.post.args[0][1];
+      requestCallback('error! error!', {}, {});
+
+      return result
+        .then(() => 'Failed. Expected rejection')
+        .catch(error => error)
+        .then(error => expect(error).to.equal('Error inserting into table: \'table\'. error! error!'));
+    });
+
+    [200, 300, 400, 500].forEach((status) => {
+      it(`should reject if non response status code = ${status}`, () => {
+        const result = testObject.insertTableRecord('table', record);
+        const requestCallback = request.post.args[0][1];
+        requestCallback(null, { statusCode: status }, {});
+
+        return result
+          .then(() => 'Failed. Expected rejection')
+          .catch(error => error)
+          .then(error => expect(error).to.equal(`Error inserting into table: 'table'. Unexpected status code: ${status}`));
       });
     });
   });
