@@ -24,11 +24,5 @@ To actually get the bot up and running, a public address is required. We used ng
  - ` docker build -t asynchronyringo/service-now-spark-bot . `
  - run the start-dev script `./start.dev.sh`
 
-```
-{
-    "text": "foo"
-}
-```
-
 
 You should now be able to communicate with the bot from within Cisco Spark
