@@ -1,4 +1,8 @@
 const nightmareHelpers = {
+  goHome: nightmare => nightmare
+    .goto('https://web.ciscospark.com')
+    .wait('.user-welcome-text')
+    .wait(() => document.querySelectorAll('.user-welcome-text').length === 0),
   login: nightmare => nightmare
     .goto('https://web.ciscospark.com/signin')
     .insert('input[type=text]', process.env.integrationUser)
@@ -25,13 +29,23 @@ const nightmareHelpers = {
     .wait(1000),
   sendMessage: message => nightmare => nightmare
     .type('#message-composer', message)
-    .type('#message-composer', '\u000d'),
-  sendDirectMessage: message => nightmare => nightmare
+    .type('#message-composer', '\u000d')
+    .use(nightmareHelpers.waitForMyResponse),
+  sendMentionMessage: message => nightmare => nightmare
     .type('#message-composer', '@SN')
     .type('#message-composer', '\u000d')
     .type('#message-composer', ` ${message}`)
-    .type('#message-composer', '\u000d'),
+    .type('#message-composer', '\u000d')
+    .use(nightmareHelpers.waitForMyResponse),
+  waitForMyResponse: nightmare => nightmare
+    .use(nightmareHelpers.waitForNextResponse('You')),
   evaluateNextSNBotResponse: nightmare => nightmare
+    .use(nightmareHelpers.waitForNextSNBotResponse)
+    .evaluate(() => document.querySelector('.activity-item:last-of-type:not(.system-message)').innerText),
+  evaluateNextSNBotResponseLinkHref: nightmare => nightmare
+    .use(nightmareHelpers.waitForNextSNBotResponse)
+    .evaluate(() => document.querySelector('.activity-item:last-of-type:not(.system-message) a').href),
+  waitForNextSNBotResponse: nightmare => nightmare
     .wait(1000)
     .wait('.convo-filter-menu-list-header')
     .click('.convo-filter-menu-list-header')
@@ -41,11 +55,12 @@ const nightmareHelpers = {
     .wait(botName => document.querySelector('.roomListItem:nth-of-type(1) .roomListItem-title-text').innerText.split(', ').indexOf(botName) !== -1, process.env.bot_name)
     .click('.roomListItem:nth-of-type(1)')
     .wait(1000)
-    .wait((botName) => {
+    .use(nightmareHelpers.waitForNextResponse(process.env.bot_name)),
+  waitForNextResponse: displayName => nightmare => nightmare
+    .wait((displayNameBrowserParam) => {
       const lastChild = document.querySelector('.activity-item:last-of-type .display-name');
-      return lastChild && lastChild.innerText && lastChild.innerText === botName;
-    }, process.env.bot_name)
-    .evaluate(() => document.querySelector('.activity-item:last-of-type:not(.system-message)').innerText)
+      return lastChild && lastChild.innerText && lastChild.innerText === displayNameBrowserParam;
+    }, displayName),
 };
 
 module.exports = nightmareHelpers;
