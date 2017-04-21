@@ -1,3 +1,5 @@
+const updateAlertDifferenceGatherer = require('./update_alert_difference_gatherer.js');
+
 const validIncident = incident => incident.type === 'Incident';
 
 const updateAlertController = {
@@ -11,7 +13,8 @@ const updateAlertController = {
           return;
         }
 
-        conversation.say(`An incident you reported has been updated! [${newObj.number}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${newObj.id})`);
+        const diff = updateAlertDifferenceGatherer.formatMessage(newObj, oldObj);
+        conversation.say(`The incident [${newObj.number}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${newObj.id}) has been updated!\n${diff}`);
       });
     }
   },
