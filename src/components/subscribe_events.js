@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var request = require('request');
 var debug = require('debug')('botkit:subscribe_events');
 
