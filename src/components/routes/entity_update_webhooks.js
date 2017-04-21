@@ -19,21 +19,7 @@ const entityUpdateWebhooks = (webserver, controller) => {
       return;
     }
 
-    const incident = req.body.new;
-
-    if (incident.callerEmail) {
-      const bot = controller.spawn({});
-
-      bot.startPrivateConversation({ user: incident.callerEmail }, (error, conversation) => {
-        if (error) {
-          console.log('Error: ', error);
-          return;
-        }
-
-        conversation.say(`An incident you reported has been updated! [${incident.number}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${incident.id})`);
-      });
-    }
-
+    updateAlertController.messageCaller(req.body.new, req.body.old, controller);
     sendSuccessResponse(res);
   });
 };
