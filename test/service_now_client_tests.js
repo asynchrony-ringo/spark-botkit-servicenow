@@ -75,7 +75,7 @@ describe('service now client', () => {
           .then(error => expect(error).to.equal('Error querying table: \'table\'. error! error!'));
     });
 
-    [201, 300, 400, 500].forEach((status) => {
+    [400, 500].forEach((status) => {
       it(`should reject if non response status code = ${status}`, () => {
         const result = testObject.getTableRecord('table', 'id');
         const requestCallback = request.get.args[0][1];
@@ -143,8 +143,8 @@ describe('service now client', () => {
         .then(error => expect(error).to.equal('Error inserting into table: \'table\'. error! error!'));
     });
 
-    [200, 300, 400, 500].forEach((status) => {
-      it(`should reject if non response status code = ${status}`, () => {
+    [400, 500].forEach((status) => {
+      it(`should reject if error status code = ${status}`, () => {
         const result = testObject.insertTableRecord('table', record);
         const requestCallback = request.post.args[0][1];
         requestCallback(null, { statusCode: status }, {});

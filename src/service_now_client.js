@@ -12,7 +12,7 @@ const serviceNowClient = {
     }, (error, response, json) => {
       if (error) {
         reject(error);
-      } else if (response.statusCode !== 200) {
+      } else if (response.statusCode >= 400) {
         reject(`Unexpected status code: ${response.statusCode}`);
       }
       resolve(json);
@@ -32,7 +32,7 @@ const serviceNowClient = {
     }, (error, response, json) => {
       if (error) {
         reject(error);
-      } else if (response.statusCode !== 201) {
+      } else if (response.statusCode >= 400) {
         reject(`Unexpected status code: ${response.statusCode}`);
       }
       resolve(json);
