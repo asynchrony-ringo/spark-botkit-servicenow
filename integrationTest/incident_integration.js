@@ -41,7 +41,7 @@ describe('incident', () => {
         }));
   });
 
-  it.only('should send a direct message to caller on incident update', () => {
+  it('should send a direct message to caller on incident update', () => {
     const nightmare = Nightmare({ show: true, waitTimeout: 60000 });
     return nightmare
       .use(createIncident)
