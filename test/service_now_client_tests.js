@@ -39,7 +39,7 @@ describe('service now client', () => {
 
     it('should make get request to the correct url', () => {
       testObject.getTableRecord('sometable', 'some sys id');
-      expect(request.get.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v1/table/sometable/some sys id`);
+      expect(request.get.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v2/table/sometable/some sys id`);
     });
 
     it('should include auth in request', () => {
@@ -102,7 +102,7 @@ describe('service now client', () => {
 
     it('should make post request to the correct url', () => {
       testObject.insertTableRecord('sometable', record);
-      expect(request.post.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v1/table/sometable`);
+      expect(request.post.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v2/table/sometable`);
     });
 
     it('should include auth in request', () => {
@@ -170,7 +170,7 @@ describe('service now client', () => {
 
     it('should make patch request to the correct url', () => {
       testObject.updateTableRecord('sometable', sysId, changes);
-      expect(request.patch.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v1/table/sometable/${sysId}`);
+      expect(request.patch.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v2/table/sometable/${sysId}`);
     });
 
     it('should include auth in request', () => {

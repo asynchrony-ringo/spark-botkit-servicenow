@@ -3,7 +3,7 @@ const request = require('request');
 const serviceNowClient = {
   getTableRecord: (table, sysId) => new Promise((resolve, reject) => {
     request.get({
-      url: `${process.env.serviceNowBaseUrl}/api/now/v1/table/${table}/${sysId}`,
+      url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}/${sysId}`,
       auth: {
         user: process.env.serviceNowUsername,
         pass: process.env.serviceNowPassword,
@@ -22,7 +22,7 @@ const serviceNowClient = {
 
   insertTableRecord: (table, record) => new Promise((resolve, reject) => {
     request.post({
-      url: `${process.env.serviceNowBaseUrl}/api/now/v1/table/${table}`,
+      url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}`,
       auth: {
         user: process.env.serviceNowUsername,
         pass: process.env.serviceNowPassword,
@@ -42,7 +42,7 @@ const serviceNowClient = {
 
   updateTableRecord: (table, sysId, payload) => new Promise((resolve, reject) => {
     request.patch({
-      url: `${process.env.serviceNowBaseUrl}/api/now/v1/table/${table}/${sysId}`,
+      url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}/${sysId}`,
       auth: {
         user: process.env.serviceNowUsername,
         pass: process.env.serviceNowPassword,
