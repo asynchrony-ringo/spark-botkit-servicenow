@@ -1,9 +1,29 @@
 const request = require('request');
+const querystring = require('querystring');
 
 const serviceNowClient = {
   getTableRecord: (table, sysId) => new Promise((resolve, reject) => {
     request.get({
       url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}/${sysId}`,
+      auth: {
+        user: process.env.serviceNowUsername,
+        pass: process.env.serviceNowPassword,
+      },
+      json: true,
+    }, (error, response, json) => {
+      if (error) {
+        reject(error);
+      } else if (response.statusCode >= 400) {
+        reject(`Unexpected status code: ${response.statusCode}`);
+      }
+      resolve(json);
+    });
+  })
+  .catch(error => Promise.reject(`Error querying table: '${table}'. ${error}`)),
+
+  getTableRecords: (table, query) => new Promise((resolve, reject) => {
+    request.get({
+      url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}?${querystring.stringify(query)}`,
       auth: {
         user: process.env.serviceNowUsername,
         pass: process.env.serviceNowPassword,

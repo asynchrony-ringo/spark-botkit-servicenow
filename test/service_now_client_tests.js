@@ -89,6 +89,75 @@ describe('service now client', () => {
     });
   });
 
+  describe('getTableRecords', () => {
+    const query = {
+      bow: 'tie',
+      top: 'hat',
+    };
+
+    it('should make get request once', () => {
+      testObject.getTableRecords('table', query);
+      expect(request.get.calledOnce);
+    });
+
+    [
+      { query, string: '?bow=tie&top=hat' },
+      { query: { bow: 'tie' }, string: '?bow=tie' },
+      { query: {}, string: '?' },
+    ].forEach((queryObj) => {
+      it(`should make get request to the correct url with the query "${queryObj.string}"`, () => {
+        testObject.getTableRecords('sometable', queryObj.query);
+        expect(request.get.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v2/table/sometable${queryObj.string}`);
+      });
+    });
+
+    it('should include auth in request', () => {
+      testObject.getTableRecords('table', query);
+      expect(request.get.args[0][0]).to.have.property('auth').that.deep.equal({
+        user: serviceNowUsername,
+        pass: serviceNowPassword,
+      });
+    });
+
+    it('should include json in request', () => {
+      testObject.getTableRecords('table', query);
+      expect(request.get.args[0][0]).to.have.property('json', true);
+    });
+
+    it('should resolve with the record results on success', () => {
+      const result = testObject.getTableRecords('table', query);
+      const requestCallback = request.get.args[0][1];
+      const records = { result: [{ goodOle: 'json' }, { badOle: 'xml' }] };
+      requestCallback(null, { statusCode: 200 }, records);
+
+      return result.then(response => expect(response).to.deep.equal(records));
+    });
+
+    it('should reject if error', () => {
+      const result = testObject.getTableRecords('table', query);
+      const requestCallback = request.get.args[0][1];
+      requestCallback('error! error!', {}, {});
+
+      return result
+          .then(() => 'Failed. Expected rejection')
+          .catch(error => error)
+          .then(error => expect(error).to.equal('Error querying table: \'table\'. error! error!'));
+    });
+
+    [400, 500].forEach((status) => {
+      it(`should reject if non response status code = ${status}`, () => {
+        const result = testObject.getTableRecords('table', query);
+        const requestCallback = request.get.args[0][1];
+        requestCallback(null, { statusCode: status }, {});
+
+        return result
+            .then(() => 'Failed. Expected rejection')
+            .catch(error => error)
+            .then(error => expect(error).to.equal(`Error querying table: 'table'. Unexpected status code: ${status}`));
+      });
+    });
+  });
+
   describe('insertTableRecord', () => {
     const record = {
       short_description: 'Super cool record.',
