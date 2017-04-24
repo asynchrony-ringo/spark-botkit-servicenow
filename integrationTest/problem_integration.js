@@ -5,23 +5,23 @@ const nightmareHelpers = require('./nightmare_helpers.js');
 
 env('.env');
 
-describe('change request', () => {
-  const changeRequestId = '9d457fbac6112287007379b57c6b2e60';
+describe('problem', () => {
+  const problemId = '051e8f6cc0a8016600cdf7fd19e10414';
 
-  it('should respond with change request status in a direct message and group message', () => {
+  it('should respond with problem status in a direct message and group message', () => {
     const nightmare = Nightmare({ show: true, waitTimeout: 60000 });
     return nightmare
       .use(nightmareHelpers.login)
       .use(nightmareHelpers.startPrivateConversation)
-      .use(nightmareHelpers.sendMessage(`cr status ${changeRequestId}`))
+      .use(nightmareHelpers.sendMessage(`problem status ${problemId}`))
       .use(nightmareHelpers.evaluateNextSNBotResponse)
       .then((dmCRStatus) => {
-        const expectedCRStatus = new RegExp(`Information for change request: [${changeRequestId}]`);
+        const expectedCRStatus = new RegExp(`Information for problem: [${problemId}]`);
         expect(dmCRStatus).to.match(expectedCRStatus);
         return nightmare
           .use(nightmareHelpers.goHome)
           .use(nightmareHelpers.startGroupConversation)
-          .use(nightmareHelpers.sendMentionMessage(`cr status ${changeRequestId}`))
+          .use(nightmareHelpers.sendMentionMessage(`problem status ${problemId}`))
           .use(nightmareHelpers.evaluateNextSNBotResponse)
           .end()
           .then((mentionCRStatus) => {
