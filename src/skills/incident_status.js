@@ -1,7 +1,7 @@
 const serviceNowClient = require('../service_now_client.js');
 
 const incidentStatus = (controller) => {
-  controller.hears(['status (.*)'], 'direct_message,direct_mention', (bot, message) => {
+  controller.hears(['incident status (.*)'], 'direct_message,direct_mention', (bot, message) => {
     const serviceNowIncidentId = message.match[1];
     return serviceNowClient.getTableRecord('incident', serviceNowIncidentId)
       .then((tableRecord) => {

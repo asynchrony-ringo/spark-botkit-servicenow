@@ -24,7 +24,7 @@ describe('incident', () => {
       .use(createIncident)
       .then(extractSysIdFromHref)
       .then(incidentId => nightmare
-        .use(nightmareHelpers.sendMessage(`status ${incidentId}`))
+        .use(nightmareHelpers.sendMessage(`incident status ${incidentId}`))
         .use(nightmareHelpers.evaluateNextSNBotResponse)
         .then((dmIncidentStatus) => {
           const expectedIncidentStatus = new RegExp(`Information for incident: [${incidentId}]`);
@@ -32,7 +32,7 @@ describe('incident', () => {
           return nightmare
             .use(nightmareHelpers.goHome)
             .use(nightmareHelpers.startGroupConversation)
-            .use(nightmareHelpers.sendMentionMessage(`status ${incidentId}`))
+            .use(nightmareHelpers.sendMentionMessage(`incident status ${incidentId}`))
             .use(nightmareHelpers.evaluateNextSNBotResponse)
             .end()
             .then((mentionIncidentStatus) => {

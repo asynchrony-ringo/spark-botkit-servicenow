@@ -12,7 +12,7 @@ describe('incident status', () => {
 
   it('should register hear listener on controller', () => {
     expect(controller.hears.calledOnce).to.be.true;
-    expect(controller.hears.args[0][0]).to.deep.equal(['status (.*)']);
+    expect(controller.hears.args[0][0]).to.deep.equal(['incident status (.*)']);
     expect(controller.hears.args[0][1]).to.equal('direct_message,direct_mention');
     expect(controller.hears.args[0][2]).to.be.a('function');
   });
@@ -35,7 +35,7 @@ describe('incident status', () => {
     });
 
     it('should look up incident record based on user supplied id', () => {
-      const message = { match: 'status someSysId'.match(/status (.*)/) };
+      const message = { match: 'incident status someSysId'.match(/status (.*)/) };
 
       listenerCallback(bot, message);
 
@@ -47,7 +47,7 @@ describe('incident status', () => {
     it('should reply with incident when record is found', () => {
       process.env.serviceNowBaseUrl = 'yo.service-now.com';
       const tableRecordPromise = Promise.resolve({ short_description: 'description for record 1234' });
-      const message = { match: 'status 1234'.match(/status (.*)/) };
+      const message = { match: 'incident status 1234'.match(/incident status (.*)/) };
 
       serviceNowClient.getTableRecord.withArgs('incident', '1234').returns(tableRecordPromise);
 
@@ -61,7 +61,7 @@ describe('incident status', () => {
 
     it('should reply with not found if incident cannot be found', () => {
       const tableRecordPromise = Promise.reject('Bad things');
-      const message = { match: 'status asdasd'.match(/status (.*)/) };
+      const message = { match: 'incident status asdasd'.match(/status (.*)/) };
 
       serviceNowClient.getTableRecord.withArgs('incident', 'asdasd').returns(tableRecordPromise);
 
