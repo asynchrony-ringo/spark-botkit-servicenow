@@ -15,7 +15,8 @@ const createIncident = nightmare => nightmare
   .use(nightmareHelpers.sendMessage(`incident create <incident integration ${uuid()}> <software>`))
   .use(nightmareHelpers.evaluateNextSNBotResponseLinkHref);
 
-const editIncident = id => serviceNowClient.updateTableRecord('incident', id, { short_description: 'foo' });
+const editIncident = (id, changes = { short_description: 'foo' }) =>
+  serviceNowClient.updateTableRecord('incident', id, changes);
 
 describe('incident', () => {
   it('should respond with incident status after direct message creation in a direct message and group message', () => {
@@ -53,5 +54,32 @@ describe('incident', () => {
           const expectedIncidentUpdateMessage = new RegExp(`The incident ${json.result.number} has been updated!`);
           expect(response).to.match(expectedIncidentUpdateMessage);
         }));
+  });
+
+  it('should respond to "incident assigned" with user\'s assigned incidents in direct and group messages', () => {
+    const nightmare = Nightmare({ show: true, waitTimeout: 60000 });
+    return nightmare
+      .use(createIncident)
+      .then(extractSysIdFromHref)
+      .then(incidentId => editIncident(incidentId, { assigned_to: process.env.integrationUser }))
+      .then((json) => {
+        const incidentText = `${json.result.number}: ${json.result.short_description}`;
+        const expectedAssignedMessage = new RegExp(`Found \\d+ incidents:[\\s\\S]*${incidentText}`);
+        return nightmare
+          .use(nightmareHelpers.sendMessage('incident assigned'))
+          .use(nightmareHelpers.evaluateNextSNBotResponse)
+          .then((dmAssignedMessage) => {
+            expect(dmAssignedMessage).to.match(expectedAssignedMessage);
+            return nightmare
+              .use(nightmareHelpers.goHome)
+              .use(nightmareHelpers.startGroupConversation)
+              .use(nightmareHelpers.sendMentionMessage('incident assigned'))
+              .use(nightmareHelpers.evaluateNextSNBotResponse)
+              .end()
+              .then((mentionAssignedMessage) => {
+                expect(mentionAssignedMessage).to.match(expectedAssignedMessage);
+              });
+          });
+      });
   });
 });
