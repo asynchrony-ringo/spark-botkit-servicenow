@@ -3,4 +3,5 @@ node_modules
 .env
 .env.bak
 .nvmrc
+npm-debug.log
 test/jenkins-report.xml
