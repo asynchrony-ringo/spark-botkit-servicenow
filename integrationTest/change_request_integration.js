@@ -15,17 +15,17 @@ describe('change request', () => {
       .use(nightmareHelpers.startPrivateConversation)
       .use(nightmareHelpers.sendMessage(`cr status ${changeRequestId}`))
       .use(nightmareHelpers.evaluateNextSNBotResponse)
-      .then((dmCRStatus) => {
-        const expectedCRStatus = new RegExp(`Information for change request: [${changeRequestId}]`);
-        expect(dmCRStatus).to.match(expectedCRStatus);
+      .then((directMessageStatusResponse) => {
+        const statusResponseMatch = new RegExp(`Information for change request: [${changeRequestId}]`);
+        expect(directMessageStatusResponse).to.match(statusResponseMatch);
         return nightmare
           .use(nightmareHelpers.goHome)
           .use(nightmareHelpers.startGroupConversation)
           .use(nightmareHelpers.sendMentionMessage(`cr status ${changeRequestId}`))
           .use(nightmareHelpers.evaluateNextSNBotResponse)
           .end()
-          .then((mentionCRStatus) => {
-            expect(mentionCRStatus).to.match(expectedCRStatus);
+          .then((directMentionStatusResponse) => {
+            expect(directMentionStatusResponse).to.match(statusResponseMatch);
           });
       });
   });

@@ -27,17 +27,17 @@ describe('incident', () => {
       .then(incidentId => nightmare
         .use(nightmareHelpers.sendMessage(`incident status ${incidentId}`))
         .use(nightmareHelpers.evaluateNextSNBotResponse)
-        .then((dmIncidentStatus) => {
-          const expectedIncidentStatus = new RegExp(`Information for incident: [${incidentId}]`);
-          expect(dmIncidentStatus).to.match(expectedIncidentStatus);
+        .then((directMessageStatusResponse) => {
+          const statusResponseMatch = new RegExp(`Information for incident: [${incidentId}]`);
+          expect(directMessageStatusResponse).to.match(statusResponseMatch);
           return nightmare
             .use(nightmareHelpers.goHome)
             .use(nightmareHelpers.startGroupConversation)
             .use(nightmareHelpers.sendMentionMessage(`incident status ${incidentId}`))
             .use(nightmareHelpers.evaluateNextSNBotResponse)
             .end()
-            .then((mentionIncidentStatus) => {
-              expect(mentionIncidentStatus).to.match(expectedIncidentStatus);
+            .then((directMentionStatusResponse) => {
+              expect(directMentionStatusResponse).to.match(statusResponseMatch);
             });
         }));
   });
