@@ -18,7 +18,6 @@ describe('incident assigned', () => {
   });
 
   describe('listener callback', () => {
-    process.env.serviceNowBaseUrl = 'yo.service-now.com';
     let bot;
     let listenerCallback;
     const message = { user: 'somebody@somewhere.com' };
@@ -30,10 +29,12 @@ describe('incident assigned', () => {
         then: () => Promise.resolve(),
         catch: () => Promise.reject(),
       });
+      process.env.serviceNowBaseUrl = 'service-now-baseurl.wow';
     });
 
     afterEach(() => {
       serviceNowClient.getTableRecords.restore();
+      delete process.env.serviceNowBaseUrl;
     });
 
     it('should look up incident records assigned to the current user', () => {
@@ -51,7 +52,7 @@ describe('incident assigned', () => {
       ] };
       let expectedResponse = 'Found 2 incidents:\n\n';
       records.result.forEach((record) => {
-        expectedResponse += ` * [${record.number}](yo.service-now.com/incident.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
+        expectedResponse += ` * [${record.number}](service-now-baseurl.wow/incident.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
       });
 
       const tableRecordPromise = Promise.resolve(records);

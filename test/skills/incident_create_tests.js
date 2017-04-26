@@ -37,10 +37,12 @@ describe('incident create', () => {
         then: () => Promise.resolve(),
         catch: () => Promise.reject(),
       });
+      process.env.serviceNowBaseUrl = 'yo.service-now.com';
     });
 
     afterEach(() => {
       serviceNowClient.insertTableRecord.restore();
+      delete process.env.serviceNowBaseUrl;
     });
 
     it('should insert incident record based on supplied params', () => {
@@ -52,7 +54,6 @@ describe('incident create', () => {
     });
 
     it('should reply with incident when record is created', () => {
-      process.env.serviceNowBaseUrl = 'yo.service-now.com';
       const insertResponse = { result: { sys_id: '1234', number: 'INC1234' } };
       const tableRecordPromise = Promise.resolve(insertResponse);
 

@@ -12,10 +12,12 @@ describe('status controller', () => {
       then: () => Promise.resolve(),
       catch: () => Promise.reject(),
     });
+    process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
   });
 
   afterEach(() => {
     serviceNowClient.getTableRecord.restore();
+    delete process.env.serviceNowBaseUrl;
   });
 
   it('should look up table record based on id', () => {
@@ -29,7 +31,6 @@ describe('status controller', () => {
   });
 
   it('should reply with change request when record is found', () => {
-    process.env.serviceNowBaseUrl = 'yo.service-now.com';
     const tableRecordPromise = Promise.resolve({ short_description: 'description for awesome record' });
     const message = { some: 'message' };
 
@@ -39,7 +40,7 @@ describe('status controller', () => {
       .then(() => {
         expect(bot.reply.calledOnce).to.be.true;
         expect(bot.reply.args[0][0]).to.equal(message);
-        expect(bot.reply.args[0][1]).to.equal('Information for entity description: [entity_id](yo.service-now.com/table_name.do?sys_id=entity_id)\n```{\n  "short_description": "description for awesome record"\n}');
+        expect(bot.reply.args[0][1]).to.equal('Information for entity description: [entity_id](servicenow-instance.domain/table_name.do?sys_id=entity_id)\n```{\n  "short_description": "description for awesome record"\n}');
       });
   });
 
