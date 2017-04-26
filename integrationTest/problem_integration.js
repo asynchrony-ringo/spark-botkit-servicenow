@@ -15,9 +15,9 @@ describe('problem', () => {
       .use(nightmareHelpers.startPrivateConversation)
       .use(nightmareHelpers.sendMessage(`problem status ${problemId}`))
       .use(nightmareHelpers.evaluateNextSNBotResponse)
-      .then((direstMessageStatusResponse) => {
+      .then((directMessageStatusResponse) => {
         const expectedStatusMatch = new RegExp(`Information for problem: [${problemId}]`);
-        expect(direstMessageStatusResponse).to.match(expectedStatusMatch);
+        expect(directMessageStatusResponse).to.match(expectedStatusMatch);
         return nightmare
           .use(nightmareHelpers.goHome)
           .use(nightmareHelpers.startGroupConversation)
