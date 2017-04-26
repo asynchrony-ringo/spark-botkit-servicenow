@@ -64,20 +64,20 @@ describe('incident', () => {
       .then(incidentId => editIncident(incidentId, { assigned_to: process.env.integrationUser }))
       .then((json) => {
         const incidentText = `${json.result.number}: ${json.result.short_description}`;
-        const expectedAssignedMessage = new RegExp(`Found \\d+ incidents:[\\s\\S]*${incidentText}`);
+        const expectedAssignedStatusMatch = new RegExp(`Found \\d+ incidents:[\\s\\S]*${incidentText}`);
         return nightmare
           .use(nightmareHelpers.sendMessage('incident assigned'))
           .use(nightmareHelpers.evaluateNextSNBotResponse)
-          .then((dmAssignedMessage) => {
-            expect(dmAssignedMessage).to.match(expectedAssignedMessage);
+          .then((directMessageAssignedStatusResponse) => {
+            expect(directMessageAssignedStatusResponse).to.match(expectedAssignedStatusMatch);
             return nightmare
               .use(nightmareHelpers.goHome)
               .use(nightmareHelpers.startGroupConversation)
               .use(nightmareHelpers.sendMentionMessage('incident assigned'))
               .use(nightmareHelpers.evaluateNextSNBotResponse)
               .end()
-              .then((mentionAssignedMessage) => {
-                expect(mentionAssignedMessage).to.match(expectedAssignedMessage);
+              .then((directMentionAssignedStatusResponse) => {
+                expect(directMentionAssignedStatusResponse).to.match(expectedAssignedStatusMatch);
               });
           });
       });
