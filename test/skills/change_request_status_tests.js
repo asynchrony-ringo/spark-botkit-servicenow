@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 const expect = require('chai').expect;
 const changeRequestStatus = require('../../src/skills/change_request_status.js');
-const serviceNowClient = require('../../src/service_now_client.js');
+const statusController = require('../../src/skillsControllers/status_controller.js');
 
 describe('change request status', () => {
   const controller = { hears: sinon.spy() };
@@ -24,53 +24,20 @@ describe('change request status', () => {
       bot = { reply: sinon.spy() };
       listenerCallback = controller.hears.args[0][2];
 
-      sinon.stub(serviceNowClient, 'getTableRecord').returns({
-        then: () => Promise.resolve(),
-        catch: () => Promise.reject(),
-      });
+      sinon.stub(statusController, 'replyWithStatus');
     });
 
     afterEach(() => {
-      serviceNowClient.getTableRecord.restore();
+      statusController.replyWithStatus.restore();
     });
 
-    it('should look up change request record based on user supplied id', () => {
-      const message = { match: 'cr status someSysId'.match(/status (.*)/) };
+    it('reply with status with correct id', () => {
+      const message = { match: 'cr status someSysId'.match(/cr status (.*)/) };
 
       listenerCallback(bot, message);
 
-      expect(serviceNowClient.getTableRecord.calledOnce).to.be.true;
-      expect(serviceNowClient.getTableRecord.args[0][0]).to.equal('change_request');
-      expect(serviceNowClient.getTableRecord.args[0][1]).to.equal('someSysId');
-    });
-
-    it('should reply with change request when record is found', () => {
-      process.env.serviceNowBaseUrl = 'yo.service-now.com';
-      const tableRecordPromise = Promise.resolve({ short_description: 'description for record 1234' });
-      const message = { match: 'cr status 1234'.match(/cr status (.*)/) };
-
-      serviceNowClient.getTableRecord.withArgs('change_request', '1234').returns(tableRecordPromise);
-
-      return listenerCallback(bot, message)
-        .then(() => {
-          expect(bot.reply.calledOnce).to.be.true;
-          expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Information for change request: [1234](yo.service-now.com/change_request.do?sys_id=1234)\n```{\n  "short_description": "description for record 1234"\n}');
-        });
-    });
-
-    it('should reply with not found if change request cannot be found', () => {
-      const tableRecordPromise = Promise.reject('Bad things');
-      const message = { match: 'cr status asdasd'.match(/cr status (.*)/) };
-
-      serviceNowClient.getTableRecord.withArgs('change_request', 'asdasd').returns(tableRecordPromise);
-
-      return listenerCallback(bot, message)
-        .then(() => {
-          expect(bot.reply.calledOnce).to.be.true;
-          expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve your change request: asdasd. Bad things');
-        });
+      expect(statusController.replyWithStatus.calledOnce).to.be.true;
+      expect(statusController.replyWithStatus.args[0]).to.deep.equal(['change_request', 'someSysId', 'change request', bot, message]);
     });
   });
 });
