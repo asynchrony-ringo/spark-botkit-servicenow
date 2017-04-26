@@ -1,14 +1,11 @@
 const expect = require('chai').expect;
 const Nightmare = require('nightmare');
-const env = require('node-env-file');
 const nightmareHelpers = require('./nightmare_helpers.js');
-
-env('.env');
 
 describe('change request', () => {
   const changeRequestId = '9d457fbac6112287007379b57c6b2e60';
 
-  it('should respond with change request status in a direct message and group message', () => {
+  it.only('should respond with change request status in a direct message and group message', () => {
     const nightmare = Nightmare({ show: true, waitTimeout: 60000 });
     return nightmare
       .use(nightmareHelpers.login)

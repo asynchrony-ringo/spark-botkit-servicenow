@@ -52,7 +52,10 @@ const nightmareHelpers = {
     .wait('.convoFilters-FILTER_UNREAD')
     .click('.convoFilters-FILTER_UNREAD')
     .wait(500)
-    .wait(botName => document.querySelector('.roomListItem:nth-of-type(1) .roomListItem-title-text').innerText.split(', ').indexOf(botName) !== -1, process.env.bot_name)
+    .wait((botName) => {
+      const newestUnreadItem = document.querySelector('.roomListItem:nth-of-type(1) .roomListItem-title-text');
+      return newestUnreadItem && newestUnreadItem.innerText.split(', ').indexOf(botName) !== -1;
+    }, process.env.bot_name)
     .click('.roomListItem:nth-of-type(1)')
     .wait(1000)
     .use(nightmareHelpers.waitForNextResponse(process.env.bot_name)),

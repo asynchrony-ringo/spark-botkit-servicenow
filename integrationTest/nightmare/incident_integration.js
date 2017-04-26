@@ -3,7 +3,7 @@ const Nightmare = require('nightmare');
 const env = require('node-env-file');
 const nightmareHelpers = require('./nightmare_helpers.js');
 const uuid = require('uuid/v4');
-const serviceNowClient = require('../src/service_now_client.js');
+const serviceNowClient = require('../../src/service_now_client.js');
 
 env('.env');
 
