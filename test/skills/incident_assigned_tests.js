@@ -67,6 +67,32 @@ describe('incident assigned', () => {
         });
     });
 
+    it('should reply top 10 incidents when records are found are more than 10', () => {
+      const records = { result: [
+      ] };
+
+      for (let i = 0; i < 100; i += 1) {
+        records.result.push({ sys_id: i, number: `INC${i}`, short_description: `description for ${i}` });
+      }
+
+
+      let expectedResponse = 'Found 100 incidents. Here are the most recently updated 10:\n\n';
+      records.result.slice(0, 10).forEach((record) => {
+        expectedResponse += ` * [${record.number}](service-now-baseurl.wow/incident.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
+      });
+
+      const tableRecordPromise = Promise.resolve(records);
+
+      serviceNowClient.getTableRecords.returns(tableRecordPromise);
+
+      return listenerCallback(bot, message)
+        .then(() => {
+          expect(bot.reply.calledOnce).to.be.true;
+          expect(bot.reply.args[0][0]).to.equal(message);
+          expect(bot.reply.args[0][1]).to.equal(expectedResponse);
+        });
+    });
+
     it('should reply with message if no records are found', () => {
       const tableRecordPromise = Promise.resolve({ result: [] });
 
@@ -76,7 +102,7 @@ describe('incident assigned', () => {
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Found 0 incidents.');
+          expect(bot.reply.args[0][1]).to.equal('Found no incidents.');
         });
     });
 
