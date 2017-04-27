@@ -1,11 +1,10 @@
 const watchListHelper = {
   addUserToWatchList: (userId, watchList) => {
-    if (!watchList || watchList === '') {
-      return userId;
-    } else if (watchList.includes(userId)) {
-      return watchList;
+    const watchListArray = watchList ? watchList.split(',') : [];
+    if (watchListArray.indexOf(userId) === -1) {
+      watchListArray.push(userId);
     }
-    return `${watchList},${userId}`;
+    return watchListArray.join(',');
   },
 };
 

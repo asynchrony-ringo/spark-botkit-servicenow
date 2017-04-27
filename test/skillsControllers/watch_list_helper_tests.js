@@ -26,4 +26,9 @@ describe('watch list parser', () => {
     const watchList = watchListHelper.addUserToWatchList('1234', '1234');
     expect(watchList).to.equal('1234');
   });
+
+  it('should add user if user id is subset of another user id', () => {
+    const watchList = watchListHelper.addUserToWatchList('123', '1234');
+    expect(watchList).to.equal('1234,123');
+  });
 });
