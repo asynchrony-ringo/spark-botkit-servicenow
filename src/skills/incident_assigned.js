@@ -27,7 +27,7 @@ const createResponseMessage = (assignedIncidents) => {
 
 const incidentAssigned = (controller) => {
   controller.hears(['incident assigned'], 'direct_message,direct_mention', (bot, message) =>
-    serviceNowClient.getTableRecords('incident', { sysparm_query: `assigned_to.email=${message.user}` })
+    serviceNowClient.getTableRecords('incident', { sysparm_query: `assigned_to.email=${message.user}^ORDERBYDESCsys_updated_on` })
     .then((jsonResult) => {
       const tableRecords = jsonResult.result;
 

@@ -37,12 +37,12 @@ describe('incident assigned', () => {
       delete process.env.serviceNowBaseUrl;
     });
 
-    it('should look up incident records assigned to the current user', () => {
+    it('should look up incident records assigned to the current user ordered by most recent updated', () => {
       listenerCallback(bot, message);
 
       expect(serviceNowClient.getTableRecords.calledOnce).to.be.true;
       expect(serviceNowClient.getTableRecords.args[0][0]).to.equal('incident');
-      expect(serviceNowClient.getTableRecords.args[0][1]).to.deep.equal({ sysparm_query: `assigned_to.email=${message.user}` });
+      expect(serviceNowClient.getTableRecords.args[0][1]).to.deep.equal({ sysparm_query: `assigned_to.email=${message.user}^ORDERBYDESCsys_updated_on` });
     });
 
     it('should reply with incidents when records are found', () => {
