@@ -29,9 +29,12 @@ const incidentAssigned = (controller) => {
   controller.hears(['incident assigned'], 'direct_message,direct_mention', (bot, message) =>
     serviceNowClient.getTableRecords('incident', { sysparm_query: `assigned_to.email=${message.user}^ORDERBYDESCsys_updated_on` })
     .then((jsonResult) => {
-      const tableRecords = jsonResult.result;
-
-      bot.reply(message, createResponseMessage(tableRecords));
+      if (jsonResult.result) {
+        const tableRecords = jsonResult.result;
+        bot.reply(message, createResponseMessage(tableRecords));
+      } else {
+        bot.reply(message, 'Sorry, I was unable to retrieve your assigned incidents.');
+      }
     })
     .catch((error) => {
       const errorResponse = `Sorry, I was unable to retrieve your assigned incidents. ${error}`;

@@ -45,6 +45,19 @@ describe('incident assigned', () => {
       expect(serviceNowClient.getTableRecords.args[0][1]).to.deep.equal({ sysparm_query: `assigned_to.email=${message.user}^ORDERBYDESCsys_updated_on` });
     });
 
+    it('should reply with error message when malformed incidents response', () => {
+      const records = {};
+      const tableRecordPromise = Promise.resolve(records);
+      serviceNowClient.getTableRecords.returns(tableRecordPromise);
+
+      return listenerCallback(bot, message)
+        .then(() => {
+          expect(bot.reply.calledOnce).to.be.true;
+          expect(bot.reply.args[0][0]).to.equal(message);
+          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve your assigned incidents.');
+        });
+    });
+
     it('should reply with incidents when records are found', () => {
       const records = { result: [
         { sys_id: 1234, number: 'INC1234', short_description: 'description for 1234' },
