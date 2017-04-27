@@ -1,7 +1,7 @@
 {
-  "name": "spark-botkit",
+  "name": "spark-botkit-servicenow",
   "version": "0.0.1",
-  "description": "A starter kit for building a custom Cisco Spark bot with Botkit Studio",
+  "description": "A starter bot for cisco spark and service now integration",
   "main": "src/bot.js",
   "scripts": {
     "start": "node src/bot.js",
