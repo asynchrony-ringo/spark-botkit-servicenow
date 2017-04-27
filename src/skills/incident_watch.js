@@ -34,7 +34,7 @@ const incidentWatch = (controller) => {
         bot.reply(message, 'Sorry, I was unable to find that incident.');
       })
       .catch((error) => {
-        bot.reply(message, `Sorry, I was unable to retrieve your incident: ${incidentId}. ${error}`);
+        bot.reply(message, `Sorry, I was unable to find your incident: ${incidentId}. ${error}`);
       });
   });
 };

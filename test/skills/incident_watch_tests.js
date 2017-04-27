@@ -73,7 +73,7 @@ describe('incident watch', () => {
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve your incident: someSysId. Bad things');
+          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to find your incident: someSysId. Bad things');
         });
     });
 
