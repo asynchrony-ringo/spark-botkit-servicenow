@@ -7,9 +7,7 @@
     "start": "node src/bot.js",
     "test": "mocha test --recursive",
     "test:watch": "npm run test -- --watch",
-    "test-jenkins": "JUNIT_REPORT_PATH=test/jenkins-report.xml mocha test --recursive --colors --reporter mocha-jenkins-reporter",
-    "uat": "mocha integrationTest --recursive --timeout 300000",
-    "uat:debug": "DEBUG=nightmare:actions* npm run uat"
+    "test-jenkins": "JUNIT_REPORT_PATH=test/jenkins-report.xml mocha test --recursive --colors --reporter mocha-jenkins-reporter"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -29,9 +27,7 @@
     "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.2.0",
     "mocha-jenkins-reporter": "^0.3.7",
-    "nightmare": "^2.10.0",
-    "sinon": "^2.1.0",
-    "uuid": "^3.0.1"
+    "sinon": "^2.1.0"
   },
   "license": "ISC"
 }
