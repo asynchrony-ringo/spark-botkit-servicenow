@@ -3,8 +3,12 @@
   "env" : {
     "node": true
   },
+  "ecmaFeatures" : {
+    "arrowFunctions": true
+  },
   "rules" : {
     "no-console": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "arrow-body-style": "off"
   }
 }
