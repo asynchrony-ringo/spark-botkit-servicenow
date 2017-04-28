@@ -1,4 +1,4 @@
-const serviceNowClient = require('../service_now_client.js');
+const createController = require('../skillsControllers/create_controller.js');
 
 const changeRequestCreate = (controller) => {
   controller.hears(['cr create <(.*)> <(.*)>'], 'direct_message, direct_mention', (bot, message) => {
@@ -7,14 +7,7 @@ const changeRequestCreate = (controller) => {
       category: message.match[2],
     };
 
-    return serviceNowClient.insertTableRecord('change_request', changeRequest)
-      .then((response) => {
-        const responseString = `Success: [${response.result.number}](${process.env.serviceNowBaseUrl}/change_request.do?sys_id=${response.result.sys_id})`;
-        bot.reply(message, responseString);
-      })
-      .catch((error) => {
-        bot.reply(message, `Sorry, I was unable to create your change request: ${error}`);
-      });
+    createController.replyWithStatus('change_request', changeRequest, 'change request', bot, message);
   });
 };
 
