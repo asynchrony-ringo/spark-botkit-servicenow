@@ -6,13 +6,6 @@ const serviceNowClient = require('../../src/service_now_client.js');
 describe('incident assign', () => {
   const controller = { hears: sinon.spy() };
 
-  const incident = {
-    result: {
-      id: 'incidentId',
-      assigned_to: '1234',
-    },
-  };
-
   beforeEach(() => {
     incidentAssign(controller);
     process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
