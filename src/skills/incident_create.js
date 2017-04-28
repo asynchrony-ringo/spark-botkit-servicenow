@@ -1,4 +1,4 @@
-const serviceNowClient = require('../service_now_client.js');
+const createController = require('../skillsControllers/create_controller.js');
 
 const incidentCreate = (controller) => {
   controller.hears(['incident create <(.*)> <(.*)>'], 'direct_message, direct_mention', (bot, message) => {
@@ -8,14 +8,7 @@ const incidentCreate = (controller) => {
       caller_id: message.user,
     };
 
-    return serviceNowClient.insertTableRecord('incident', incident)
-      .then((response) => {
-        const responseString = `Success: [${response.result.number}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${response.result.sys_id})`;
-        bot.reply(message, responseString);
-      })
-      .catch((error) => {
-        bot.reply(message, `Sorry, I was unable to create your incident: ${error}`);
-      });
+    createController.replyWithStatus('incident', incident, 'incident', bot, message);
   });
 };
 
