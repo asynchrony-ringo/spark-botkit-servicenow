@@ -13,7 +13,7 @@ describe('assign user controller', () => {
     let bot;
 
     const message = {
-      match: 'incident watch someSysId'.match(/incident watch (.*)/),
+      match: 'entity assign someSysId'.match(/entity assign (.*)/),
       user: 'someone@example.com',
     };
 
@@ -96,7 +96,7 @@ describe('assign user controller', () => {
           return assignUserController.assignUserToEntity(entity, bot, message)
             .then(() => {
               expect(bot.reply.calledOnce).to.be.true;
-              expect(bot.reply.args[0]).to.deep.equal([message, 'You have been assigned to the entity: [someSysId](servicenow-instance.domain/incident.do?sys_id=someSysId)']);
+              expect(bot.reply.args[0]).to.deep.equal([message, 'You have been assigned to the entity: [someSysId](servicenow-instance.domain/entity_table.do?sys_id=someSysId)']);
             });
         });
       });

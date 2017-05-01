@@ -13,7 +13,7 @@ const assignUserController = {
           return serviceNowClient
             .updateTableRecord(entity.table, entityId, { assigned_to: user.sys_id })
             .then(() => {
-              bot.reply(message, `You have been assigned to the ${entity.description}: [${entityId}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${entityId})`);
+              bot.reply(message, `You have been assigned to the ${entity.description}: [${entityId}](${process.env.serviceNowBaseUrl}/${entity.table}.do?sys_id=${entityId})`);
             })
             .catch((error) => {
               bot.reply(message, `Sorry, I was unable to assign you to the ${entity.description}: ${error}`);
