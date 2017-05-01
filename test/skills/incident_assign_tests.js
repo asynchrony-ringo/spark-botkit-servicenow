@@ -27,7 +27,7 @@ describe('incident assign', () => {
     let listenerCallback;
 
     const message = {
-      match: 'incident watch someSysId'.match(/incident watch (.*)/),
+      match: 'incident assign someSysId'.match(/incident assign (.*)/),
       user: 'someone@example.com',
     };
 
