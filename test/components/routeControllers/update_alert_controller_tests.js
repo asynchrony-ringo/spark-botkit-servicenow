@@ -12,12 +12,14 @@ describe('update alert controller', () => {
       callerEmail: 'some.email@some-domain.com',
       number: 'INC1234',
       shortDescription: 'An even better description.',
+      type: 'SOME TYPE',
     };
     const oldItem = {
       id: 1234,
       callerEmail: 'some.email@some-domain.com',
       number: 'INC1234',
       shortDescription: 'A really good description.',
+      type: 'SOME TYPE',
     };
 
     beforeEach(() => {
@@ -75,7 +77,7 @@ describe('update alert controller', () => {
           expect(conversation.say.notCalled).to.be.true;
         });
 
-        it('should tell the user an incident has been updated on success', () => {
+        it('should tell the user an entity has been updated on success', () => {
           const expectedDifferenceMessage = 'Here is a really good difference message';
           updateAlertDifferenceGatherer.formatMessage
             .withArgs(newItem, oldItem)
@@ -83,19 +85,21 @@ describe('update alert controller', () => {
 
           conversationCallback(null, conversation);
           expect(conversation.say.called).to.be.true;
-          expect(conversation.say.args[0][0]).to.equal(`The incident [INC1234](niceurl.some-domain.com/incident.do?sys_id=1234) has been updated!\n${expectedDifferenceMessage}`);
+          expect(conversation.say.args[0][0]).to.equal(`The SOME TYPE [INC1234](niceurl.some-domain.com/some_type.do?sys_id=1234) has been updated!\n${expectedDifferenceMessage}`);
         });
       });
     });
   });
 
   describe('isValid', () => {
-    it('should return a successful status and message when the request is of correct type', () => {
+    it('should return a successful status and message when new and old are the same type', () => {
       const newObject = {
-        type: 'Incident',
+        type: 'Type',
+        id: 1234,
       };
       const oldObject = {
-        type: 'Incident',
+        type: 'Type',
+        id: 1234,
       };
       const result = updateAlertController.isValid(newObject, oldObject);
       expect(result).to.be.true;
