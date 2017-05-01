@@ -36,12 +36,8 @@ describe('incident assigned', () => {
     it('should call assignedController\'s getAssignedEntities method', () => {
       listenerCallback(bot, message);
 
-      const entity = {
-        table: 'incident',
-        description: 'Incidents',
-      };
       expect(assignedController.getAssignedEntities.calledOnce).to.be.true;
-      expect(assignedController.getAssignedEntities.args[0]).to.deep.equal([entity, bot, message]);
+      expect(assignedController.getAssignedEntities.args[0]).to.deep.equal(['incident', 'Incidents', bot, message]);
     });
   });
 });

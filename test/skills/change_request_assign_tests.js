@@ -44,12 +44,8 @@ describe('change request assign', () => {
     it('should call assignUserController\'s assignUserToEntity method', () => {
       listenerCallback(bot, message);
 
-      const entity = {
-        table: 'change_request',
-        description: 'Change Request',
-      };
       expect(assignUserController.assignUserToEntity.calledOnce).to.be.true;
-      expect(assignUserController.assignUserToEntity.args[0]).to.deep.equal([entity, bot, message]);
+      expect(assignUserController.assignUserToEntity.args[0]).to.deep.equal(['change_request', 'Change Request', bot, message]);
     });
   });
 });

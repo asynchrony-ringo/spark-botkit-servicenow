@@ -10,10 +10,8 @@ describe('assigned controller', () => {
       user: 'someone@example.com',
     };
 
-    const entity = {
-      table: 'entity_table',
-      description: 'foo',
-    };
+    const tableName = 'entity_table';
+    const description = 'foo';
 
     beforeEach(() => {
       bot = { reply: sinon.spy() };
@@ -31,10 +29,10 @@ describe('assigned controller', () => {
     });
 
     it('calls getTableRecords for specified entity type', () => {
-      return assignedController.getAssignedEntities(entity, bot, message)
+      return assignedController.getAssignedEntities(tableName, description, bot, message)
         .then(() => {
           expect(serviceNowClient.getTableRecords.calledOnce).to.be.true;
-          expect(serviceNowClient.getTableRecords.args[0][0]).to.equal(entity.table);
+          expect(serviceNowClient.getTableRecords.args[0][0]).to.equal(tableName);
           expect(serviceNowClient.getTableRecords.args[0][1]).to.deep.equal({ sysparm_query: `assigned_to.email=${message.user}^ORDERBYDESCsys_updated_on` });
         });
     });
@@ -43,10 +41,10 @@ describe('assigned controller', () => {
       it('responds with the appropriate error message', () => {
         serviceNowClient.getTableRecords.returns(Promise.reject('Bad things'));
 
-        return assignedController.getAssignedEntities(entity, bot, message)
+        return assignedController.getAssignedEntities(tableName, description, bot, message)
           .then(() => {
             expect(bot.reply.calledOnce).to.be.true;
-            expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to retrieve your assigned ${entity.description}. Bad things`]);
+            expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to retrieve your assigned ${description}. Bad things`]);
           });
       });
     });
@@ -58,10 +56,10 @@ describe('assigned controller', () => {
 
           serviceNowClient.getTableRecords.returns(tableRecordPromise);
 
-          return assignedController.getAssignedEntities(entity, bot, message)
+          return assignedController.getAssignedEntities(tableName, description, bot, message)
             .then(() => {
               expect(bot.reply.calledOnce).to.be.true;
-              expect(bot.reply.args[0]).deep.to.equal([message, `Sorry, I was unable to retrieve your assigned ${entity.description}.`]);
+              expect(bot.reply.args[0]).deep.to.equal([message, `Sorry, I was unable to retrieve your assigned ${description}.`]);
             });
         });
       });
@@ -72,10 +70,10 @@ describe('assigned controller', () => {
         const tableRecordPromise = Promise.resolve({ result: [] });
         serviceNowClient.getTableRecords.returns(tableRecordPromise);
 
-        return assignedController.getAssignedEntities(entity, bot, message)
+        return assignedController.getAssignedEntities(tableName, description, bot, message)
           .then(() => {
             expect(bot.reply.calledOnce).to.be.true;
-            expect(bot.reply.args[0]).to.deep.equal([message, `Found no assigned ${entity.description}.`]);
+            expect(bot.reply.args[0]).to.deep.equal([message, `Found no assigned ${description}.`]);
           });
       });
 
@@ -99,16 +97,16 @@ describe('assigned controller', () => {
           ],
         ].forEach((testCase) => {
           const records = { result: testCase };
-          let expectedResponse = `Found 2 assigned ${entity.description}:\n\n`;
+          let expectedResponse = `Found 2 assigned ${description}:\n\n`;
 
           records.result.forEach((record) => {
-            expectedResponse += ` * [${record.number}](service-now-baseurl.wow/${entity.table}.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
+            expectedResponse += ` * [${record.number}](service-now-baseurl.wow/${tableName}.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
           });
 
           const tableRecordPromise = Promise.resolve(records);
           serviceNowClient.getTableRecords.returns(tableRecordPromise);
 
-          return assignedController.getAssignedEntities(entity, bot, message)
+          return assignedController.getAssignedEntities(tableName, description, bot, message)
             .then(() => {
               expect(bot.reply.calledOnce).to.be.true;
               expect(bot.reply.args[0][0]).to.equal(message);
@@ -125,16 +123,16 @@ describe('assigned controller', () => {
           records.result.push({ sys_id: i, number: `INC${i}`, short_description: `description for ${i}` });
         }
 
-        let expectedResponse = `Found 100 assigned ${entity.description}. Here are the most recently updated 10:\n\n`;
+        let expectedResponse = `Found 100 assigned ${description}. Here are the most recently updated 10:\n\n`;
         records.result.slice(0, 10).forEach((record) => {
-          expectedResponse += ` * [${record.number}](service-now-baseurl.wow/${entity.table}.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
+          expectedResponse += ` * [${record.number}](service-now-baseurl.wow/${tableName}.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
         });
 
         const tableRecordPromise = Promise.resolve(records);
 
         serviceNowClient.getTableRecords.returns(tableRecordPromise);
 
-        return assignedController.getAssignedEntities(entity, bot, message)
+        return assignedController.getAssignedEntities(tableName, description, bot, message)
           .then(() => {
             expect(bot.reply.calledOnce).to.be.true;
             expect(bot.reply.args[0]).to.deep.equal([message, expectedResponse]);

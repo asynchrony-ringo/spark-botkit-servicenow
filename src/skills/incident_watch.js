@@ -1,4 +1,3 @@
-/* eslint consistent-return:off */
 const serviceNowClient = require('../service_now_client.js');
 const watchListHelper = require('../skillsControllers/watch_list_helper.js');
 
@@ -29,9 +28,11 @@ const incidentWatch = (controller) => {
                 });
             }
             bot.reply(message, 'Sorry, I was unable to find your user account.');
+            return Promise.resolve();
           });
         }
         bot.reply(message, `Sorry, I was unable to find the Incident: ${incidentId}.`);
+        return Promise.resolve();
       })
       .catch((error) => {
         bot.reply(message, `Sorry, I was unable to find the Incident: ${incidentId}. ${error}`);
