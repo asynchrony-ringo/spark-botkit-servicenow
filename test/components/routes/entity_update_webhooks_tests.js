@@ -10,10 +10,17 @@ describe('incoming web hook for incident update', () => {
   beforeEach(() => {
     webserver = {
       post: sinon.stub(),
+      use: sinon.spy(),
     };
     controller = {};
 
     testModule(webserver, controller);
+  });
+
+  it('should register parsing middleware', () => {
+    expect(webserver.use.calledOnce).to.be.true;
+    expect(webserver.use.args[0][0]).to.equal('/servicenow/update');
+    expect(webserver.use.args[0][1]).to.be.an('Array');
   });
 
   it('should register a post event', () => {
