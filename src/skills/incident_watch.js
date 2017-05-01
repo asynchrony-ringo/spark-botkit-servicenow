@@ -1,6 +1,4 @@
-const serviceNowClient = require('../service_now_client.js');
 const watchController = require('../skillsControllers/watch_controller.js');
-
 
 const incidentWatch = (controller) => {
   controller.hears(['incident watch (.*)'], 'direct_message,direct_mention', (bot, message) => {
@@ -9,6 +7,5 @@ const incidentWatch = (controller) => {
     watchController.watchEntity('incident', 'Incident', incidentId, bot, message);
   });
 };
-
 
 module.exports = incidentWatch;
