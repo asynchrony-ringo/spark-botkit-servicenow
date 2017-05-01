@@ -3,6 +3,7 @@ const serviceNowClient = require('../service_now_client.js');
 const watchListHelper = require('../skillsControllers/watch_list_helper.js');
 
 const watchController = {
+
   watchEntity: (table, description, id, bot, message) => {
     return serviceNowClient.getTableRecord(table, id)
       .then((jsonResponse) => {
