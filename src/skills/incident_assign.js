@@ -12,5 +12,4 @@ const incidentAssign = (controller) => {
   });
 };
 
-
 module.exports = incidentAssign;
