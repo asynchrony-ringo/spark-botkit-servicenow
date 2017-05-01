@@ -54,7 +54,7 @@ describe('status controller', () => {
       .then(() => {
         expect(bot.reply.calledOnce).to.be.true;
         expect(bot.reply.args[0][0]).to.equal(message);
-        expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve your entity description: entity_id. Bad things');
+        expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve the entity description: entity_id. Bad things');
       });
   });
 });

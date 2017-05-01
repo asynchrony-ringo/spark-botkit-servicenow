@@ -7,7 +7,7 @@ const changeRequestCreate = (controller) => {
       category: message.match[2],
     };
 
-    createController.replyWithStatus('change_request', changeRequest, 'change request', bot, message);
+    createController.replyWithStatus('change_request', changeRequest, 'Change Request', bot, message);
   });
 };
 

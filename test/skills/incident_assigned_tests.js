@@ -54,7 +54,7 @@ describe('incident assigned', () => {
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve your assigned incidents.');
+          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve your assigned Incidents.');
         });
     });
 
@@ -63,7 +63,7 @@ describe('incident assigned', () => {
         { sys_id: 1234, number: 'INC1234', short_description: 'description for 1234' },
         { sys_id: 5678, number: 'INC5678', short_description: 'description for 5678' },
       ] };
-      let expectedResponse = 'Found 2 incidents:\n\n';
+      let expectedResponse = 'Found 2 assigned Incidents:\n\n';
       records.result.forEach((record) => {
         expectedResponse += ` * [${record.number}](service-now-baseurl.wow/incident.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
       });
@@ -89,7 +89,7 @@ describe('incident assigned', () => {
       }
 
 
-      let expectedResponse = 'Found 100 incidents. Here are the most recently updated 10:\n\n';
+      let expectedResponse = 'Found 100 assigned Incidents. Here are the most recently updated 10:\n\n';
       records.result.slice(0, 10).forEach((record) => {
         expectedResponse += ` * [${record.number}](service-now-baseurl.wow/incident.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
       });
@@ -115,7 +115,7 @@ describe('incident assigned', () => {
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Found no incidents.');
+          expect(bot.reply.args[0][1]).to.equal('Found no assigned Incidents.');
         });
     });
 
@@ -128,7 +128,7 @@ describe('incident assigned', () => {
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve your assigned incidents. Bad things');
+          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to retrieve your assigned Incidents. Bad things');
         });
     });
   });

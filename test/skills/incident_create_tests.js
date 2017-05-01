@@ -43,7 +43,7 @@ describe('incident create', () => {
     it('should call create controller\'s replyWithStatus method', () => {
       listenerCallback(bot, message);
       expect(createController.replyWithStatus.calledOnce).to.be.true;
-      expect(createController.replyWithStatus.args[0]).to.deep.equal(['incident', incident, 'incident', bot, message]);
+      expect(createController.replyWithStatus.args[0]).to.deep.equal(['incident', incident, 'Incident', bot, message]);
     });
   });
 });

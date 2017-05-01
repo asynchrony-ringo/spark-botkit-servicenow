@@ -43,7 +43,7 @@ describe('create controller', () => {
       .then(() => {
         expect(bot.reply.calledOnce).to.be.true;
         expect(bot.reply.args[0][0]).to.equal(message);
-        expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to create your entity description. Bad things');
+        expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to create the entity description. Bad things');
       });
   });
 
@@ -60,7 +60,7 @@ describe('create controller', () => {
           .then(() => {
             expect(bot.reply.calledOnce).to.be.true;
             expect(bot.reply.args[0][0]).to.equal(message);
-            expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to create your entity description.');
+            expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to create the entity description.');
           });
     });
   });
@@ -75,7 +75,7 @@ describe('create controller', () => {
       .then(() => {
         expect(bot.reply.calledOnce).to.be.true;
         expect(bot.reply.args[0][0]).to.equal(message);
-        expect(bot.reply.args[0][1]).to.equal(`Success: [${insertResponse.result.sys_id}](${process.env.serviceNowBaseUrl}/table_name.do?sys_id=${insertResponse.result.sys_id})`);
+        expect(bot.reply.args[0][1]).to.equal(`Success, entity description created: [${insertResponse.result.sys_id}](${process.env.serviceNowBaseUrl}/table_name.do?sys_id=${insertResponse.result.sys_id})`);
       });
   });
 });

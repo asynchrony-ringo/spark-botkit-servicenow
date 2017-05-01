@@ -10,7 +10,7 @@ const statusController = {
         bot.reply(message, response);
       })
       .catch((error) => {
-        const errorResponse = `Sorry, I was unable to retrieve your ${description}: ${recordId}. ${error}`;
+        const errorResponse = `Sorry, I was unable to retrieve the ${description}: ${recordId}. ${error}`;
         bot.reply(message, errorResponse);
       }),
 };

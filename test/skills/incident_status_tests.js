@@ -37,7 +37,7 @@ describe('incident status', () => {
       listenerCallback(bot, message);
 
       expect(statusController.replyWithStatus.calledOnce).to.be.true;
-      expect(statusController.replyWithStatus.args[0]).to.deep.equal(['incident', 'someSysId', 'incident', bot, message]);
+      expect(statusController.replyWithStatus.args[0]).to.deep.equal(['incident', 'someSysId', 'Incident', bot, message]);
     });
   });
 });

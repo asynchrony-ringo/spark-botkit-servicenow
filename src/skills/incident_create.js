@@ -8,7 +8,7 @@ const incidentCreate = (controller) => {
       caller_id: message.user,
     };
 
-    createController.replyWithStatus('incident', incident, 'incident', bot, message);
+    createController.replyWithStatus('incident', incident, 'Incident', bot, message);
   });
 };
 

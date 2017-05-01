@@ -73,7 +73,7 @@ describe('incident watch', () => {
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0][0]).to.equal(message);
-          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to find your incident: someSysId. Bad things');
+          expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to find the Incident: someSysId. Bad things');
         });
     });
 
@@ -90,7 +90,7 @@ describe('incident watch', () => {
           .then(() => {
             expect(bot.reply.calledOnce).to.be.true;
             expect(bot.reply.args[0][0]).to.deep.equal(message);
-            expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to find that incident.');
+            expect(bot.reply.args[0][1]).to.equal('Sorry, I was unable to find the Incident: someSysId.');
           });
       });
     });
@@ -170,7 +170,7 @@ describe('incident watch', () => {
             return listenerCallback(bot, message)
               .then(() => {
                 expect(bot.reply.calledOnce).to.be.true;
-                expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to update the incident: Bad things']);
+                expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to update the Incident: Bad things']);
               });
           });
         });
@@ -186,7 +186,7 @@ describe('incident watch', () => {
             return listenerCallback(bot, message)
               .then(() => {
                 expect(bot.reply.calledOnce).to.be.true;
-                expect(bot.reply.args[0]).to.deep.equal([message, `You have been added to the watchlist for the incident: [someSysId](${process.env.serviceNowBaseUrl}/incident.do?sys_id=someSysId)`]);
+                expect(bot.reply.args[0]).to.deep.equal([message, `You have been added to the watchlist for the Incident: [someSysId](${process.env.serviceNowBaseUrl}/incident.do?sys_id=someSysId)`]);
               });
           });
         });

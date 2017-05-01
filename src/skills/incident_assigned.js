@@ -4,16 +4,16 @@ const createResponseMessage = (assignedIncidents) => {
   const maxIncidentCount = 10;
 
   if (assignedIncidents.length === 0) {
-    return 'Found no incidents.';
+    return 'Found no assigned Incidents.';
   }
 
   let message;
   let incidentMessageList;
   if (assignedIncidents.length <= maxIncidentCount) {
-    message = `Found ${assignedIncidents.length} incidents:\n\n`;
+    message = `Found ${assignedIncidents.length} assigned Incidents:\n\n`;
     incidentMessageList = assignedIncidents;
   } else {
-    message = `Found ${assignedIncidents.length} incidents. Here are the most recently updated ${maxIncidentCount}:\n\n`;
+    message = `Found ${assignedIncidents.length} assigned Incidents. Here are the most recently updated ${maxIncidentCount}:\n\n`;
     incidentMessageList = assignedIncidents.slice(0, maxIncidentCount);
   }
   incidentMessageList.forEach((record) => {
@@ -33,11 +33,11 @@ const incidentAssigned = (controller) => {
         const tableRecords = jsonResult.result;
         bot.reply(message, createResponseMessage(tableRecords));
       } else {
-        bot.reply(message, 'Sorry, I was unable to retrieve your assigned incidents.');
+        bot.reply(message, 'Sorry, I was unable to retrieve your assigned Incidents.');
       }
     })
     .catch((error) => {
-      const errorResponse = `Sorry, I was unable to retrieve your assigned incidents. ${error}`;
+      const errorResponse = `Sorry, I was unable to retrieve your assigned Incidents. ${error}`;
       bot.reply(message, errorResponse);
     }));
 };

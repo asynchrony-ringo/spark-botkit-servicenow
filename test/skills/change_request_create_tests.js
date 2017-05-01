@@ -42,7 +42,7 @@ describe('change request create', () => {
     it('should call create controller\'s replyWithStatus method', () => {
       listenerCallback(bot, message);
       expect(createController.replyWithStatus.calledOnce).to.be.true;
-      expect(createController.replyWithStatus.args[0]).to.deep.equal(['change_request', changeRequest, 'change request', bot, message]);
+      expect(createController.replyWithStatus.args[0]).to.deep.equal(['change_request', changeRequest, 'Change Request', bot, message]);
     });
   });
 });

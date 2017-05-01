@@ -22,19 +22,19 @@ const incidentWatch = (controller) => {
 
               return serviceNowClient.updateTableRecord('incident', incidentId, { watch_list: watchList })
                 .then(() => {
-                  bot.reply(message, `You have been added to the watchlist for the incident: [${incidentId}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${incidentId})`);
+                  bot.reply(message, `You have been added to the watchlist for the Incident: [${incidentId}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${incidentId})`);
                 })
                 .catch((error) => {
-                  bot.reply(message, `Sorry, I was unable to update the incident: ${error}`);
+                  bot.reply(message, `Sorry, I was unable to update the Incident: ${error}`);
                 });
             }
             bot.reply(message, 'Sorry, I was unable to find your user account.');
           });
         }
-        bot.reply(message, 'Sorry, I was unable to find that incident.');
+        bot.reply(message, `Sorry, I was unable to find the Incident: ${incidentId}.`);
       })
       .catch((error) => {
-        bot.reply(message, `Sorry, I was unable to find your incident: ${incidentId}. ${error}`);
+        bot.reply(message, `Sorry, I was unable to find the Incident: ${incidentId}. ${error}`);
       });
   });
 };

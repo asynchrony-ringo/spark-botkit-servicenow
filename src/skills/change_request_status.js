@@ -4,7 +4,7 @@ const changeRequestStatus = (controller) => {
   controller.hears(['cr status (.*)'], 'direct_message,direct_mention', (bot, message) => {
     const changeRequestId = message.match[1];
 
-    statusController.replyWithStatus('change_request', changeRequestId, 'change request', bot, message);
+    statusController.replyWithStatus('change_request', changeRequestId, 'Change Request', bot, message);
   });
 };
 

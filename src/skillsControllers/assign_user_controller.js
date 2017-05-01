@@ -16,7 +16,7 @@ const assignUserController = {
               bot.reply(message, `You have been assigned to the ${entity.description}: [${entityId}](${process.env.serviceNowBaseUrl}/incident.do?sys_id=${entityId})`);
             })
             .catch((error) => {
-              bot.reply(message, `Sorry, I was unable to update the ${entity.description}: ${error}`);
+              bot.reply(message, `Sorry, I was unable to assign you to the ${entity.description}: ${error}`);
             });
         }
         bot.reply(message, 'Sorry, I was unable to find your user account.');
