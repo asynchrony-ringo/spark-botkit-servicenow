@@ -84,7 +84,7 @@ describe('assign user controller', () => {
           return assignUserController.assignUserToEntity(entity, bot, message)
             .then(() => {
               expect(bot.reply.calledOnce).to.be.true;
-              expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to assign you to the entity: Bad things']);
+              expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to assign you to the entity. Bad things']);
             });
         });
       });
