@@ -5,12 +5,6 @@ const watchController = require('../../src/skillsControllers/watch_controller.js
 
 describe('change request watch', () => {
   const controller = { hears: sinon.spy() };
-  const changeRequest = {
-    result: {
-      id: 'changeRequestId',
-      watch_list: '',
-    },
-  };
 
   beforeEach(() => {
     changeRequestWatch(controller);
