@@ -20,6 +20,9 @@ const assignUserController = {
             });
         }
         bot.reply(message, 'Sorry, I was unable to find your user account.');
+      })
+      .catch(() => {
+        bot.reply(message, 'Sorry, I was unable to find your user account.');
       });
   },
 };
