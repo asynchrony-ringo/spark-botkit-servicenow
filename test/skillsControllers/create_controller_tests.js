@@ -14,10 +14,7 @@ describe('create controller', () => {
     bot = { reply: sinon.spy() };
 
 
-    sinon.stub(serviceNowClient, 'insertTableRecord').returns({
-      then: () => Promise.resolve(),
-      catch: () => Promise.reject(),
-    });
+    sinon.stub(serviceNowClient, 'insertTableRecord').returns(Promise.resolve());
     process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
   });
 

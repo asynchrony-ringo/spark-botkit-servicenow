@@ -16,10 +16,7 @@ describe('assigned controller', () => {
     beforeEach(() => {
       bot = { reply: sinon.spy() };
 
-      sinon.stub(serviceNowClient, 'getTableRecords').returns({
-        then: () => Promise.resolve(),
-        catch: () => Promise.reject(),
-      });
+      sinon.stub(serviceNowClient, 'getTableRecords').returns(Promise.resolve());
       process.env.serviceNowBaseUrl = 'service-now-baseurl.wow';
     });
 

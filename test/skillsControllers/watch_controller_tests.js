@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 const expect = require('chai').expect;
 const watchController = require('../../src/skillsControllers/watch_controller.js');
-const watchListHelper = require('../../src/skillsControllers/watch_list_helper.js');
+const controllerHelper = require('../../src/skillsControllers/controller_helper.js');
 const serviceNowClient = require('../../src/service_now_client.js');
 
 describe('watch controller', () => {
@@ -25,18 +25,9 @@ describe('watch controller', () => {
     beforeEach(() => {
       bot = { reply: sinon.spy() };
 
-      sinon.stub(serviceNowClient, 'getTableRecord').returns({
-        then: () => Promise.resolve(),
-        catch: () => Promise.reject(),
-      });
-      sinon.stub(serviceNowClient, 'getTableRecords').returns({
-        then: () => Promise.resolve(),
-        catch: () => Promise.reject(),
-      });
-      sinon.stub(serviceNowClient, 'updateTableRecord').returns({
-        then: () => Promise.resolve(),
-        catch: () => Promise.reject(),
-      });
+      sinon.stub(serviceNowClient, 'getTableRecord').returns(Promise.resolve());
+      sinon.stub(serviceNowClient, 'getTableRecords').returns(Promise.resolve());
+      sinon.stub(serviceNowClient, 'updateTableRecord').returns(Promise.resolve());
       process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
     });
 
@@ -90,11 +81,11 @@ describe('watch controller', () => {
 
         serviceNowClient.getTableRecord.returns(tableRecordPromise);
 
-        sinon.spy(watchListHelper, 'addUserToWatchList');
+        sinon.spy(controllerHelper, 'addUserToWatchList');
       });
 
       afterEach(() => {
-        watchListHelper.addUserToWatchList.restore();
+        controllerHelper.addUserToWatchList.restore();
       });
 
       it('getTableRecords should be called', () => {
@@ -133,8 +124,8 @@ describe('watch controller', () => {
         it('should add user to watchlist for entity', () => {
           return watchController.watchEntity(tableName, entityId, description, bot, message)
             .then(() => {
-              expect(watchListHelper.addUserToWatchList.calledOnce).to.be.true;
-              expect(watchListHelper.addUserToWatchList.args[0]).to.deep.equal(
+              expect(controllerHelper.addUserToWatchList.calledOnce).to.be.true;
+              expect(controllerHelper.addUserToWatchList.args[0]).to.deep.equal(
                 [expectedUsers[0].sys_id, entity.result.watch_list]);
             });
         });

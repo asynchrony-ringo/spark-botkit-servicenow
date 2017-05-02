@@ -1,6 +1,6 @@
 /* eslint consistent-return:off */
 const serviceNowClient = require('../service_now_client.js');
-const watchListHelper = require('../skillsControllers/watch_list_helper.js');
+const controllerHelper = require('../skillsControllers/controller_helper.js');
 
 const watchController = {
 
@@ -22,7 +22,7 @@ const watchController = {
             }
 
             const user = userResponse.result[0];
-            const watchList = watchListHelper.addUserToWatchList(user.sys_id, entity.watch_list);
+            const watchList = controllerHelper.addUserToWatchList(user.sys_id, entity.watch_list);
 
             return serviceNowClient.updateTableRecord(tableName, id, { watch_list: watchList })
                 .then(() => {

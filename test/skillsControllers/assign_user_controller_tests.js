@@ -15,15 +15,8 @@ describe('assign user controller', () => {
     };
 
     beforeEach(() => {
-      sinon.stub(serviceNowClient, 'getTableRecords').returns({
-        then: () => Promise.resolve(),
-        catch: () => Promise.reject(),
-      });
-
-      sinon.stub(serviceNowClient, 'updateTableRecord').returns({
-        then: () => Promise.resolve(),
-        catch: () => Promise.reject(),
-      });
+      sinon.stub(serviceNowClient, 'getTableRecords').returns(Promise.resolve());
+      sinon.stub(serviceNowClient, 'updateTableRecord').returns(Promise.resolve());
 
       process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
       bot = { reply: sinon.spy() };
@@ -44,6 +37,19 @@ describe('assign user controller', () => {
         });
     });
 
+    describe('when getTableRecords for entity fails', () => {
+      it('should reply with an error message', () => {
+        const getTableRecordPromiseReject = Promise.reject('Bad things');
+        serviceNowClient.getTableRecords.returns(getTableRecordPromiseReject);
+        return assignUserController
+          .assignUserToEntity(tableName, entityId, description, bot, message)
+          .then(() => {
+            expect(bot.reply.calledOnce).to.be.true;
+            expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to assign you to the entity. Bad things']);
+          });
+      });
+    });
+
     describe('when the user is not found', () => {
       it('should reply with appropriate error message', () => {
         serviceNowClient.getTableRecords.withArgs('sys_user', { sysparm_query: `email=${message.user}` }).returns(Promise.resolve({ result: [] }));
@@ -52,7 +58,7 @@ describe('assign user controller', () => {
           .assignUserToEntity(tableName, entityId, description, bot, message)
           .then(() => {
             expect(bot.reply.calledOnce).to.be.true;
-            expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to find your user account.']);
+            expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to assign you to the entity. No ServiceNow user account found.']);
           });
       });
     });

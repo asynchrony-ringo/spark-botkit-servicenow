@@ -8,10 +8,7 @@ describe('status controller', () => {
   beforeEach(() => {
     bot = { reply: sinon.spy() };
 
-    sinon.stub(serviceNowClient, 'getTableRecord').returns({
-      then: () => Promise.resolve(),
-      catch: () => Promise.reject(),
-    });
+    sinon.stub(serviceNowClient, 'getTableRecord').returns(Promise.resolve());
     process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
   });
 
