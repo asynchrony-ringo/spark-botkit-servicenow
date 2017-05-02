@@ -1,10 +1,11 @@
 const serviceNowClient = require('../service_now_client.js');
 
 const controllerHelper = {
-  addUserToWatchList: (userId, watchList) => {
+  addToCSV: (item, watchList) => {
+    const itemString = item.toString();
     const watchListArray = watchList ? watchList.split(',') : [];
-    if (watchListArray.indexOf(userId) === -1) {
-      watchListArray.push(userId);
+    if (watchListArray.indexOf(itemString) === -1) {
+      watchListArray.push(itemString);
     }
     return watchListArray.join(',');
   },

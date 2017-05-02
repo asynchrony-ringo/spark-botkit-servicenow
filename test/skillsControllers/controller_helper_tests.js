@@ -4,35 +4,44 @@ const controllerHelper = require('../../src/skillsControllers/controller_helper.
 const serviceNowClient = require('../../src/service_now_client.js');
 
 describe('controller helper', () => {
-  describe('addUserToWatchList', () => {
+  describe('addToCSV', () => {
     it('should return watch list with only user id if initial watch list is undefined', () => {
-      const watchList = controllerHelper.addUserToWatchList('1234', undefined);
-      expect(watchList).to.equal('1234');
+      const csv = controllerHelper.addToCSV('1234', undefined);
+      expect(csv).to.equal('1234');
     });
 
     it('should return watch list with only user id if initial watch list is empty', () => {
-      const watchList = controllerHelper.addUserToWatchList('1234', '');
-      expect(watchList).to.equal('1234');
+      const csv = controllerHelper.addToCSV('1234', '');
+      expect(csv).to.equal('1234');
     });
 
     it('should return watch list with correct users if initial watch list contains a single different user', () => {
-      const watchList = controllerHelper.addUserToWatchList('1234', '2345');
-      expect(watchList).to.equal('2345,1234');
+      const csv = controllerHelper.addToCSV('1234', '2345');
+      expect(csv).to.equal('2345,1234');
     });
 
     it('should return watch list with correct users if initial watch list contains multiple different users', () => {
-      const watchList = controllerHelper.addUserToWatchList('1234', '2345,3456');
-      expect(watchList).to.equal('2345,3456,1234');
+      const csv = controllerHelper.addToCSV('1234', '2345,3456');
+      expect(csv).to.equal('2345,3456,1234');
     });
 
     it('should not add a user more than once to the watch list', () => {
-      const watchList = controllerHelper.addUserToWatchList('1234', '1234');
-      expect(watchList).to.equal('1234');
+      const csv = controllerHelper.addToCSV('1234', '1234');
+      expect(csv).to.equal('1234');
     });
 
     it('should add user if user id is subset of another user id', () => {
-      const watchList = controllerHelper.addUserToWatchList('123', '1234');
-      expect(watchList).to.equal('1234,123');
+      const csv = controllerHelper.addToCSV('123', '1234');
+      expect(csv).to.equal('1234,123');
+    });
+
+    it('should add user if user id is a different type', () => {
+      const csv = controllerHelper.addToCSV(123, '1234');
+      expect(csv).to.equal('1234,123');
+    });
+    it('should not add user if user id is a different type already in the csv', () => {
+      const csv = controllerHelper.addToCSV(123, '123');
+      expect(csv).to.equal('123');
     });
   });
 

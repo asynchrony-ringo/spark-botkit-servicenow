@@ -81,11 +81,11 @@ describe('watch controller', () => {
 
         serviceNowClient.getTableRecord.returns(tableRecordPromise);
 
-        sinon.spy(controllerHelper, 'addUserToWatchList');
+        sinon.spy(controllerHelper, 'addToCSV');
       });
 
       afterEach(() => {
-        controllerHelper.addUserToWatchList.restore();
+        controllerHelper.addToCSV.restore();
       });
 
       it('getTableRecords should be called', () => {
@@ -124,8 +124,8 @@ describe('watch controller', () => {
         it('should add user to watchlist for entity', () => {
           return watchController.watchEntity(tableName, entityId, description, bot, message)
             .then(() => {
-              expect(controllerHelper.addUserToWatchList.calledOnce).to.be.true;
-              expect(controllerHelper.addUserToWatchList.args[0]).to.deep.equal(
+              expect(controllerHelper.addToCSV.calledOnce).to.be.true;
+              expect(controllerHelper.addToCSV.args[0]).to.deep.equal(
                 [expectedUsers[0].sys_id, entity.result.watch_list]);
             });
         });

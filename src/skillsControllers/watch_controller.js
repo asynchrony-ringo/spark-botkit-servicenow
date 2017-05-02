@@ -17,7 +17,7 @@ const watchController = {
       .then((entity) => {
         return controllerHelper.lookupServiceNowUser(message.user)
         .then((user) => {
-          const watchList = controllerHelper.addUserToWatchList(user.sys_id, entity.watch_list);
+          const watchList = controllerHelper.addToCSV(user.sys_id, entity.watch_list);
           return serviceNowClient.updateTableRecord(tableName, id, { watch_list: watchList });
         })
         .then(() => `You have been added to the watchlist for the ${description}: [${id}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${id})`);
