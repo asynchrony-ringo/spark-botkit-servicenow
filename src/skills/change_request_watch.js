@@ -4,7 +4,7 @@ const changeRequestWatch = (controller) => {
   controller.hears(['cr watch (.*)'], 'direct_message,direct_mention', (bot, message) => {
     const changeRequestId = message.match[1];
 
-    watchController.watchEntity('change_request', 'Change Request', changeRequestId, bot, message);
+    watchController.watchEntity('change_request', changeRequestId, 'Change Request', bot, message);
   });
 };
 

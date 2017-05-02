@@ -45,7 +45,7 @@ describe('change request watch', () => {
       listenerCallback(bot, message);
 
       expect(watchController.watchEntity.calledOnce).to.be.true;
-      expect(watchController.watchEntity.args[0]).to.deep.equal(['change_request', 'Change Request', 'someSysId', bot, message]);
+      expect(watchController.watchEntity.args[0]).to.deep.equal(['change_request', 'someSysId', 'Change Request', bot, message]);
     });
   });
 });

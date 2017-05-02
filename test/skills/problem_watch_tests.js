@@ -45,7 +45,7 @@ describe('problem watch', () => {
       listenerCallback(bot, message);
 
       expect(watchController.watchEntity.calledOnce).to.be.true;
-      expect(watchController.watchEntity.args[0]).to.deep.equal(['problem', 'Problem', 'someSysId', bot, message]);
+      expect(watchController.watchEntity.args[0]).to.deep.equal(['problem', 'someSysId', 'Problem', bot, message]);
     });
   });
 });
