@@ -15,33 +15,70 @@ describe('controller helper', () => {
       expect(csv).to.equal('1234');
     });
 
-    it('should return csv with correct users if initial csv contains a single different user', () => {
+    it('should return csv with correct items if initial csv contains a single different item', () => {
       const csv = controllerHelper.addToCSV('1234', '2345');
       expect(csv).to.equal('2345,1234');
     });
 
-    it('should return csv with correct users if initial csv contains multiple different users', () => {
+    it('should return csv with correct items if initial csv contains multiple different items', () => {
       const csv = controllerHelper.addToCSV('1234', '2345,3456');
       expect(csv).to.equal('2345,3456,1234');
     });
 
-    it('should not add a user more than once to the csv', () => {
+    it('should not add a item more than once to the csv', () => {
       const csv = controllerHelper.addToCSV('1234', '1234');
       expect(csv).to.equal('1234');
     });
 
-    it('should add user if item is subset of another item', () => {
+    it('should add item if item is subset of another item', () => {
       const csv = controllerHelper.addToCSV('123', '1234');
       expect(csv).to.equal('1234,123');
     });
 
-    it('should add user if item is a different type', () => {
+    it('should add item if item is a different type', () => {
       const csv = controllerHelper.addToCSV(123, '1234');
       expect(csv).to.equal('1234,123');
     });
-    it('should not add user if item is a different type already in the csv', () => {
+    it('should not add item if item is a different type already in the csv', () => {
       const csv = controllerHelper.addToCSV(123, '123');
       expect(csv).to.equal('123');
+    });
+  });
+
+  describe('removeFromCSV', () => {
+    it('should return empty string if initial csv is undefined', () => {
+      const csv = controllerHelper.removeFromCSV('1234', undefined);
+      expect(csv).to.equal('');
+    });
+
+    it('should return empty string if initial csv is empty', () => {
+      const csv = controllerHelper.removeFromCSV('1234', '');
+      expect(csv).to.equal('');
+    });
+
+    it('should return original csv if initial csv does not contain the item', () => {
+      const csv = controllerHelper.removeFromCSV('1234', '2345');
+      expect(csv).to.equal('2345');
+    });
+
+    it('should return original csv if initial csv is multiple items and does not contain item', () => {
+      const csv = controllerHelper.removeFromCSV('1234', '2345,3456');
+      expect(csv).to.equal('2345,3456');
+    });
+
+    it('should remove item from single item csv', () => {
+      const csv = controllerHelper.removeFromCSV('1234', '1234');
+      expect(csv).to.equal('');
+    });
+
+    it('should not remove item if item is subset of another item', () => {
+      const csv = controllerHelper.removeFromCSV('123', '1234');
+      expect(csv).to.equal('1234');
+    });
+
+    it('should remove item if item is a different type and csv contain item', () => {
+      const csv = controllerHelper.removeFromCSV(123, '123,1234');
+      expect(csv).to.equal('1234');
     });
   });
 

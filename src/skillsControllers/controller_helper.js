@@ -1,13 +1,22 @@
 const serviceNowClient = require('../service_now_client.js');
 
 const controllerHelper = {
-  addToCSV: (item, watchList) => {
+  addToCSV: (item, csv) => {
     const itemString = item.toString();
-    const watchListArray = watchList ? watchList.split(',') : [];
-    if (watchListArray.indexOf(itemString) === -1) {
-      watchListArray.push(itemString);
+    const splitArray = csv ? csv.split(',') : [];
+    if (splitArray.indexOf(itemString) === -1) {
+      splitArray.push(itemString);
     }
-    return watchListArray.join(',');
+    return splitArray.join(',');
+  },
+  removeFromCSV: (item, csv) => {
+    const itemString = item.toString();
+    const splitArray = csv ? csv.split(',') : [];
+    const index = splitArray.indexOf(itemString);
+    if (index !== -1) {
+      splitArray.splice(index, 1);
+    }
+    return splitArray.join(',');
   },
   lookupServiceNowUser: (userEmail) => {
     return serviceNowClient.getTableRecords('sys_user', { sysparm_query: `email=${userEmail}` })
