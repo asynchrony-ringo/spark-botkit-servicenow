@@ -13,7 +13,7 @@ const updateAlertController = {
 
         const tableName = newObj.type.replace(/\s/, '_').toLowerCase();
         const diff = updateAlertDifferenceGatherer.formatMessage(newObj, oldObj);
-        conversation.say(`The ${newObj.type} [${newObj.number}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${newObj.sys_id}) has been updated!\n${diff}`);
+        conversation.say(`The ${newObj.type} [${newObj.sys_id}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${newObj.sys_id}) has been updated!\n${diff}`);
       });
     }
   },

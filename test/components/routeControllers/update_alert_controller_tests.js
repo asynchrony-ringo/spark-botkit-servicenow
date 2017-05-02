@@ -85,7 +85,7 @@ describe('update alert controller', () => {
 
           conversationCallback(null, conversation);
           expect(conversation.say.called).to.be.true;
-          expect(conversation.say.args[0][0]).to.equal(`The SOME TYPE [INC1234](niceurl.some-domain.com/some_type.do?sys_id=1234) has been updated!\n${expectedDifferenceMessage}`);
+          expect(conversation.say.args[0][0]).to.equal(`The SOME TYPE [1234](niceurl.some-domain.com/some_type.do?sys_id=1234) has been updated!\n${expectedDifferenceMessage}`);
         });
       });
     });
