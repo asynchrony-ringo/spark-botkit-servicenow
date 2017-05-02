@@ -45,7 +45,7 @@ describe('problem assign', () => {
       listenerCallback(bot, message);
 
       expect(assignUserController.assignUserToEntity.calledOnce).to.be.true;
-      expect(assignUserController.assignUserToEntity.args[0]).to.deep.equal(['problem', 'Problem', bot, message]);
+      expect(assignUserController.assignUserToEntity.args[0]).to.deep.equal(['problem', 'someSysId', 'Problem', bot, message]);
     });
   });
 });

@@ -5,12 +5,6 @@ const watchController = require('../../src/skillsControllers/watch_controller.js
 
 describe('incident watch', () => {
   const controller = { hears: sinon.spy() };
-  const incident = {
-    result: {
-      id: 'incidentId',
-      watch_list: '',
-    },
-  };
 
   beforeEach(() => {
     incidentWatch(controller);
@@ -51,7 +45,7 @@ describe('incident watch', () => {
       listenerCallback(bot, message);
 
       expect(watchController.watchEntity.calledOnce).to.be.true;
-      expect(watchController.watchEntity.args[0]).to.deep.equal(['incident', 'Incident', 'someSysId', bot, message]);
+      expect(watchController.watchEntity.args[0]).to.deep.equal(['incident', 'someSysId', 'Incident', bot, message]);
     });
   });
 });

@@ -4,8 +4,8 @@ const watchListHelper = require('../skillsControllers/watch_list_helper.js');
 
 const watchController = {
 
-  watchEntity: (table, description, id, bot, message) => {
-    return serviceNowClient.getTableRecord(table, id)
+  watchEntity: (tableName, id, description, bot, message) => {
+    return serviceNowClient.getTableRecord(tableName, id)
       .then((jsonResponse) => {
         if (!jsonResponse.result) {
           bot.reply(message, `Sorry, I was unable to find the ${description}: ${id}`);
@@ -24,9 +24,9 @@ const watchController = {
             const user = userResponse.result[0];
             const watchList = watchListHelper.addUserToWatchList(user.sys_id, entity.watch_list);
 
-            return serviceNowClient.updateTableRecord(table, id, { watch_list: watchList })
+            return serviceNowClient.updateTableRecord(tableName, id, { watch_list: watchList })
                 .then(() => {
-                  bot.reply(message, `You have been added to the watchlist for the ${description}: [${id}](${process.env.serviceNowBaseUrl}/${table}.do?sys_id=${id})`);
+                  bot.reply(message, `You have been added to the watchlist for the ${description}: [${id}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${id})`);
                 })
                 .catch((error) => {
                   bot.reply(message, `Sorry, I was unable to update the ${description}: ${error}`);

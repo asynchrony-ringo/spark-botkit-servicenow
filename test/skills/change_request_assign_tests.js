@@ -45,7 +45,7 @@ describe('change request assign', () => {
       listenerCallback(bot, message);
 
       expect(assignUserController.assignUserToEntity.calledOnce).to.be.true;
-      expect(assignUserController.assignUserToEntity.args[0]).to.deep.equal(['change_request', 'Change Request', bot, message]);
+      expect(assignUserController.assignUserToEntity.args[0]).to.deep.equal(['change_request', 'someSysId', 'Change Request', bot, message]);
     });
   });
 });

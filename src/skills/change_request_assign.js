@@ -2,7 +2,8 @@ const assignUserController = require('../skillsControllers/assign_user_controlle
 
 const changeRequestAssign = (controller) => {
   controller.hears(['cr assign (.*)'], 'direct_message,direct_mention', (bot, message) => {
-    assignUserController.assignUserToEntity('change_request', 'Change Request', bot, message);
+    const changeRequestId = message.match[1];
+    assignUserController.assignUserToEntity('change_request', changeRequestId, 'Change Request', bot, message);
   });
 };
 

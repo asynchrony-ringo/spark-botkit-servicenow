@@ -8,7 +8,7 @@ describe('watch controller', () => {
   describe('watchEntity', () => {
     let bot;
     const entityId = 'entityId';
-    const table = 'entity_table';
+    const tableName = 'entity_table';
     const description = 'entity';
 
     const message = {
@@ -49,10 +49,10 @@ describe('watch controller', () => {
 
     it('should look up table record based on id', () => {
       serviceNowClient.getTableRecord.returns(Promise.resolve());
-      return watchController.watchEntity(table, description, entityId, bot, message)
+      return watchController.watchEntity(tableName, entityId, description, bot, message)
         .then(() => {
           expect(serviceNowClient.getTableRecord.calledOnce).to.be.true;
-          expect(serviceNowClient.getTableRecord.args[0]).to.deep.equal([table, entityId]);
+          expect(serviceNowClient.getTableRecord.args[0]).to.deep.equal([tableName, entityId]);
         });
     });
 
@@ -60,7 +60,7 @@ describe('watch controller', () => {
       const tableRecordPromise = Promise.reject('Bad Things');
 
       serviceNowClient.getTableRecord.returns(tableRecordPromise);
-      return watchController.watchEntity(table, description, entityId, bot, message)
+      return watchController.watchEntity(tableName, entityId, description, bot, message)
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
           expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to find the ${description}: ${entityId}. Bad Things`]);
@@ -76,7 +76,7 @@ describe('watch controller', () => {
       });
 
       it('should reply with appropriate error message', () => {
-        return watchController.watchEntity(table, description, entityId, bot, message)
+        return watchController.watchEntity(tableName, entityId, description, bot, message)
           .then(() => {
             expect(bot.reply.calledOnce).to.be.true;
             expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to find the ${description}: ${entityId}`]);
@@ -98,7 +98,7 @@ describe('watch controller', () => {
       });
 
       it('getTableRecords should be called', () => {
-        return watchController.watchEntity(table, description, entityId, bot, message)
+        return watchController.watchEntity(description, entityId, description, bot, message)
           .then(() => {
             expect(serviceNowClient.getTableRecords.calledOnce).to.be.true;
             expect(serviceNowClient.getTableRecords.args[0]).to.deep.equal(['sys_user', { sysparm_query: `email=${message.user}` }]);
@@ -111,7 +111,7 @@ describe('watch controller', () => {
         });
 
         it('should reply with appropriate error message', () => {
-          return watchController.watchEntity(table, description, entityId, bot, message)
+          return watchController.watchEntity(description, entityId, description, bot, message)
             .then(() => {
               expect(bot.reply.calledOnce).to.be.true;
               expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to find your user account.']);
@@ -131,7 +131,7 @@ describe('watch controller', () => {
         });
 
         it('should add user to watchlist for entity', () => {
-          return watchController.watchEntity(table, description, entityId, bot, message)
+          return watchController.watchEntity(tableName, entityId, description, bot, message)
             .then(() => {
               expect(watchListHelper.addUserToWatchList.calledOnce).to.be.true;
               expect(watchListHelper.addUserToWatchList.args[0]).to.deep.equal(
@@ -140,10 +140,11 @@ describe('watch controller', () => {
         });
 
         it('should call updateTableRecord for entity', () => {
-          return watchController.watchEntity(table, description, entityId, bot, message)
+          return watchController
+            .watchEntity(tableName, entityId, description, bot, message)
             .then(() => {
               expect(serviceNowClient.updateTableRecord.calledOnce).to.be.true;
-              expect(serviceNowClient.updateTableRecord.args[0]).to.deep.equal([table, entityId, { watch_list: '12345' }]);
+              expect(serviceNowClient.updateTableRecord.args[0]).to.deep.equal([tableName, entityId, { watch_list: '12345' }]);
             });
         });
 
@@ -155,7 +156,7 @@ describe('watch controller', () => {
           });
 
           it('should reply an appropriate error message', () => {
-            return watchController.watchEntity(table, description, entityId, bot, message)
+            return watchController.watchEntity(tableName, entityId, description, bot, message)
               .then(() => {
                 expect(bot.reply.calledOnce).to.be.true;
                 expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to update the ${description}: Bad things`]);
@@ -171,10 +172,10 @@ describe('watch controller', () => {
           });
 
           it('should reply with a success message', () => {
-            return watchController.watchEntity(table, description, entityId, bot, message)
+            return watchController.watchEntity(tableName, entityId, description, bot, message)
               .then(() => {
                 expect(bot.reply.calledOnce).to.be.true;
-                expect(bot.reply.args[0]).to.deep.equal([message, `You have been added to the watchlist for the ${description}: [${entityId}](${process.env.serviceNowBaseUrl}/${table}.do?sys_id=${entityId})`]);
+                expect(bot.reply.args[0]).to.deep.equal([message, `You have been added to the watchlist for the ${description}: [${entityId}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${entityId})`]);
               });
           });
         });

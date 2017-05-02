@@ -7,10 +7,10 @@ describe('assign user controller', () => {
   describe('assignUserToEntity', () => {
     const tableName = 'entity_table';
     const description = 'entity';
+    const entityId = 'someSysId';
     let bot;
 
     const message = {
-      match: 'entity assign someSysId'.match(/entity assign (.*)/),
       user: 'someone@example.com',
     };
 
@@ -36,7 +36,8 @@ describe('assign user controller', () => {
     });
 
     it('getTableRecords should be called', () => {
-      return assignUserController.assignUserToEntity(tableName, description, bot, message)
+      return assignUserController
+        .assignUserToEntity(tableName, entityId, description, bot, message)
         .then(() => {
           expect(serviceNowClient.getTableRecords.calledOnce).to.be.true;
           expect(serviceNowClient.getTableRecords.args[0]).to.deep.equal(['sys_user', { sysparm_query: `email=${message.user}` }]);
@@ -47,11 +48,12 @@ describe('assign user controller', () => {
       it('should reply with appropriate error message', () => {
         serviceNowClient.getTableRecords.withArgs('sys_user', { sysparm_query: `email=${message.user}` }).returns(Promise.resolve({ result: [] }));
 
-        return assignUserController.assignUserToEntity(tableName, description, bot, message)
-            .then(() => {
-              expect(bot.reply.calledOnce).to.be.true;
-              expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to find your user account.']);
-            });
+        return assignUserController
+          .assignUserToEntity(tableName, entityId, description, bot, message)
+          .then(() => {
+            expect(bot.reply.calledOnce).to.be.true;
+            expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to find your user account.']);
+          });
       });
     });
 
@@ -67,7 +69,8 @@ describe('assign user controller', () => {
       });
 
       it('should call updateTableRecord for entity', () => {
-        return assignUserController.assignUserToEntity(tableName, description, bot, message)
+        return assignUserController
+          .assignUserToEntity(tableName, entityId, description, bot, message)
           .then(() => {
             expect(serviceNowClient.updateTableRecord.calledOnce).to.be.true;
             expect(serviceNowClient.updateTableRecord.args[0]).to.deep.equal(['entity_table', 'someSysId', { assigned_to: '12345' }]);
@@ -78,7 +81,8 @@ describe('assign user controller', () => {
         it('should reply with an error message', () => {
           const updateTableRecordPromiseReject = Promise.reject('Bad things');
           serviceNowClient.updateTableRecord.returns(updateTableRecordPromiseReject);
-          return assignUserController.assignUserToEntity(tableName, description, bot, message)
+          return assignUserController
+            .assignUserToEntity(tableName, entityId, description, bot, message)
             .then(() => {
               expect(bot.reply.calledOnce).to.be.true;
               expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to assign you to the entity. Bad things']);
@@ -90,7 +94,8 @@ describe('assign user controller', () => {
         it('should reply with a success message', () => {
           serviceNowClient.updateTableRecord.returns(Promise.resolve());
 
-          return assignUserController.assignUserToEntity(tableName, description, bot, message)
+          return assignUserController
+            .assignUserToEntity(tableName, entityId, description, bot, message)
             .then(() => {
               expect(bot.reply.calledOnce).to.be.true;
               expect(bot.reply.args[0]).to.deep.equal([message, 'You have been assigned to the entity: [someSysId](servicenow-instance.domain/entity_table.do?sys_id=someSysId)']);

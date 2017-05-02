@@ -3,7 +3,8 @@ const assignUserController = require('../skillsControllers/assign_user_controlle
 
 const incidentAssign = (controller) => {
   controller.hears(['incident assign (.*)'], 'direct_message,direct_mention', (bot, message) => {
-    assignUserController.assignUserToEntity('incident', 'Incident', bot, message);
+    const incidentId = message.match[1];
+    assignUserController.assignUserToEntity('incident', incidentId, 'Incident', bot, message);
   });
 };
 
