@@ -8,17 +8,17 @@ describe('update alert controller', () => {
     let controller;
     let bot;
     const newItem = {
-      id: 1234,
-      callerEmail: 'some.email@some-domain.com',
+      sys_id: 1234,
+      alert_email: 'some.email@some-domain.com',
       number: 'INC1234',
-      shortDescription: 'An even better description.',
+      short_description: 'An even better description.',
       type: 'SOME TYPE',
     };
     const oldItem = {
-      id: 1234,
-      callerEmail: 'some.email@some-domain.com',
+      sys_id: 1234,
+      alert_email: 'some.email@some-domain.com',
       number: 'INC1234',
-      shortDescription: 'A really good description.',
+      short_description: 'A really good description.',
       type: 'SOME TYPE',
     };
 
@@ -31,7 +31,7 @@ describe('update alert controller', () => {
       };
     });
 
-    describe('when callerEmail does not exist', () => {
+    describe('when alert_email does not exist', () => {
       beforeEach(() => {
         updateAlertController.messageCaller({}, {}, controller);
       });
@@ -41,7 +41,7 @@ describe('update alert controller', () => {
       });
     });
 
-    describe('when callerEmail exists', () => {
+    describe('when alert_email exists', () => {
       beforeEach(() => {
         updateAlertController.messageCaller(newItem, oldItem, controller);
       });
@@ -95,11 +95,11 @@ describe('update alert controller', () => {
     it('should return a successful status and message when new and old are the same type', () => {
       const newObject = {
         type: 'Type',
-        id: 1234,
+        sys_id: 1234,
       };
       const oldObject = {
         type: 'Type',
-        id: 1234,
+        sys_id: 1234,
       };
       const result = updateAlertController.isValid(newObject, oldObject);
       expect(result).to.be.true;
@@ -137,18 +137,18 @@ describe('update alert controller', () => {
         description: 'old has more than new',
       },
       {
-        new: { type: 'Incident', id: '1' },
-        old: { type: 'Incident', id: '2' },
+        new: { type: 'Incident', sys_id: '1' },
+        old: { type: 'Incident', sys_id: '2' },
         description: 'different ids',
       },
       {
-        new: { type: 'Incident', id: '1' },
-        old: { id: '1' },
+        new: { type: 'Incident', sys_id: '1' },
+        old: { sys_id: '1' },
         description: 'old element does not contain type attribute',
       },
       {
-        new: { type: 'Incident', id: '1' },
-        old: { type: 'Foo', id: '1' },
+        new: { type: 'Incident', sys_id: '1' },
+        old: { type: 'Foo', sys_id: '1' },
         description: 'old element is not an incident',
       },
     ].forEach((testCase) => {
