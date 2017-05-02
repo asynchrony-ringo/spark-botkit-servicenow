@@ -1,0 +1,7 @@
+{
+  "globals" : {
+    "current": "true",
+    "previous": "true",
+    "sn_ws": "true"
+  }
+}
