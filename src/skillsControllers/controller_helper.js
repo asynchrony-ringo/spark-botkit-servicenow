@@ -11,7 +11,7 @@ const controllerHelper = {
   lookupServiceNowUser: (userEmail) => {
     return serviceNowClient.getTableRecords('sys_user', { sysparm_query: `email=${userEmail}` })
       .then((userResponse) => {
-        if (!userResponse.result || userResponse.result.length === 0) {
+        if (!userResponse || !userResponse.result || userResponse.result.length === 0) {
           return Promise.reject('No ServiceNow user account found.');
         }
         return userResponse.result[0];
