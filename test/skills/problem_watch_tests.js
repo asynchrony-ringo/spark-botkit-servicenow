@@ -41,7 +41,7 @@ describe('problem watch', () => {
       watchController.watchEntity.restore();
     });
 
-    it('should call assignUserController\'s assignUserToEntity method', () => {
+    it('should call watchController\'s watchEntity method', () => {
       listenerCallback(bot, message);
 
       expect(watchController.watchEntity.calledOnce).to.be.true;
