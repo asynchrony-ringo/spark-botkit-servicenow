@@ -54,7 +54,7 @@ describe('watch controller', () => {
       return watchController.watchEntity(tableName, entityId, description, bot, message)
         .then(() => {
           expect(bot.reply.calledOnce).to.be.true;
-          expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to find the ${description}: ${entityId}. Bad Things`]);
+          expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to add you to the watch list for the ${description}: ${entityId}. Bad Things`]);
         });
     });
 
@@ -70,7 +70,7 @@ describe('watch controller', () => {
         return watchController.watchEntity(tableName, entityId, description, bot, message)
           .then(() => {
             expect(bot.reply.calledOnce).to.be.true;
-            expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to find the ${description}: ${entityId}`]);
+            expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to add you to the watch list for the ${description}: ${entityId}. Unable to find the ServiceNow item.`]);
           });
       });
     });
@@ -105,7 +105,7 @@ describe('watch controller', () => {
           return watchController.watchEntity(description, entityId, description, bot, message)
             .then(() => {
               expect(bot.reply.calledOnce).to.be.true;
-              expect(bot.reply.args[0]).to.deep.equal([message, 'Sorry, I was unable to find your user account.']);
+              expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to add you to the watch list for the ${description}: ${entityId}. No ServiceNow user account found.`]);
             });
         });
       });
@@ -150,7 +150,7 @@ describe('watch controller', () => {
             return watchController.watchEntity(tableName, entityId, description, bot, message)
               .then(() => {
                 expect(bot.reply.calledOnce).to.be.true;
-                expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to update the ${description}: Bad things`]);
+                expect(bot.reply.args[0]).to.deep.equal([message, `Sorry, I was unable to add you to the watch list for the ${description}: ${entityId}. Bad things`]);
               });
           });
         });
