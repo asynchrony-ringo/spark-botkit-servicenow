@@ -87,7 +87,29 @@ describe('update alert difference gatherer', () => {
     const formattedDiffs = updateAlertDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(2);
-    expect(formattedDiffs[0]).to.equal(' * title was added: bar');
-    expect(formattedDiffs[1]).to.equal(' * name was removed');
+    expect(formattedDiffs[0]).to.equal(' * name was removed');
+    expect(formattedDiffs[1]).to.equal(' * title was added: bar');
+  });
+
+  it('should order the keys alphabetically', () => {
+    const newObject = {
+      monkey: 'banana',
+      zebra: 'stripe',
+      apple: 'foo',
+      title: 'bar',
+    };
+    const oldObject = {
+      monkey: 'tree',
+      zebra: 'savanna',
+      apple: 'bar',
+      title: 'foo',
+    };
+    const formattedDiffs = updateAlertDifferenceGatherer
+      .formatMessage(newObject, oldObject).split('\n');
+    expect(formattedDiffs.length).to.equal(4);
+    expect(formattedDiffs[0]).to.equal(' * apple was updated from bar to foo');
+    expect(formattedDiffs[1]).to.equal(' * monkey was updated from tree to banana');
+    expect(formattedDiffs[2]).to.equal(' * title was updated from foo to bar');
+    expect(formattedDiffs[3]).to.equal(' * zebra was updated from savanna to stripe');
   });
 });
