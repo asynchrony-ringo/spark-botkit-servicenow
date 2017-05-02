@@ -16,7 +16,6 @@ const entityUpdateWebhooks = (webserver, controller) => {
   debug('Configured POST /servicenow/update for receiving events');
 
   webserver.use('/servicenow/update', [bodyParser.json(), bodyParser.urlencoded({ extended: true })]);
-
   webserver.post('/servicenow/update', (req, res) => {
     if (!updateAlertController.isValid(req.body.new, req.body.old)) {
       sendFailureResponse(res);

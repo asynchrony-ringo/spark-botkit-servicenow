@@ -1,6 +1,6 @@
 const watchController = require('../skillsControllers/watch_controller.js');
 
-const changeRequestUnWatch = (controller) => {
+const changeRequestUnwatch = (controller) => {
   controller.hears(['^cr remove watch[ ]+(.*)[ ]*$'], 'direct_message,direct_mention', (bot, message) => {
     const changeRequestId = message.match[1];
 
@@ -9,4 +9,4 @@ const changeRequestUnWatch = (controller) => {
 };
 
 
-module.exports = changeRequestUnWatch;
+module.exports = changeRequestUnwatch;
