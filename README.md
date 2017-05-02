@@ -41,42 +41,7 @@ To enable your bot to recieve update alerts from ServiceNow you must add a Busin
     2. Select the appropriate actions from the available action checkboxes (insert, update, delete, query) you want to run the trigger on
 3. In the "Advanced" tab:
     4. Enter the code that will fire when a change is triggered
+        1. [See our examples for writing Business Rules](https://gitlab.asynchrony.com/proj-1274/spark-botkit-servicenow/tree/master/docs)
+        2. Note: You will have to update the call to ```setEndpoint``` in order to pass in the public address of your bot
     
-    **Example Code:**
-    ```javascript
-(function executeRule(current, previous /*null when async*/) {
-	function getIncidentObject(incident) {
-		return {
-			type: 'Incident',
-			id: incident.sys_id.getDisplayValue(),
-			callerEmail: incident.caller_id.email.getDisplayValue(),
-			callerId: incident.caller_id.sys_id.getDisplayValue(),
-			number: incident.number.getDisplayValue(),
-			shortDescription: incident.short_description.getDisplayValue(),
-			category: incident.category.getDisplayValue(),
-			subcategory: incident.subcategory.getDisplayValue(),
-			businessService: incident.business_service.getDisplayValue(),
-			contactType: incident.contact_type.getDisplayValue(),
-			state: incident.state.getDisplayValue(),
-			impact: incident.impact.getDisplayValue(),
-			urgency: incident.urgency.getDisplayValue(),
-			priority: incident.priority.getDisplayValue(),
-			assignmentGroup: incident.assignment_group.getDisplayValue(),
-			assignedTo: incident.assigned_to.getDisplayValue()
-		};
-	}
-
-	var restMessage = new sn_ws.RESTMessageV2();
-	restMessage.setHttpMethod("post");
-	restMessage.setEndpoint("https://47ff7d6f.ngrok.io/servicenow/update");
-	restMessage.setRequestHeader('Content-Type', 'application/json');
-	var body = {
-		'new': getIncidentObject(current),
-		'old': getIncidentObject(previous)
-	};
-	restMessage.setRequestBody(JSON.stringify(body));
-	
-	restMessage.execute();
-})(current, previous);
-    ```
 
