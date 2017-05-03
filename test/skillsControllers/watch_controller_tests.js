@@ -60,8 +60,8 @@ describe('watch controller', () => {
 
     describe('when the entity is not found', () => {
       beforeEach(() => {
-        const malformedIncident = {};
-        const tableRecordPromise = Promise.resolve(malformedIncident);
+        const malformedEntity = {};
+        const tableRecordPromise = Promise.resolve(malformedEntity);
 
         serviceNowClient.getTableRecord.returns(tableRecordPromise);
       });
@@ -75,7 +75,7 @@ describe('watch controller', () => {
       });
     });
 
-    describe('when the incident is found', () => {
+    describe('when the entity is found', () => {
       beforeEach(() => {
         const tableRecordPromise = Promise.resolve(entity);
 
@@ -230,8 +230,8 @@ describe('watch controller', () => {
 
     describe('when the entity is not found', () => {
       beforeEach(() => {
-        const malformedIncident = {};
-        const tableRecordPromise = Promise.resolve(malformedIncident);
+        const malformedEntity = {};
+        const tableRecordPromise = Promise.resolve(malformedEntity);
 
         serviceNowClient.getTableRecord.returns(tableRecordPromise);
       });
@@ -245,7 +245,7 @@ describe('watch controller', () => {
       });
     });
 
-    describe('when the incident is found', () => {
+    describe('when the entity is found', () => {
       beforeEach(() => {
         const tableRecordPromise = Promise.resolve(entity);
 

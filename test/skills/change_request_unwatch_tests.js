@@ -41,7 +41,7 @@ describe('change request unwatch', () => {
       watchController.unwatchEntity.restore();
     });
 
-    it('should call assignUserController\'s assignUserToEntity method', () => {
+    it('should call watchController\'s unwatchEntity method', () => {
       listenerCallback(bot, message);
 
       expect(watchController.unwatchEntity.calledOnce).to.be.true;
