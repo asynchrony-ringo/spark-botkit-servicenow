@@ -37,8 +37,8 @@ describe('update alert difference gatherer', () => {
     const formattedDiffs = updateAlertDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(2);
-    expect(formattedDiffs[0]).to.equal(' * name was updated from bar to foo');
-    expect(formattedDiffs[1]).to.equal(' * title was updated from foo to bar');
+    expect(formattedDiffs[0]).to.equal(' * name was updated from **bar** to **foo**');
+    expect(formattedDiffs[1]).to.equal(' * title was updated from **foo** to **bar**');
   });
 
   it('should return correct format when values have been deleted', () => {
@@ -69,8 +69,8 @@ describe('update alert difference gatherer', () => {
     const formattedDiffs = updateAlertDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(2);
-    expect(formattedDiffs[0]).to.equal(' * name was added: bar');
-    expect(formattedDiffs[1]).to.equal(' * title was added: foo');
+    expect(formattedDiffs[0]).to.equal(' * name was added: **bar**');
+    expect(formattedDiffs[1]).to.equal(' * title was added: **foo**');
   });
 
   it('should return correct message when a value changed from "" or changed to ""', () => {
@@ -88,7 +88,7 @@ describe('update alert difference gatherer', () => {
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(2);
     expect(formattedDiffs[0]).to.equal(' * name was removed');
-    expect(formattedDiffs[1]).to.equal(' * title was added: bar');
+    expect(formattedDiffs[1]).to.equal(' * title was added: **bar**');
   });
 
   it('should order the keys alphabetically', () => {
@@ -107,9 +107,46 @@ describe('update alert difference gatherer', () => {
     const formattedDiffs = updateAlertDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(4);
-    expect(formattedDiffs[0]).to.equal(' * apple was updated from bar to foo');
-    expect(formattedDiffs[1]).to.equal(' * monkey was updated from tree to banana');
-    expect(formattedDiffs[2]).to.equal(' * title was updated from foo to bar');
-    expect(formattedDiffs[3]).to.equal(' * zebra was updated from savanna to stripe');
+    expect(formattedDiffs[0]).to.equal(' * apple was updated from **bar** to **foo**');
+    expect(formattedDiffs[1]).to.equal(' * monkey was updated from **tree** to **banana**');
+    expect(formattedDiffs[2]).to.equal(' * title was updated from **foo** to **bar**');
+    expect(formattedDiffs[3]).to.equal(' * zebra was updated from **savanna** to **stripe**');
+  });
+
+  [
+    {
+      new: `${'characters'.repeat(15)}z`,
+      old: `${'whizzbangs'.repeat(15)}z`,
+      description: 'the value is long',
+    },
+    {
+      new: 'hi\n\n\nhello',
+      old: 'yo\nsup',
+      description: 'the value contains newlines',
+    },
+    {
+      new: 'hi\rhello',
+      old: 'yo\r\r\rsup',
+      description: 'the value contains carriage returns',
+    },
+  ].forEach((testCase) => {
+    it(`should use blockquotes when ${testCase.description}`, () => {
+      const newObject = {
+        key: testCase.new,
+      };
+      const oldObject = {
+        key: testCase.old,
+      };
+      const formattedDiffs = updateAlertDifferenceGatherer
+        .formatMessage(newObject, oldObject).split('\n');
+      expect(formattedDiffs.length).to.equal(7);
+      expect(formattedDiffs[0]).to.equal(' * key was updated from ');
+      expect(formattedDiffs[1]).to.equal(`> ${oldObject.key.replace(/[\n\r]+/, ' ')}`);
+      expect(formattedDiffs[2]).to.equal('');
+      expect(formattedDiffs[3]).to.equal(' to ');
+      expect(formattedDiffs[4]).to.equal(`> ${newObject.key.replace(/[\n\r]+/, ' ')}`);
+      expect(formattedDiffs[5]).to.equal('');
+      expect(formattedDiffs[6]).to.equal('');
+    });
   });
 });
