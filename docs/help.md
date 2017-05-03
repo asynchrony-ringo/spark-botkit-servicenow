@@ -1,11 +1,11 @@
 ###Create
 * Create an Incident, Problem, or Change Request:
-    * `incident create <description> <category>`
+    * `incident create [description] [category]`
         * description can be multi word, but may not contain a new line character
         * category should be one of: Inquiry / Help, Software, Hardware, Network, Database
-    * `problem create <description>`
+    * `problem create [description]`
         * description can be multi word, but may not contain a new line character
-    * `cr create <description> <category>`
+    * `cr create [description] [category]`
         * description can be multi word, but may not contain a new line character
         * category should be one of: Hardware, Software, Business Service, System Software, Applications Software, Network, Telecom, Documentation, Other, Cloud Management
 
