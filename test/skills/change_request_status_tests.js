@@ -48,6 +48,7 @@ describe('change request status', () => {
           phase: 'Phase',
           sys_created_on: 'Created',
           sys_updated_on: 'Last Updated',
+          active: 'Active',
         },
         bot,
         message,

@@ -11,6 +11,7 @@ const changeRequestStatus = (controller) => {
     phase: 'Phase',
     sys_created_on: 'Created',
     sys_updated_on: 'Last Updated',
+    active: 'Active',
   };
 
   controller.hears(['cr status (.*)'], 'direct_message,direct_mention', (bot, message) => {
