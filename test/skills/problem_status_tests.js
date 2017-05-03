@@ -37,7 +37,21 @@ describe('problem status', () => {
       listenerCallback(bot, message);
 
       expect(statusController.replyWithStatus.calledOnce).to.be.true;
-      expect(statusController.replyWithStatus.args[0]).to.deep.equal(['problem', 'someSysId', 'Problem', {}, bot, message]);
+      expect(statusController.replyWithStatus.args[0]).to.deep.equal([
+        'problem',
+        'someSysId',
+        'Problem',
+        {
+          number: 'Number',
+          short_description: 'Description',
+          comments: 'Comments',
+          work_around: 'Workaround',
+          sys_created_on: 'Created',
+          sys_updated_on: 'Last Updated',
+          active: 'Active',
+        },
+        bot,
+        message]);
     });
   });
 });
