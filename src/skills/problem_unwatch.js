@@ -1,8 +1,8 @@
 const watchController = require('../skillsControllers/watch_controller.js');
 
 const problemUnwatch = (controller) => {
-  controller.hears(['problem remove watch[ ]+(.*)[ ]*'], 'direct_message,direct_mention', (bot, message) => {
-    const problemId = message.match[1];
+  controller.hears(['problem remove watch (.*)'], 'direct_message,direct_mention', (bot, message) => {
+    const problemId = message.match[1].trim();
 
     watchController.unwatchEntity('problem', problemId, 'Problem', bot, message);
   });

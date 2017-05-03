@@ -1,8 +1,8 @@
 const watchController = require('../skillsControllers/watch_controller.js');
 
 const problemWatch = (controller) => {
-  controller.hears(['problem watch[ ]+(.*)[ ]*'], 'direct_message,direct_mention', (bot, message) => {
-    const problemId = message.match[1];
+  controller.hears(['problem watch (.*)'], 'direct_message,direct_mention', (bot, message) => {
+    const problemId = message.match[1].trim();
 
     watchController.watchEntity('problem', problemId, 'Problem', bot, message);
   });

@@ -12,7 +12,7 @@ describe('change request status', () => {
 
   it('should register hear listener on controller', () => {
     expect(controller.hears.calledOnce).to.be.true;
-    expect(controller.hears.args[0][0]).to.deep.equal(['cr status[ ]+(.*)[ ]*']);
+    expect(controller.hears.args[0][0]).to.deep.equal(['cr status (.*)']);
     expect(controller.hears.args[0][1]).to.equal('direct_message,direct_mention');
     expect(controller.hears.args[0][2]).to.be.a('function');
   });
@@ -32,7 +32,7 @@ describe('change request status', () => {
     });
 
     it('reply with status with correct id', () => {
-      const message = { match: 'cr status someSysId'.match(/cr status[ ]+(.*)[ ]*/) };
+      const message = { match: 'cr status   someSysId  '.match(/cr status (.*)/) };
 
       listenerCallback(bot, message);
 
