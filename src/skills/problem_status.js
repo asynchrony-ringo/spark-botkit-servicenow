@@ -4,7 +4,7 @@ const problemStatus = (controller) => {
   controller.hears(['^problem status[ ]+(.*)[ ]*$'], 'direct_message,direct_mention', (bot, message) => {
     const problemId = message.match[1];
 
-    statusController.replyWithStatus('problem', problemId, 'Problem', bot, message);
+    statusController.replyWithStatus('problem', problemId, 'Problem', {}, bot, message);
   });
 };
 
