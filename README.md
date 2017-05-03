@@ -27,6 +27,11 @@ To actually get the bot up and running, a public address is required. We used ng
 
 You should now be able to communicate with the bot from within Cisco Spark
 
+### SNBot commands
+ 
+ See the [help sheet](https://gitlab.asynchrony.com/proj-1274/spark-botkit-servicenow/blob/master/docs/help.md) for a list of the various SNBot commands
+
+
 ### Alerting
 To enable your bot to recieve update alerts from ServiceNow you must add a Business Rule.
 
