@@ -29,7 +29,7 @@ You should now be able to communicate with the bot from within Cisco Spark
 
 ### SNBot commands
  
- See the [help sheet](https://gitlab.asynchrony.com/proj-1274/spark-botkit-servicenow/blob/master/docs/help.md) for a list of the various SNBot commands
+ See the [help sheet](https://gitlab.asynchrony.com/proj-1274/spark-botkit-servicenow/blob/master/docs/help.md) or type '@SNBot help' within Spark for a list of the various SNBot commands
 
 
 ### Alerting
