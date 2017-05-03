@@ -81,7 +81,7 @@ describe('status controller', () => {
     ].forEach((testCase) => {
       const { entity, attributes, expectedListMarkdown, testDescription } = testCase;
       it(`should reply with correct status when ${testDescription}`, () => {
-        const tableRecordPromise = Promise.resolve(entity);
+        const tableRecordPromise = Promise.resolve({ result: entity });
         const message = { some: 'message' };
 
         serviceNowClient.getTableRecord.withArgs(table, entityId).returns(tableRecordPromise);

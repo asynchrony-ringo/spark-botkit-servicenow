@@ -1,10 +1,22 @@
 const statusController = require('../skillsControllers/status_controller.js');
 
+
 const changeRequestStatus = (controller) => {
+  const table = 'change_request';
+  const description = 'Change Request';
+  const attributes = {
+    number: 'Number',
+    short_description: 'Description',
+    category: 'Category',
+    phase: 'Phase',
+    sys_created_on: 'Created',
+    sys_updated_on: 'Last Updated',
+  };
+
   controller.hears(['cr status (.*)'], 'direct_message,direct_mention', (bot, message) => {
     const changeRequestId = message.match[1].trim();
 
-    statusController.replyWithStatus('change_request', changeRequestId, 'Change Request', {}, bot, message);
+    statusController.replyWithStatus(table, changeRequestId, description, attributes, bot, message);
   });
 };
 
