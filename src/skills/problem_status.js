@@ -5,7 +5,7 @@ const problemStatus = (controller) => {
   const description = 'Problem';
   const attributes = {
     number: 'Number',
-    short_description: 'Description',
+    short_description: 'Short Description',
     sys_created_on: 'Created',
     sys_updated_on: 'Last Updated',
     active: 'Active',

@@ -43,7 +43,7 @@ describe('incident status', () => {
         'Incident',
         {
           number: 'Number',
-          short_description: 'Description',
+          short_description: 'Short Description',
           category: 'Category',
           subcategory: 'Sub Category',
           sys_created_on: 'Created',

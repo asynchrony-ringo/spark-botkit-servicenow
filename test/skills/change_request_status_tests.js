@@ -43,7 +43,7 @@ describe('change request status', () => {
         'Change Request',
         {
           number: 'Number',
-          short_description: 'Description',
+          short_description: 'Short Description',
           category: 'Category',
           phase: 'Phase',
           sys_created_on: 'Created',

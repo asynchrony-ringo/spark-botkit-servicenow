@@ -5,7 +5,7 @@ const incidentStatus = (controller) => {
   const description = 'Incident';
   const attributes = {
     number: 'Number',
-    short_description: 'Description',
+    short_description: 'Short Description',
     category: 'Category',
     subcategory: 'Sub Category',
     sys_created_on: 'Created',
