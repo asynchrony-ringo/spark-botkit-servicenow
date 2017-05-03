@@ -1,13 +1,13 @@
 const sinon = require('sinon');
 const expect = require('chai').expect;
-const problemUnWatch = require('../../src/skills/problem_unwatch.js');
+const problemUnwatch = require('../../src/skills/problem_unwatch.js');
 const watchController = require('../../src/skillsControllers/watch_controller.js');
 
 describe('problem unwatch', () => {
   const controller = { hears: sinon.spy() };
 
   beforeEach(() => {
-    problemUnWatch(controller);
+    problemUnwatch(controller);
     process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
   });
 
