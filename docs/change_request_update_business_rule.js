@@ -2,7 +2,7 @@
   function getCRObject(cr) {
     return {
       type: 'Change Request',
-      alert_email: cr.opened_by.email.getDisplayValue(),
+      alert_email: cr.requested_by.email.getDisplayValue(),
       parent: cr.parent.getDisplayValue(),
       made_sla: cr.made_sla.getDisplayValue(),
       watch_list: cr.watch_list.getDisplayValue(),
@@ -14,6 +14,7 @@
       sys_updated_by: cr.sys_updated_by.getDisplayValue(),
       work_around: cr.work_around.getDisplayValue(),
       opened_by: cr.opened_by.getDisplayValue(),
+      requested_by: cr.requested_by.getDisplayValue(),
       user_input: cr.user_input.getDisplayValue(),
       state: cr.state.getDisplayValue(),
       sys_created_by: cr.sys_created_by.getDisplayValue(),
