@@ -44,8 +44,6 @@ describe('problem status', () => {
         {
           number: 'Number',
           short_description: 'Description',
-          comments: 'Comments',
-          work_around: 'Workaround',
           sys_created_on: 'Created',
           sys_updated_on: 'Last Updated',
           active: 'Active',

@@ -46,8 +46,6 @@ describe('incident status', () => {
           short_description: 'Description',
           category: 'Category',
           subcategory: 'Sub Category',
-          comments: 'Comments',
-          work_notes: 'Work Notes',
           sys_created_on: 'Created',
           sys_updated_on: 'Last Updated',
           active: 'Active',
