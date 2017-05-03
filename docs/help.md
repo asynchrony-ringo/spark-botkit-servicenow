@@ -1,13 +1,13 @@
 ###Create
 * Create an Incident, Problem, or Change Request:
-    * `incident create [description] [category]`
-        * description can be multi word, but may not contain a new line character
-        * category should be one of: Inquiry / Help, Software, Hardware, Network, Database
-    * `problem create [description]`
-        * description can be multi word, but may not contain a new line character
-    * `cr create [description] [category]`
-        * description can be multi word, but may not contain a new line character
-        * category should be one of: Hardware, Software, Business Service, System Software, Applications Software, Network, Telecom, Documentation, Other, Cloud Management
+    * `incident create [short description] [category]`
+        * **short description:** sentence describing the incident
+        * **category:** Inquiry / Help, Software, Hardware, Network, or Database
+    * `problem create [short description]`
+        * **short description:** sentence describing the problem
+    * `cr create [short description] [category]`
+        * **short description:** sentence describing the change request
+        * **category:** Hardware, Software, Business Service, System Software, Applications Software, Network, Telecom, Documentation, Other, or Cloud Management
 
 ###View
 * View the status of an Incident, Problem, or Change Request by internal ID:
