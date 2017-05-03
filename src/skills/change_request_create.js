@@ -5,6 +5,7 @@ const changeRequestCreate = (controller) => {
     const changeRequest = {
       short_description: message.match[1],
       category: message.match[2],
+      requested_by: message.user,
     };
 
     createController.replyWithStatus('change_request', changeRequest, 'Change Request', bot, message);

@@ -23,6 +23,7 @@ describe('change request create', () => {
     const changeRequest = {
       short_description: 'description',
       category: 'category',
+      requested_by: 'someone@example.com',
     };
     const message = {
       match: 'cr create [description] [category]'.match(/cr create \[(.*)\] \[(.*)\]/),
