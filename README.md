@@ -12,10 +12,13 @@ run the bot either in production or the dev environment.
     - Save this access token securely for future use: it will be required in order to run the bot
  - Create a `.env` environment variables file in the root directory of the project.
     - This file will contain all your local environment variables that get loaded by the project.
-    - Copy & paste the access token from the step above and set it as the ```access_token``` variable in the ```.env``` file of the project
-        ```
-        access_token=[bot_access_token_here]
-        ```
+ - Setup `.env` file with needed variables
+ 
+    ```
+    access_token=[bot_access_token_here]
+    base_url=[your_serviceNow_instance_base_url]
+    bot_name=[bot_name_here]
+    ```
  
 To actually get the bot up and running, a public address is required. We used ngrok in order to create a public address that can be utilized. 
 
