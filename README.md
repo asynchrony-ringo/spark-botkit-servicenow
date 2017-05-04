@@ -111,3 +111,20 @@ To enable your bot to recieve update alerts from ServiceNow you must add a Busin
         1. [See our examples for writing Business Rules](https://gitlab.asynchrony.com/proj-1274/spark-botkit-servicenow/tree/master/docs)
         2. Note: You will have to update the call to `setEndpoint` in order to pass in the public address of your bot
 1. Submit the Business Rule
+
+---
+
+## Creating new skills
+
+In order to create additional functionality for the bot, you will have to create a new skill that listens to a particular message and
+acts accordingly. The existing skills can be found in the `src/skills` directory. The project is set up in a way that any skills located
+within this directory will be registered with the Spark bot. 
+
+Within a newly created skill, you will need to call `.hears` and provide a regex pattern that will match a certain message the user sends
+to the bot in Spark, as well as a callback that will fire when the message is received. The callback takes both the bot and the message.
+In order to have the bot send a message to the user, you can use the bot's `.reply(message, "custom message")` function, which takes
+the original message and your bot's response.
+
+To communicate with ServiceNow, you can use the `service_now_client.js` in order to make calls to the 
+[Table API](https://docs.servicenow.com/bundle/istanbul-servicenow-platform/page/integrate/inbound-rest/concept/c_TableAPI.html). Using
+this class, you can retrieve, create, and update records within tables in ServiceNow.
