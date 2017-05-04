@@ -1,0 +1,38 @@
+{
+  "name": "ServiceNow bot for Cisco Spark",
+  "description": "ServiceNow bot for Cisco Spark",
+  "repository": "https://github.com/asynchrony/spark-botkit-servicenow",
+  "addons": [],
+  "env": {
+    "public_address": {
+      "description": "The address at which your bot can be reached. The public address of your Heroku app will be 'https://<App Name>.herokuapp.com",
+      "required": true
+    },
+    "access_token": {
+      "description": "The bot's access token from Cisco Spark. Create a new bot account at https://developer.ciscospark.com/add-bot.html if you do not have one.",
+      "required": true
+    },
+    "secret": {
+      "description": "A secret for validating that incoming webhooks originate from Cisco Spark.",
+      "required": true
+    },
+    "port": {
+      "description": "Port that the bot will run on",
+      "value": "3000",
+      "required": false
+    },
+    "base_url": {
+      "description": "The URL to your ServiceNow instance.",
+      "required": true
+    },
+    "salesforce_username": {
+      "description": "The username of the account to used to authenticate with ServiceNow. Changes made to ServiceNow will be performed by this user, so you may want to create a special bot account.",
+      "required": true
+    },
+    "salesforce_password": {
+      "description": "The password of the account to used to authenticate with ServiceNow.",
+      "required": true
+    }
+  },
+  "keywords": ["spark", "cisco", "ciscospark", "servicenow", "bot", "botkit", "node"]
+}
