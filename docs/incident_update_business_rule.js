@@ -1,5 +1,5 @@
 (function executeRule(current, previous /*null when async*/) {
-	function getIncidentObject(incident) {
+    function getIncidentObject(incident) {
 		return {
 			type: 'Incident',
 			alert_email: incident.caller_id.email.getDisplayValue(),
