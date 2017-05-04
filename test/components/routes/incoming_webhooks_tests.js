@@ -50,33 +50,76 @@ describe('incoming webhooks', () => {
       };
     });
 
-    [undefined, 'right'].forEach((headerValue) => {
-      it(`should return 403 the calculated hmacSHA1 does not match header value (${headerValue})`, () => {
-        request.hmacSHA1 = 'wrong';
-        request.get.withArgs('X-Spark-Signature').returns(headerValue);
+    describe('when no secret is specified', () => {
+      [undefined, 'right'].forEach((headerValue) => {
+        it(`should return 200 regardless of if the calculated hmacSHA1 does not match header value (${headerValue})`, () => {
+          request.hmacSHA1 = 'wrong';
+          request.get.withArgs('X-Spark-Signature').returns(headerValue);
 
-        webserverPostCallback(request, response);
-        expect(response.status.calledOnce).to.be.true;
-        expect(response.status.args[0][0]).to.equal(403);
-        expect(response.send.calledOnce).to.be.true;
-        expect(response.send.args[0][0]).to.equal('HMAC validation error');
+          webserverPostCallback(request, response);
+          expect(response.status.calledOnce).to.be.true;
+          expect(response.status.args[0][0]).to.equal(200);
+          expect(response.send.calledOnce).to.be.true;
+          expect(response.send.args[0][0]).to.equal('ok');
+          expect(controller.handleWebhookPayload.calledOnce).to.be.true;
+        });
+      });
+
+      [undefined, 'matching'].forEach((matchingHeaderValue) => {
+        it('should return 200 regardless of if the calculated hmacSHA1 matches the header value', () => {
+          request.hmacSHA1 = matchingHeaderValue;
+          request.get.withArgs('X-Spark-Signature').returns(matchingHeaderValue);
+
+          controller.spawn.returns('a bot');
+
+          webserverPostCallback(request, response);
+          expect(response.status.calledOnce).to.be.true;
+          expect(response.status.args[0][0]).to.equal(200);
+          expect(response.send.calledOnce).to.be.true;
+          expect(response.send.args[0][0]).to.equal('ok');
+          expect(controller.handleWebhookPayload.calledOnce).to.be.true;
+          expect(controller.handleWebhookPayload.args).to.deep.equal([[request, response, 'a bot']]);
+        });
       });
     });
 
-    [undefined, 'matching'].forEach((matchingHeaderValue) => {
-      it('should return 200 when calculated hmacSHA1 matches the header value', () => {
-        request.hmacSHA1 = matchingHeaderValue;
-        request.get.withArgs('X-Spark-Signature').returns(matchingHeaderValue);
+    describe('when a secret is specified', () => {
+      beforeEach(() => {
+        process.env.secret = 'foo';
+      });
 
-        controller.spawn.returns('a bot');
+      afterEach(() => {
+        delete process.env.base_url;
+      });
 
-        webserverPostCallback(request, response);
-        expect(response.status.calledOnce).to.be.true;
-        expect(response.status.args[0][0]).to.equal(200);
-        expect(response.send.calledOnce).to.be.true;
-        expect(response.send.args[0][0]).to.equal('ok');
-        expect(controller.handleWebhookPayload.calledOnce).to.be.true;
-        expect(controller.handleWebhookPayload.args).to.deep.equal([[request, response, 'a bot']]);
+      [undefined, 'right'].forEach((headerValue) => {
+        it(`should return 403 the calculated hmacSHA1 does not match header value (${headerValue})`, () => {
+          request.hmacSHA1 = 'wrong';
+          request.get.withArgs('X-Spark-Signature').returns(headerValue);
+
+          webserverPostCallback(request, response);
+          expect(response.status.calledOnce).to.be.true;
+          expect(response.status.args[0][0]).to.equal(403);
+          expect(response.send.calledOnce).to.be.true;
+          expect(response.send.args[0][0]).to.equal('HMAC validation error');
+        });
+      });
+
+      [undefined, 'matching'].forEach((matchingHeaderValue) => {
+        it('should return 200 when calculated hmacSHA1 matches the header value', () => {
+          request.hmacSHA1 = matchingHeaderValue;
+          request.get.withArgs('X-Spark-Signature').returns(matchingHeaderValue);
+
+          controller.spawn.returns('a bot');
+
+          webserverPostCallback(request, response);
+          expect(response.status.calledOnce).to.be.true;
+          expect(response.status.args[0][0]).to.equal(200);
+          expect(response.send.calledOnce).to.be.true;
+          expect(response.send.args[0][0]).to.equal('ok');
+          expect(controller.handleWebhookPayload.calledOnce).to.be.true;
+          expect(controller.handleWebhookPayload.args).to.deep.equal([[request, response, 'a bot']]);
+        });
       });
     });
   });

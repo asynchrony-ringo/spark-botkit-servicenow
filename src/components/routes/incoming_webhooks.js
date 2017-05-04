@@ -10,7 +10,7 @@ module.exports = (webserver, controller) => {
     bodyParser.urlencoded({ extended: true })]);
 
   webserver.post('/ciscospark/receive', (req, res) => {
-    if (req.hmacSHA1 !== req.get('X-Spark-Signature')) {
+    if (process.env.secret && req.hmacSHA1 !== req.get('X-Spark-Signature')) {
       res.status(403).send('HMAC validation error');
       return;
     }
