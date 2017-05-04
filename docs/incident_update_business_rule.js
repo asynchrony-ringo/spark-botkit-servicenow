@@ -89,7 +89,7 @@
 
 	var restMessage = new sn_ws.RESTMessageV2();
 	restMessage.setHttpMethod("post");
-	restMessage.setEndpoint([YOUR_PUBLIC_FACING_URL]);
+	restMessage.setEndpoint("https://c33e4b47.ngrok.io/servicenow/update");
 	restMessage.setRequestHeader('Content-Type', 'application/json');
 	var body = {
 		'new': getIncidentObject(current),
