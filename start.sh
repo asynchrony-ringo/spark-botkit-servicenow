@@ -1,3 +1,3 @@
-docker pull asynchronyringo/service-now-spark-bot
+docker pull asynchronyringo/servicenow-spark-bot
 docker-compose down
 docker-compose up

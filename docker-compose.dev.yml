@@ -1,7 +1,6 @@
 version: '2'
 services:
-  service-now:
-    ports:
-      - "3000:3000"
+  servicenow:
     volumes:
       - .:/app
+      - /app/node_modules

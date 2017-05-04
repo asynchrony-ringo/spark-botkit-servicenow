@@ -1,4 +1,4 @@
-This project is aimed at bridging Spark and Service now via Spark box technology. 
+This project is aimed at bridging Spark and Service now via Spark box technology.
 
 ## Getting Started
 
@@ -7,7 +7,7 @@ This project is aimed at bridging Spark and Service now via Spark box technology
  1. Using the "Filter Navigator" search bar, search for "Users"
  1. Click on the "Users" link under "User Administration"
  1. Click on the "New" button in the top navigation bar
- 1. Create a user... 
+ 1. Create a user...
 
 
 #### Create the Bot
@@ -19,7 +19,7 @@ This project is aimed at bridging Spark and Service now via Spark box technology
  - Create a `.env` environment variables file in the root directory of the project.
     - This file will contain all your local environment variables that get loaded by the project.
  - Populate your `.env` file with the following variables:
- 
+
     ```
     access_token=[bot_access_token_from_spark]
     base_url=[serviceNow_instance_base_url]
@@ -30,14 +30,14 @@ This project is aimed at bridging Spark and Service now via Spark box technology
     ```
 
 #### Setup a Public Address Through ngrok
- 
-To actually get the bot up and running, a public address is required. We used ngrok in order to create a public address that can be utilized. 
+
+To actually get the bot up and running, a public address is required. We used ngrok in order to create a public address that can be utilized.
 
  - Install ngrok globally via npm: `npm install -g ngrok`
  - Create a public address on port 3000: `ngrok http 3000`
  - ngrok should create a session with a unique `http` and `https` forwarding address (something like: `https://bb94ea5d.ngrok.io`)
  - Add the `https` forwarding address to your `.env` file as follows:
- 
+
     ```
     public_address=[ngrok_https_forwarding_address]
     ```
@@ -45,7 +45,7 @@ To actually get the bot up and running, a public address is required. We used ng
 ### Build and Run
 
  - install necessary node packages: `npm install`
- - build the docker image for the project: `docker build -t asynchronyringo/service-now-spark-bot .`
+ - build the docker image for the project: `docker build -t asynchronyringo/servicenow-spark-bot .`
  - spin up the docker container: `./start.dev.sh`
     - NOTE: To spin up the docker container in production, run: `start.sh`
 
@@ -112,6 +112,4 @@ To enable your bot to recieve update alerts from ServiceNow you must add a Busin
     4. Enter the code that will make a request whenever a change is triggered:
         1. [See our examples for writing Business Rules](https://gitlab.asynchrony.com/proj-1274/spark-botkit-servicenow/tree/master/docs)
         2. Note: You will have to update the call to `setEndpoint` in order to pass in the public address of your bot
-1. Submit the Business Rule 
-    
-
+1. Submit the Business Rule

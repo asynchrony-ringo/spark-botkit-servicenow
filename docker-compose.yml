@@ -1,8 +1,9 @@
 version: '2'
 services:
-  service-now:
+  servicenow:
     ports:
-      - "3000:3000"
-    image: asynchronyringo/service-now-spark-bot
+      - "3001:3001"
+    image: asynchronyringo/servicenow-spark-bot
+    container_name: servicenow-spark-bot
     volumes:
       - .env:/app/.env
