@@ -1,36 +1,34 @@
 This project is aimed at bridging Spark and Service now via Spark box technology. 
 
-## Development Requirements
-The bot is spun up within a docker container. Scripts have been written in order to 
-run the bot either in production or the dev environment.
- - start-dev.sh
- - start.sh
-
 ### Getting Started
 
  - [Create a bot in the Spark for Developers site](https://developer.ciscospark.com/add-bot.html). You'll receive an `access token`.
     - Save this access token securely for future use: it will be required in order to run the bot
  - Create a `.env` environment variables file in the root directory of the project.
     - This file will contain all your local environment variables that get loaded by the project.
- - Setup `.env` file with needed variables
+ - Populate your `.env` file with the following variables:
  
     ```
-    access_token=[bot_access_token_here]
-    base_url=[your_serviceNow_instance_base_url]
-    bot_name=[bot_name_here]
+    access_token=[bot_access_token_from_spark]
+    base_url=[serviceNow_instance_base_url]
+    bot_name=[bot_name_from_spark]
     ```
  
 To actually get the bot up and running, a public address is required. We used ngrok in order to create a public address that can be utilized. 
 
- - Install ngrok globally via npm (```npm install -g ngrok```). 
- - Create a public address on port 3000 - ```ngrok http 3000```
-    - NOTE: the docker instance must be running on port 3000 in order for communication to the bot to work
- - Copy the https forwarding address in the ngrok log (```https://<########>.ngrok.io```)
- - Paste that address as the ```public_address``` variable in the ```.env``` file of the project
- - run `npm install`
- - make sure you have docker installed
- - ` docker build -t asynchronyringo/service-now-spark-bot . `
- - run the start-dev script `./start.dev.sh`
+ - Install ngrok globally via npm: `npm install -g ngrok`
+ - Create a public address on port 3000: `ngrok http 3000`
+ - ngrok should create a session with a unique `http` and `https` forwarding address (something like: `https://bb94ea5d.ngrok.io`)
+ - Add the `https` forwarding address to your `.env` file as follows:
+ 
+    ```
+    public_address=[ngrok_https_forwarding_address]
+    ```
+
+ - install necessary node packages: `npm install`
+ - build the docker image for the project: `docker build -t asynchronyringo/service-now-spark-bot .`
+ - spin up the docker container: `./start.dev.sh`
+    - NOTE: To spin up the docker container in production, run: `start.sh`
 
 
 You should now be able to communicate with the bot from within Cisco Spark
