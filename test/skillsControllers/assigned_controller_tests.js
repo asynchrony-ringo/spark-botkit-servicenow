@@ -97,7 +97,7 @@ describe('assigned controller', () => {
           let expectedResponse = `Found 2 assigned ${description}:\n\n`;
 
           records.result.forEach((record) => {
-            expectedResponse += ` * [${record.number}](service-now-baseurl.wow/${tableName}.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
+            expectedResponse += ` * [${record.sys_id}](service-now-baseurl.wow/${tableName}.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
           });
 
           const tableRecordPromise = Promise.resolve(records);
@@ -122,7 +122,7 @@ describe('assigned controller', () => {
 
         let expectedResponse = `Found 100 assigned ${description}. Here are the most recently updated 10:\n\n`;
         records.result.slice(0, 10).forEach((record) => {
-          expectedResponse += ` * [${record.number}](service-now-baseurl.wow/${tableName}.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
+          expectedResponse += ` * [${record.sys_id}](service-now-baseurl.wow/${tableName}.do?sys_id=${record.sys_id}): ${record.short_description}\n`;
         });
 
         const tableRecordPromise = Promise.resolve(records);
