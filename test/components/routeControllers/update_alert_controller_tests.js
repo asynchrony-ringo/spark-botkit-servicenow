@@ -61,14 +61,14 @@ describe('update alert controller', () => {
         let conversation;
 
         beforeEach(() => {
-          process.env.serviceNowBaseUrl = 'niceurl.some-domain.com';
+          process.env.base_url = 'niceurl.some-domain.com';
           sinon.stub(updateAlertDifferenceGatherer, 'formatMessage');
           conversationCallback = bot.startPrivateConversation.args[0][1];
           conversation = { say: sinon.stub() };
         });
 
         afterEach(() => {
-          delete process.env.serviceNowBaseUrl;
+          delete process.env.base_url;
           updateAlertDifferenceGatherer.formatMessage.restore();
         });
 

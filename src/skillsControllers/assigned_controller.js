@@ -18,7 +18,7 @@ const createResponseMessage = (tableName, description, assignedEntities) => {
   }
 
   entityMessageList.forEach((record) => {
-    const serviceNowLink = `[${record.number}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${record.sys_id})`;
+    const serviceNowLink = `[${record.number}](${process.env.base_url}/${tableName}.do?sys_id=${record.sys_id})`;
     message += ` * ${serviceNowLink}: ${record.short_description}\n`;
   });
 

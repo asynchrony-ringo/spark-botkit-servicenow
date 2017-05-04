@@ -13,12 +13,12 @@ describe('status controller', () => {
     bot = { reply: sinon.spy() };
 
     sinon.stub(serviceNowClient, 'getTableRecord').returns(Promise.resolve());
-    process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
+    process.env.base_url = 'servicenow-instance.domain';
   });
 
   afterEach(() => {
     serviceNowClient.getTableRecord.restore();
-    delete process.env.serviceNowBaseUrl;
+    delete process.env.base_url;
   });
 
   it('should look up table record based on id', () => {

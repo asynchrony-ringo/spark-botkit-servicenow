@@ -11,7 +11,7 @@ const createController = {
         }
 
         const recordId = response.result.sys_id;
-        const serviceNowLink = `[${recordId}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${recordId})`;
+        const serviceNowLink = `[${recordId}](${process.env.base_url}/${tableName}.do?sys_id=${recordId})`;
         bot.reply(message, `Success, ${description} created: ${serviceNowLink}`);
       })
       .catch((error) => {

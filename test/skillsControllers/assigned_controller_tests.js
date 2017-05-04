@@ -17,12 +17,12 @@ describe('assigned controller', () => {
       bot = { reply: sinon.spy() };
 
       sinon.stub(serviceNowClient, 'getTableRecords').returns(Promise.resolve());
-      process.env.serviceNowBaseUrl = 'service-now-baseurl.wow';
+      process.env.base_url = 'service-now-baseurl.wow';
     });
 
     afterEach(() => {
       serviceNowClient.getTableRecords.restore();
-      delete process.env.serviceNowBaseURL;
+      delete process.env.base_url;
     });
 
     it('calls getTableRecords for specified entity type', () => {

@@ -28,14 +28,14 @@ describe('watch controller', () => {
       sinon.stub(serviceNowClient, 'getTableRecord').returns(Promise.resolve());
       sinon.stub(serviceNowClient, 'getTableRecords').returns(Promise.resolve());
       sinon.stub(serviceNowClient, 'updateTableRecord').returns(Promise.resolve());
-      process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
+      process.env.base_url = 'servicenow-instance.domain';
     });
 
     afterEach(() => {
       serviceNowClient.getTableRecord.restore();
       serviceNowClient.getTableRecords.restore();
       serviceNowClient.updateTableRecord.restore();
-      delete process.env.serviceNowBaseUrl;
+      delete process.env.base_url;
     });
 
     it('should look up table record based on id', () => {
@@ -166,7 +166,7 @@ describe('watch controller', () => {
             return watchController.watchEntity(tableName, entityId, description, bot, message)
               .then(() => {
                 expect(bot.reply.calledOnce).to.be.true;
-                expect(bot.reply.args[0]).to.deep.equal([message, `You have been added to the watch list for the ${description}: [${entityId}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${entityId})`]);
+                expect(bot.reply.args[0]).to.deep.equal([message, `You have been added to the watch list for the ${description}: [${entityId}](${process.env.base_url}/${tableName}.do?sys_id=${entityId})`]);
               });
           });
         });
@@ -198,14 +198,14 @@ describe('watch controller', () => {
       sinon.stub(serviceNowClient, 'getTableRecord').returns(Promise.resolve());
       sinon.stub(serviceNowClient, 'getTableRecords').returns(Promise.resolve());
       sinon.stub(serviceNowClient, 'updateTableRecord').returns(Promise.resolve());
-      process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
+      process.env.base_url = 'servicenow-instance.domain';
     });
 
     afterEach(() => {
       serviceNowClient.getTableRecord.restore();
       serviceNowClient.getTableRecords.restore();
       serviceNowClient.updateTableRecord.restore();
-      delete process.env.serviceNowBaseUrl;
+      delete process.env.base_url;
     });
 
     it('should look up table record based on id', () => {
@@ -336,7 +336,7 @@ describe('watch controller', () => {
             return watchController.unwatchEntity(tableName, entityId, description, bot, message)
               .then(() => {
                 expect(bot.reply.calledOnce).to.be.true;
-                expect(bot.reply.args[0]).to.deep.equal([message, `You have been removed from the watch list for the ${description}: [${entityId}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${entityId})`]);
+                expect(bot.reply.args[0]).to.deep.equal([message, `You have been removed from the watch list for the ${description}: [${entityId}](${process.env.base_url}/${tableName}.do?sys_id=${entityId})`]);
               });
           });
         });

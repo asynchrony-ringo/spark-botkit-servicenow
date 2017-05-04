@@ -16,7 +16,7 @@ const statusController = {
   replyWithStatus: (tableName, id, description, attributes, bot, message) =>
     serviceNowClient.getTableRecord(tableName, id)
       .then((tableRecord) => {
-        const serviceNowLink = `[${id}](${process.env.serviceNowBaseUrl}/${tableName}.do?sys_id=${id})`;
+        const serviceNowLink = `[${id}](${process.env.base_url}/${tableName}.do?sys_id=${id})`;
         const response = `Information for ${description}: ${serviceNowLink}\n${formatMarkdownList(tableRecord.result, attributes)}`;
         bot.reply(message, response);
       })

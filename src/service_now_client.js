@@ -4,10 +4,10 @@ const querystring = require('querystring');
 const serviceNowClient = {
   getTableRecord: (table, sysId) => new Promise((resolve, reject) => {
     request.get({
-      url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}/${sysId}`,
+      url: `${process.env.base_url}/api/now/v2/table/${table}/${sysId}`,
       auth: {
-        user: process.env.serviceNowUsername,
-        pass: process.env.serviceNowPassword,
+        user: process.env.user,
+        pass: process.env.password,
       },
       json: true,
     }, (error, response, json) => {
@@ -23,10 +23,10 @@ const serviceNowClient = {
 
   getTableRecords: (table, query) => new Promise((resolve, reject) => {
     request.get({
-      url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}?${querystring.stringify(query)}`,
+      url: `${process.env.base_url}/api/now/v2/table/${table}?${querystring.stringify(query)}`,
       auth: {
-        user: process.env.serviceNowUsername,
-        pass: process.env.serviceNowPassword,
+        user: process.env.user,
+        pass: process.env.password,
       },
       json: true,
     }, (error, response, json) => {
@@ -42,10 +42,10 @@ const serviceNowClient = {
 
   insertTableRecord: (table, record) => new Promise((resolve, reject) => {
     request.post({
-      url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}`,
+      url: `${process.env.base_url}/api/now/v2/table/${table}`,
       auth: {
-        user: process.env.serviceNowUsername,
-        pass: process.env.serviceNowPassword,
+        user: process.env.user,
+        pass: process.env.password,
       },
       body: record,
       json: true,
@@ -62,10 +62,10 @@ const serviceNowClient = {
 
   updateTableRecord: (table, sysId, payload) => new Promise((resolve, reject) => {
     request.patch({
-      url: `${process.env.serviceNowBaseUrl}/api/now/v2/table/${table}/${sysId}`,
+      url: `${process.env.base_url}/api/now/v2/table/${table}/${sysId}`,
       auth: {
-        user: process.env.serviceNowUsername,
-        pass: process.env.serviceNowPassword,
+        user: process.env.user,
+        pass: process.env.password,
       },
       body: payload,
       json: true,

@@ -8,11 +8,11 @@ describe('problem unwatch', () => {
 
   beforeEach(() => {
     problemUnwatch(controller);
-    process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
+    process.env.base_url = 'servicenow-instance.domain';
   });
 
   afterEach(() => {
-    delete process.env.serviceNowBaseUrl;
+    delete process.env.base_url;
   });
 
   it('should register hear listener on controller', () => {

@@ -15,12 +15,12 @@ describe('create controller', () => {
 
 
     sinon.stub(serviceNowClient, 'insertTableRecord').returns(Promise.resolve());
-    process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
+    process.env.base_url = 'servicenow-instance.domain';
   });
 
   afterEach(() => {
     serviceNowClient.insertTableRecord.restore();
-    delete process.env.serviceNowBaseUrl;
+    delete process.env.base_url;
   });
 
   it('should create table record', () => {
@@ -72,7 +72,7 @@ describe('create controller', () => {
       .then(() => {
         expect(bot.reply.calledOnce).to.be.true;
         expect(bot.reply.args[0][0]).to.equal(message);
-        expect(bot.reply.args[0][1]).to.equal(`Success, entity description created: [${insertResponse.result.sys_id}](${process.env.serviceNowBaseUrl}/table_name.do?sys_id=${insertResponse.result.sys_id})`);
+        expect(bot.reply.args[0][1]).to.equal(`Success, entity description created: [${insertResponse.result.sys_id}](${process.env.base_url}/table_name.do?sys_id=${insertResponse.result.sys_id})`);
       });
   });
 });

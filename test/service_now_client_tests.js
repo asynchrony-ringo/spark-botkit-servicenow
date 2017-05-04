@@ -4,16 +4,16 @@ const request = require('request');
 const sinon = require('sinon');
 
 describe('service now client', () => {
-  const serviceNowUsername = 'service now user';
-  const serviceNowPassword = 'service now password';
-  const serviceNowBaseUrl = 'service now base url';
+  const user = 'service now user';
+  const password = 'service now password';
+  const base_url = 'service now base url';
 
   let testObject;
 
   beforeEach(() => {
-    process.env.serviceNowUsername = serviceNowUsername;
-    process.env.serviceNowPassword = serviceNowPassword;
-    process.env.serviceNowBaseUrl = serviceNowBaseUrl;
+    process.env.user = user;
+    process.env.password = password;
+    process.env.base_url = base_url;
 
     sinon.stub(request, 'get');
     sinon.stub(request, 'post');
@@ -26,9 +26,9 @@ describe('service now client', () => {
     request.get.restore();
     request.post.restore();
     request.patch.restore();
-    delete process.env.serviceNowUsername;
-    delete process.env.serviceNowPassword;
-    delete process.env.serviceNowBaseUrl;
+    delete process.env.user;
+    delete process.env.password;
+    delete process.env.base_url;
   });
 
   describe('getTableRecord', () => {
@@ -39,14 +39,14 @@ describe('service now client', () => {
 
     it('should make get request to the correct url', () => {
       testObject.getTableRecord('sometable', 'some sys id');
-      expect(request.get.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v2/table/sometable/some sys id`);
+      expect(request.get.args[0][0]).to.have.property('url', `${base_url}/api/now/v2/table/sometable/some sys id`);
     });
 
     it('should include auth in request', () => {
       testObject.getTableRecord('table', 'id');
       expect(request.get.args[0][0]).to.have.property('auth').that.deep.equal({
-        user: serviceNowUsername,
-        pass: serviceNowPassword,
+        user: user,
+        pass: password,
       });
     });
 
@@ -107,15 +107,15 @@ describe('service now client', () => {
     ].forEach((queryObj) => {
       it(`should make get request to the correct url with the query "${queryObj.string}"`, () => {
         testObject.getTableRecords('sometable', queryObj.query);
-        expect(request.get.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v2/table/sometable${queryObj.string}`);
+        expect(request.get.args[0][0]).to.have.property('url', `${base_url}/api/now/v2/table/sometable${queryObj.string}`);
       });
     });
 
     it('should include auth in request', () => {
       testObject.getTableRecords('table', query);
       expect(request.get.args[0][0]).to.have.property('auth').that.deep.equal({
-        user: serviceNowUsername,
-        pass: serviceNowPassword,
+        user: user,
+        pass: password,
       });
     });
 
@@ -171,14 +171,14 @@ describe('service now client', () => {
 
     it('should make post request to the correct url', () => {
       testObject.insertTableRecord('sometable', record);
-      expect(request.post.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v2/table/sometable`);
+      expect(request.post.args[0][0]).to.have.property('url', `${base_url}/api/now/v2/table/sometable`);
     });
 
     it('should include auth in request', () => {
       testObject.insertTableRecord('table', record);
       expect(request.post.args[0][0]).to.have.property('auth').that.deep.equal({
-        user: serviceNowUsername,
-        pass: serviceNowPassword,
+        user: user,
+        pass: password,
       });
     });
 
@@ -239,14 +239,14 @@ describe('service now client', () => {
 
     it('should make patch request to the correct url', () => {
       testObject.updateTableRecord('sometable', sysId, changes);
-      expect(request.patch.args[0][0]).to.have.property('url', `${serviceNowBaseUrl}/api/now/v2/table/sometable/${sysId}`);
+      expect(request.patch.args[0][0]).to.have.property('url', `${base_url}/api/now/v2/table/sometable/${sysId}`);
     });
 
     it('should include auth in request', () => {
       testObject.updateTableRecord('table', sysId, changes);
       expect(request.patch.args[0][0]).to.have.property('auth').that.deep.equal({
-        user: serviceNowUsername,
-        pass: serviceNowPassword,
+        user: user,
+        pass: password,
       });
     });
 

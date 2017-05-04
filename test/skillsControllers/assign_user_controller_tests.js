@@ -18,14 +18,14 @@ describe('assign user controller', () => {
       sinon.stub(serviceNowClient, 'getTableRecords').returns(Promise.resolve());
       sinon.stub(serviceNowClient, 'updateTableRecord').returns(Promise.resolve());
 
-      process.env.serviceNowBaseUrl = 'servicenow-instance.domain';
+      process.env.base_url = 'servicenow-instance.domain';
       bot = { reply: sinon.spy() };
     });
 
     afterEach(() => {
       serviceNowClient.getTableRecords.restore();
       serviceNowClient.updateTableRecord.restore();
-      delete process.env.serviceNowBaseUrl;
+      delete process.env.base_url;
     });
 
     it('getTableRecords should be called', () => {
