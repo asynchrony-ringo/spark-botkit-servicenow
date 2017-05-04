@@ -45,7 +45,7 @@ To actually get the bot up and running, a public address is required. We used ng
 ### Build and Run
 
  - install necessary node packages: `npm install`
- - build the docker image for the project: `docker build -t asynchronyringo/servicenow-spark-bot .`
+ - build the docker image for the project: `docker build -t cisco/servicenow-spark-bot .`
  - spin up the docker container: `./start.dev.sh`
     - NOTE: To spin up the docker container in production, run: `start.sh`
 

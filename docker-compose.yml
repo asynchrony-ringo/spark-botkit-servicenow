@@ -3,7 +3,7 @@ services:
   servicenow:
     ports:
       - "3001:3001"
-    image: asynchronyringo/servicenow-spark-bot
+    image: cisco/servicenow-spark-bot
     container_name: servicenow-spark-bot
     volumes:
       - .env:/app/.env
