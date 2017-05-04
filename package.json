@@ -2,6 +2,29 @@
   "name": "spark-botkit-servicenow",
   "version": "0.0.1",
   "description": "A starter bot for cisco spark and service now integration",
+  "author": "Cisco",
+  "contributors": [
+    {
+      "name": "Roger Landreth",
+      "email": "roger.landreth@asynchrony.com"
+    },
+    {
+      "name": "Kara Kimmel",
+      "email": "kara.kimmel@asynchrony.com"
+    },
+    {
+      "name": "Chad Schwab",
+      "email": "chad.schwab@asynchrony.com"
+    },
+    {
+      "name": "Alex Agatstein",
+      "email": "alex.agatstein@asynchrony.com"
+    },
+    {
+      "name": "Joe Still",
+      "email": joe.still@asynchrony.com
+    }
+  ],
   "main": "src/bot.js",
   "scripts": {
     "start": "node src/bot.js",
