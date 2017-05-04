@@ -22,7 +22,7 @@
     },
     {
       "name": "Joe Still",
-      "email": joe.still@asynchrony.com
+      "email": "joe.still@asynchrony.com"
     }
   ],
   "main": "src/bot.js",
