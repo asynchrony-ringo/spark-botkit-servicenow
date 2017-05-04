@@ -6,8 +6,8 @@ const serviceNowClient = {
     request.get({
       url: `${process.env.base_url}/api/now/v2/table/${table}/${sysId}`,
       auth: {
-        user: process.env.user,
-        pass: process.env.password,
+        user: process.env.servicenow_username,
+        pass: process.env.servicenow_password,
       },
       json: true,
     }, (error, response, json) => {
@@ -25,8 +25,8 @@ const serviceNowClient = {
     request.get({
       url: `${process.env.base_url}/api/now/v2/table/${table}?${querystring.stringify(query)}`,
       auth: {
-        user: process.env.user,
-        pass: process.env.password,
+        user: process.env.servicenow_username,
+        pass: process.env.servicenow_password,
       },
       json: true,
     }, (error, response, json) => {
@@ -44,8 +44,8 @@ const serviceNowClient = {
     request.post({
       url: `${process.env.base_url}/api/now/v2/table/${table}`,
       auth: {
-        user: process.env.user,
-        pass: process.env.password,
+        user: process.env.servicenow_username,
+        pass: process.env.servicenow_password,
       },
       body: record,
       json: true,
@@ -64,8 +64,8 @@ const serviceNowClient = {
     request.patch({
       url: `${process.env.base_url}/api/now/v2/table/${table}/${sysId}`,
       auth: {
-        user: process.env.user,
-        pass: process.env.password,
+        user: process.env.servicenow_username,
+        pass: process.env.servicenow_password,
       },
       body: payload,
       json: true,

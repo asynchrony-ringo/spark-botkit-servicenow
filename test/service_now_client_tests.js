@@ -11,8 +11,8 @@ describe('service now client', () => {
   let testObject;
 
   beforeEach(() => {
-    process.env.user = user;
-    process.env.password = password;
+    process.env.servicenow_username = user;
+    process.env.servicenow_password = password;
     process.env.base_url = base_url;
 
     sinon.stub(request, 'get');
@@ -26,8 +26,8 @@ describe('service now client', () => {
     request.get.restore();
     request.post.restore();
     request.patch.restore();
-    delete process.env.user;
-    delete process.env.password;
+    delete process.env.servicenow_username;
+    delete process.env.servicenow_password;
     delete process.env.base_url;
   });
 
