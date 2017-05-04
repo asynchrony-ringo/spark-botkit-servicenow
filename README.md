@@ -1,4 +1,4 @@
-This project is aimed at bridging Spark and Service now via Spark box technology.
+This project is aimed at bridging Spark and Service now via Spark bot technology.
 
 ## Getting Started
 
@@ -25,8 +25,8 @@ This project is aimed at bridging Spark and Service now via Spark box technology
     base_url=[serviceNow_instance_base_url]
     user=[serviceNow_]
     bot_name=[bot_name_from_spark]
-    user=[serviceNow_user_created_above]
-    password=[serviceNow_users_password_created_above]
+    servicenow_username=[serviceNow_user_created_above]
+    servicenow_password=[serviceNow_users_password_created_above]
     ```
 
 #### Setup a Public Address Through ngrok
