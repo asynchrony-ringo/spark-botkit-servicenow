@@ -38,15 +38,10 @@ describe('truncateLargeMessageMiddleware', () => {
     });
 
     it('should not truncate the message when it is equal to 6000 characters in length', () => {
-      let text = '';
-      for (let i = 0; i < 6000; i += 1) {
-        text += 'a';
-      }
+      const text = 'a'.repeat(6000);
       const expectedText = text;
 
-      const message = {
-        text,
-      };
+      const message = { text };
 
       useCallback(bot, message, next);
 
@@ -55,22 +50,11 @@ describe('truncateLargeMessageMiddleware', () => {
     });
 
     it('should truncate the message when it is over 6000 characters in length', () => {
-      let text = '';
-      for (let i = 0; i < 6001; i += 1) {
-        text += 'a';
-      }
-
-      const message = {
-        text,
-      };
+      const message = { text: 'a'.repeat(6001) };
 
       useCallback(bot, message, next);
 
-      let expectedText = '';
-      for (let i = 0; i < 6000; i += 1) {
-        expectedText += 'a';
-      }
-      expectedText += '...';
+      const expectedText = `${'a'.repeat(6000)}...`;
 
       expect(message.text).to.be.equal(expectedText);
       expect(next.calledOnce).to.be.true;
