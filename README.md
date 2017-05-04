@@ -7,7 +7,7 @@ This project is aimed at bridging Spark and Service now via Spark bot technology
  1. Using the "Filter Navigator" search bar, search for "Users"
  1. Click on the "Users" link under "User Administration"
  1. Click on the "New" button in the top navigation bar
- 1. Create a user...
+ 1. Create a user and specify a `User ID` and `Password`
 
 
 #### Create the Bot
