@@ -1,4 +1,4 @@
-const updateAlertDifferenceGatherer = require('./update_alert_difference_gatherer.js');
+const updateDifferenceGatherer = require('../../update_difference_gatherer.js');
 
 const updateAlertController = {
   messageCaller: (newObj, oldObj, controller) => {
@@ -12,7 +12,7 @@ const updateAlertController = {
         }
 
         const tableName = newObj.type.replace(/\s/, '_').toLowerCase();
-        const diff = updateAlertDifferenceGatherer.formatMessage(newObj, oldObj);
+        const diff = updateDifferenceGatherer.formatMessage(newObj, oldObj);
         conversation.say(`The ${newObj.type} [${newObj.sys_id}](${process.env.base_url}/${tableName}.do?sys_id=${newObj.sys_id}) has been updated!\n${diff}`);
       });
     }

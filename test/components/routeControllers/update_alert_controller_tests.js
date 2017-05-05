@@ -1,7 +1,7 @@
 const updateAlertController = require('../../../src/components/routeControllers/update_alert_controller.js');
 const sinon = require('sinon');
 const expect = require('chai').expect;
-const updateAlertDifferenceGatherer = require('../../../src/components/routeControllers/update_alert_difference_gatherer.js');
+const updateDifferenceGatherer = require('../../../src/update_difference_gatherer.js');
 
 describe('update alert controller', () => {
   describe('messageCaller', () => {
@@ -62,14 +62,14 @@ describe('update alert controller', () => {
 
         beforeEach(() => {
           process.env.base_url = 'niceurl.some-domain.com';
-          sinon.stub(updateAlertDifferenceGatherer, 'formatMessage');
+          sinon.stub(updateDifferenceGatherer, 'formatMessage');
           conversationCallback = bot.startPrivateConversation.args[0][1];
           conversation = { say: sinon.stub() };
         });
 
         afterEach(() => {
           delete process.env.base_url;
-          updateAlertDifferenceGatherer.formatMessage.restore();
+          updateDifferenceGatherer.formatMessage.restore();
         });
 
         it('should not say anything on error', () => {
@@ -79,7 +79,7 @@ describe('update alert controller', () => {
 
         it('should tell the user an entity has been updated on success', () => {
           const expectedDifferenceMessage = 'Here is a really good difference message';
-          updateAlertDifferenceGatherer.formatMessage
+          updateDifferenceGatherer.formatMessage
             .withArgs(newItem, oldItem)
             .returns(expectedDifferenceMessage);
 

@@ -7,7 +7,7 @@ const formatValue = (value) => {
   return `**${value}**`;
 };
 
-const updateAlertDifferenceGatherer = {
+const updateDifferenceGatherer = {
   formatMessage: (newObject = {}, oldObject = {}) => {
     const diffs = [];
 
@@ -29,4 +29,4 @@ const updateAlertDifferenceGatherer = {
   },
 };
 
-module.exports = updateAlertDifferenceGatherer;
+module.exports = updateDifferenceGatherer;

@@ -1,13 +1,13 @@
-const updateAlertDifferenceGatherer = require('../../../src/components/routeControllers/update_alert_difference_gatherer.js');
+const updateDifferenceGatherer = require('../../../src/update_difference_gatherer.js');
 const expect = require('chai').expect;
 
 describe('update alert difference gatherer', () => {
   it('should return empty string if object undefined', () => {
-    expect(updateAlertDifferenceGatherer.formatMessage()).to.be.empty;
+    expect(updateDifferenceGatherer.formatMessage()).to.be.empty;
   });
 
   it('should return empty string if empty objects', () => {
-    expect(updateAlertDifferenceGatherer.formatMessage({}, {})).to.be.empty;
+    expect(updateDifferenceGatherer.formatMessage({}, {})).to.be.empty;
   });
 
   it('should return empty if objects are equal', () => {
@@ -20,7 +20,7 @@ describe('update alert difference gatherer', () => {
       title: 'bar',
     };
 
-    expect(updateAlertDifferenceGatherer.formatMessage(newObject, oldObject)).to.be.empty;
+    expect(updateDifferenceGatherer.formatMessage(newObject, oldObject)).to.be.empty;
   });
 
   it('should return correct format when values have been edited', () => {
@@ -34,7 +34,7 @@ describe('update alert difference gatherer', () => {
       name: 'bar',
       title: 'foo',
     };
-    const formattedDiffs = updateAlertDifferenceGatherer
+    const formattedDiffs = updateDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(2);
     expect(formattedDiffs[0]).to.equal(' * name was updated from **bar** to **foo**');
@@ -50,7 +50,7 @@ describe('update alert difference gatherer', () => {
       name: 'bar',
       title: 'foo',
     };
-    const formattedDiffs = updateAlertDifferenceGatherer
+    const formattedDiffs = updateDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(2);
     expect(formattedDiffs[0]).to.equal(' * name was removed');
@@ -66,7 +66,7 @@ describe('update alert difference gatherer', () => {
       name: 'bar',
       title: 'foo',
     };
-    const formattedDiffs = updateAlertDifferenceGatherer
+    const formattedDiffs = updateDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(2);
     expect(formattedDiffs[0]).to.equal(' * name was added: **bar**');
@@ -84,7 +84,7 @@ describe('update alert difference gatherer', () => {
       name: '',
       id: '',
     };
-    const formattedDiffs = updateAlertDifferenceGatherer
+    const formattedDiffs = updateDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(2);
     expect(formattedDiffs[0]).to.equal(' * name was removed');
@@ -104,7 +104,7 @@ describe('update alert difference gatherer', () => {
       apple: 'bar',
       title: 'foo',
     };
-    const formattedDiffs = updateAlertDifferenceGatherer
+    const formattedDiffs = updateDifferenceGatherer
       .formatMessage(newObject, oldObject).split('\n');
     expect(formattedDiffs.length).to.equal(4);
     expect(formattedDiffs[0]).to.equal(' * apple was updated from **bar** to **foo**');
@@ -137,7 +137,7 @@ describe('update alert difference gatherer', () => {
       const oldObject = {
         key: testCase.old,
       };
-      const formattedDiffs = updateAlertDifferenceGatherer
+      const formattedDiffs = updateDifferenceGatherer
         .formatMessage(newObject, oldObject).split('\n');
       expect(formattedDiffs.length).to.equal(7);
       expect(formattedDiffs[0]).to.equal(' * key was updated from ');
