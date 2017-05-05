@@ -27,6 +27,16 @@ const controllerHelper = {
         return userResponse.result[0];
       });
   },
+  formatMarkdownList: (tableRecord, attributes) => {
+    return Object.keys(attributes).reduce((unorderedListMarkdown, attributeKey) => {
+      let attributeValue = tableRecord[attributeKey];
+      if (attributeValue === undefined || attributeValue === null) {
+        attributeValue = '';
+      }
+      return `${unorderedListMarkdown}* ${attributes[attributeKey]}: ${attributeValue}\n`;
+    }
+  , '');
+  },
 };
 
 module.exports = controllerHelper;

@@ -97,7 +97,7 @@ describe('update controller', () => {
     ].forEach((testCase) => {
       const { command, expectedUpdate, description } = testCase;
       it(`should update the entity when ${description}`, () => {
-        serviceNowClient.updateTableRecord.returns(Promise.resolve());
+        serviceNowClient.updateTableRecord.returns(Promise.resolve({ result: {} }));
         return updateController.replyWithUpdate(alias, entityId, command, bot, message)
         .then(() => {
           expect(serviceNowClient.updateTableRecord.calledOnce);
@@ -108,13 +108,43 @@ describe('update controller', () => {
       });
     });
 
-    it('should reply with success message when update is successful', () => {
+    it('should reply with success message when update is successfully updated', () => {
       const updateCommands = 'goodcommand=[good]';
-      serviceNowClient.updateTableRecord.returns(Promise.resolve());
+      serviceNowClient.updateTableRecord.returns(Promise.resolve({ result: { goodcommand: 'good' } }));
       return updateController.replyWithUpdate(alias, entityId, updateCommands, bot, message)
       .then(() => {
         expect(bot.reply.calledOnce).to.be.true;
-        expect(bot.reply.args[0]).to.deep.equal([message, `${entity.description} has been updated! [${entityId}](${baseUrl}/${entity.table}.do?sys_entityId=${entityId}).`]);
+        expect(bot.reply.args[0]).to.deep.equal([message, `${entity.description} has been updated! [${entityId}](${baseUrl}/${entity.table}.do?sys_entityId=${entityId}).\n\nThe following fields have been updated:\n* goodcommand: good\n\n`]);
+      });
+    });
+
+    it('should reply with success message when update is successfully updated with two fields', () => {
+      const updateCommands = 'goodcommand=[good] goodcommand2=[reallygood]';
+      serviceNowClient.updateTableRecord.returns(Promise.resolve({ result: { goodcommand: 'good', goodcommand2: 'reallygood' } }));
+      return updateController.replyWithUpdate(alias, entityId, updateCommands, bot, message)
+      .then(() => {
+        expect(bot.reply.calledOnce).to.be.true;
+        expect(bot.reply.args[0]).to.deep.equal([message, `${entity.description} has been updated! [${entityId}](${baseUrl}/${entity.table}.do?sys_entityId=${entityId}).\n\nThe following fields have been updated:\n* goodcommand: good\n* goodcommand2: reallygood\n\n`]);
+      });
+    });
+
+    it('should reply with missing field if not in update object', () => {
+      const updateCommands = 'unknown=[odd]';
+      serviceNowClient.updateTableRecord.returns(Promise.resolve({ result: { } }));
+      return updateController.replyWithUpdate(alias, entityId, updateCommands, bot, message)
+      .then(() => {
+        expect(bot.reply.calledOnce).to.be.true;
+        expect(bot.reply.args[0]).to.deep.equal([message, 'The following fields could not be found:\n* unknown\n']);
+      });
+    });
+
+    it('should reply with both successes and failures in update object', () => {
+      const updateCommands = 'goodcommand=[good] unknownfield=[odd]';
+      serviceNowClient.updateTableRecord.returns(Promise.resolve({ result: { goodcommand: 'good' } }));
+      return updateController.replyWithUpdate(alias, entityId, updateCommands, bot, message)
+      .then(() => {
+        expect(bot.reply.calledOnce).to.be.true;
+        expect(bot.reply.args[0]).to.deep.equal([message, `${entity.description} has been updated! [${entityId}](${baseUrl}/${entity.table}.do?sys_entityId=${entityId}).\n\nThe following fields have been updated:\n* goodcommand: good\n\nThe following fields could not be found:\n* unknownfield\n`]);
       });
     });
 

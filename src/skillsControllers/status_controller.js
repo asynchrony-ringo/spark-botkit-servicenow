@@ -1,15 +1,5 @@
 const serviceNowClient = require('../service_now_client.js');
-
-const formatMarkdownList = (tableRecord, attributes) => {
-  return Object.keys(attributes).reduce((unorderedListMarkdown, attributeKey) => {
-    let attributeValue = tableRecord[attributeKey];
-    if (attributeValue === undefined || attributeValue === null) {
-      attributeValue = '';
-    }
-    return `${unorderedListMarkdown}* ${attributes[attributeKey]}: ${attributeValue}\n`;
-  }
-, '');
-};
+const controllerHelper = require('./controller_helper.js');
 
 const statusController = {
 
@@ -17,7 +7,7 @@ const statusController = {
     serviceNowClient.getTableRecord(tableName, id)
       .then((tableRecord) => {
         const serviceNowLink = `[${id}](${process.env.base_url}/${tableName}.do?sys_id=${id})`;
-        const response = `Information for ${description}: ${serviceNowLink}\n${formatMarkdownList(tableRecord.result, attributes)}`;
+        const response = `Information for ${description}: ${serviceNowLink}\n${controllerHelper.formatMarkdownList(tableRecord.result, attributes)}`;
         bot.reply(message, response);
       })
       .catch((error) => {
