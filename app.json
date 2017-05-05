@@ -25,11 +25,11 @@
       "description": "The URL to your ServiceNow instance.",
       "required": true
     },
-    "salesforce_username": {
+    "servicenow_username": {
       "description": "The username of the account to used to authenticate with ServiceNow. Changes made to ServiceNow will be performed by this user, so you may want to create a special bot account.",
       "required": true
     },
-    "salesforce_password": {
+    "servicenow_password": {
       "description": "The password of the account to used to authenticate with ServiceNow.",
       "required": true
     }
