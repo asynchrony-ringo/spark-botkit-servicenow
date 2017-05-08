@@ -60,7 +60,7 @@ You should now be able to communicate with the bot from within Cisco Spark.
 
 - You can ask your bot for help (`@BotName help`) to display the available commands within Spark:
 
-###Create
+### Create
 * Create an Incident, Problem, or Change Request:
     * `incident create [short description] [category]`
         * **short description:** sentence describing the incident
@@ -71,7 +71,7 @@ You should now be able to communicate with the bot from within Cisco Spark.
         * **short description:** sentence describing the change request
         * **category:** Hardware, Software, Business Service, System Software, Applications Software, Network, Telecom, Documentation, Other, or Cloud Management
 
-###View
+### View
 * View the status of an Incident, Problem, or Change Request by internal ID:
     * `incident status sys_id`
     * `problem status sys_id`
@@ -81,7 +81,7 @@ You should now be able to communicate with the bot from within Cisco Spark.
     * `problem assigned`
     * `cr assigned`
 
-###Update
+### Update
 * List all properties available to update on an Incident, Problem, or Change Request:
     * `incident update sys_id guide`
     * `problem update sys_id guide`

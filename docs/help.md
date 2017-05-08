@@ -1,4 +1,4 @@
-###Create
+### Create
 * Create an Incident, Problem, or Change Request:
     * `incident create [short description] [category]`
         * **short description:** sentence describing the incident
@@ -9,7 +9,7 @@
         * **short description:** sentence describing the change request
         * **category:** Hardware, Software, Business Service, System Software, Applications Software, Network, Telecom, Documentation, Other, or Cloud Management
 
-###View
+### View
 * View the status of an Incident, Problem, or Change Request by internal ID:
     * `incident status sys_id`
     * `problem status sys_id`
@@ -19,7 +19,7 @@
     * `problem assigned`
     * `cr assigned`
 
-###Update
+### Update
 * List all properties available to update on an Incident, Problem, or Change Request:
     * `incident update sys_id guide`
     * `problem update sys_id guide`
