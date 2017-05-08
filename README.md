@@ -46,9 +46,9 @@ To actually get the bot up and running, a public address is required. We used ng
 
 ### Build and Run
 
- - install necessary node packages: `npm install`
- - build the docker image for the project: `docker build -t cisco/servicenow-spark-bot .`
- - spin up the docker container: `./start.dev.sh`
+ - Install necessary node packages: `npm install`
+ - Build the docker image for the project: `docker build -t cisco/servicenow-spark-bot .`
+ - Spin up the docker container: `./start.dev.sh`
     - NOTE: To spin up the docker container in production, run: `start.sh`
 
 
@@ -60,7 +60,7 @@ You should now be able to communicate with the bot from within Cisco Spark.
 
 - You can ask your bot for help (`@BotName help`) to display the available commands within Spark:
 
-#### Create
+###Create
 * Create an Incident, Problem, or Change Request:
     * `incident create [short description] [category]`
         * **short description:** sentence describing the incident
@@ -71,7 +71,7 @@ You should now be able to communicate with the bot from within Cisco Spark.
         * **short description:** sentence describing the change request
         * **category:** Hardware, Software, Business Service, System Software, Applications Software, Network, Telecom, Documentation, Other, or Cloud Management
 
-#### View
+###View
 * View the status of an Incident, Problem, or Change Request by internal ID:
     * `incident status sys_id`
     * `problem status sys_id`
@@ -81,7 +81,22 @@ You should now be able to communicate with the bot from within Cisco Spark.
     * `problem assigned`
     * `cr assigned`
 
-#### Update
+###Update
+* List all properties available to update on an Incident, Problem, or Change Request:
+    * `incident update sys_id guide`
+    * `problem update sys_id guide`
+    * `cr update sys_id guide`
+* Update a property on an Incident, Problem, or Change Request:
+    * `incident update sys_id field=[value]` or
+    * `incident update sys_id field=[value] field2=[value2]` for multiple fields
+        * **field**: the field name you want to update
+        * **value:** the value you want to set on the updated field
+    * `problem update sys_id field=[value]`
+        * **field**: the field name you want to update
+        * **value:** the value you want to set on the updated field
+    * `cr update sys_id field=[value]`
+        * **field**: the field name you want to update
+        * **value:** the value you want to set on the updated field
 * Assign yourself to an Incident, Problem, or Change Request:
     * `incident assign sys_id`
     * `problem assign sys_id`
@@ -98,14 +113,14 @@ You should now be able to communicate with the bot from within Cisco Spark.
 ---
 
 ## Alerting
-To enable your bot to recieve update alerts from ServiceNow you must add a Business Rule.
+To enable your bot to receive update alerts from ServiceNow you must add a Business Rule.
 
 1. Login to your ServiceNow instance.
 1. Using the "Filter Navigator" search bar, search for "Business Rules"
 1. Click on the "Business Rules" link under "System Definition"
 2. Click on the "New" button in the top navigation bar
 3. Enter a unique name that you can use to find your Business Rule in the future
-4. Select the table you wish to recieve alerts about from the "Table" dropdown
+4. Select the table you wish to receive alerts about from the "Table" dropdown
 1. Check the "Advanced" checkbox
 1. In the "When to run" tab:
     1. Set the "When" dropdown to "after"
@@ -120,15 +135,12 @@ To enable your bot to recieve update alerts from ServiceNow you must add a Busin
 
 ## Creating new skills
 
-In order to create additional functionality for the bot, you will have to create a new skill that listens to a particular message and
-acts accordingly. The existing skills can be found in the `src/skills` directory. The project is set up in a way that any skills located
-within this directory will be registered with the Spark bot. 
+In order to create additional functionality for the bot, you will have to create a new skill that listens to a particular message and acts accordingly. The existing skills can be found in the `src/skills` directory. The project is set up in a way that any skills located within this directory will be registered with the Spark bot.
 
-Within a newly created skill, you will need to call `.hears` and provide a regex pattern that will match a certain message the user sends
-to the bot in Spark, as well as a callback that will fire when the message is received. The callback takes both the bot and the message.
-In order to have the bot send a message to the user, you can use the bot's `.reply(message, "custom message")` function, which takes
-the original message and your bot's response.
+Within a newly created skill, you will need to call `.hears` and provide a regex pattern that will match a certain message the user sends to the bot in Spark, as well as a callback that will fire when the message is received. The callback takes both the bot and the message.
 
-To communicate with ServiceNow, you can use the `service_now_client.js` in order to make calls to the 
+In order to have the bot send a message to the user, you can use the bot's `.reply(message, "custom message")` function, which takes the original message and your bot's response.
+
+To communicate with ServiceNow, you can use the `service_now_client.js` in order to make calls to the
 [Table API](https://docs.servicenow.com/bundle/istanbul-servicenow-platform/page/integrate/inbound-rest/concept/c_TableAPI.html). Using
 this class, you can retrieve, create, and update records within tables in ServiceNow.
