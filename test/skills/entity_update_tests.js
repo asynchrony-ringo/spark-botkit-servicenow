@@ -17,7 +17,7 @@ describe('incident assign', () => {
 
   it('should register hear listener on controller', () => {
     expect(controller.hears.calledOnce).to.be.true;
-    expect(controller.hears.args[0][0]).to.deep.equal(['(.*) update ([^ ]*) (.*)']);
+    expect(controller.hears.args[0][0]).to.deep.equal(['(cr|incident|problem) update ([^ ]*) (.*)']);
     expect(controller.hears.args[0][1]).to.equal('direct_message,direct_mention');
     expect(controller.hears.args[0][2]).to.be.a('function');
   });
@@ -27,7 +27,7 @@ describe('incident assign', () => {
     let listenerCallback;
 
     const message = {
-      match: 'entity update entityId field=[value] field2=[value]'.match(/(.*) update ([^ ]*) (.*)/),
+      match: '@SNBot cr update entityId field=[value] field2=[value]'.match(/(cr|incident|problem) update ([^ ]*) (.*)/),
     };
 
     beforeEach(() => {
@@ -44,7 +44,7 @@ describe('incident assign', () => {
       listenerCallback(bot, message);
 
       expect(updateController.replyWithUpdate.calledOnce).to.be.true;
-      expect(updateController.replyWithUpdate.args[0]).to.deep.equal(['entity', 'entityId', 'field=[value] field2=[value]', bot, message]);
+      expect(updateController.replyWithUpdate.args[0]).to.deep.equal(['cr', 'entityId', 'field=[value] field2=[value]', bot, message]);
     });
   });
 });
