@@ -20,6 +20,21 @@
     * `cr assigned`
 
 ###Update
+* List all properties available to update on an Incident, Problem, or Change Request:
+    * `incident update sys_id guide`
+    * `problem update sys_id guide`
+    * `cr update sys_id guide`
+* Update a property on an Incident, Problem, or Change Request:
+    * `incident update sys_id field=[value]` or
+    * `incident update sys_id field=[value] field2=[value2]` for multiple fields
+        * **field**: the field name you want to update
+        * **value:** the value you want to set on the updated field
+    * `problem update sys_id field=[value]`
+        * **field**: the field name you want to update
+        * **value:** the value you want to set on the updated field
+    * `cr update sys_id field=[value]`
+        * **field**: the field name you want to update
+        * **value:** the value you want to set on the updated field
 * Assign yourself to an Incident, Problem, or Change Request:
     * `incident assign sys_id`
     * `problem assign sys_id`
