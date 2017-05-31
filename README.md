@@ -27,6 +27,7 @@ This project is aimed at bridging Spark and Service now via Spark bot technology
     ```
     access_token=[bot_access_token_from_spark]
     base_url=[serviceNow_instance_base_url]
+    secret=[your_bot_secret(any_value)]
     servicenow_username=[serviceNow_user_created_above]
     servicenow_password=[serviceNow_users_password_created_above]
     ```
